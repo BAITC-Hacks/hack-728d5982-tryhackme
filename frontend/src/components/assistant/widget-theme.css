@@ -1,131 +1,203 @@
-/* Applied after the scoped legacy CSS. Keep functional markup and selectors. */
+/* Shared Tailwind v4 / shadcn tokens, applied after the scoped legacy CSS. */
 .assistant-widget {
-  --ink: #e6edf4;
-  --muted: #9caebd;
-  --brand: #9bebc0;
-  --lime: #9bebc0;
-  --line: #2c3b47;
-  --paper: #101821;
-  --white: #141f2a;
+  --ink: var(--foreground);
+  --muted: var(--muted-foreground);
+  --brand: var(--primary);
+  --lime: var(--primary);
+  --line: var(--border);
+  --paper: var(--background);
+  --white: var(--card);
+  color: var(--foreground);
   color-scheme: dark;
   background: transparent;
+  font-family: inherit;
 }
 .assistant-widget .chat {
   z-index: 50;
-  background: #0e171f;
-  border-color: #3c5361;
-  box-shadow:
-    0 25px 95px #0009,
-    0 0 25px #77cbb00a;
+  color: var(--foreground);
+  background: var(--background);
+  border-color: var(--input);
+  box-shadow: 0 25px 95px #0009;
 }
-.assistant-widget .chat-header {
-  background: #14212c;
-  border-bottom: 1px solid #344653;
+.assistant-widget .chat-header,
+.assistant-widget .chat-help,
+.assistant-widget .composer {
+  color: var(--foreground);
+  background: var(--card);
+  border-color: var(--border);
 }
-.assistant-widget .chat-status {
-  color: #9cafbf;
+.assistant-widget .chat-title {
+  font-size: 16px;
+}
+.assistant-widget .chat-status,
+.assistant-widget .composer-hint,
+.assistant-widget .attachment-status,
+.assistant-widget .assistant-label {
+  color: var(--muted-foreground);
+  font-size: 12px;
 }
 .assistant-widget .chat-header .spark,
 .assistant-widget .message.bot .spark {
-  background: #9bebc016;
-  color: #9bebc0;
+  background: var(--accent);
+  color: var(--primary);
 }
 .assistant-widget .mode-banner {
-  background: #102521;
-  border-color: #244137;
-  color: #b2d2c3;
+  background: var(--secondary);
+  border-color: var(--border);
+  color: var(--muted-foreground);
+  font-size: 12px;
 }
-.assistant-widget .message-body {
-  background: #16212c;
-  border-color: #2b3b49;
+.assistant-widget .message {
+  font-size: 14px;
+  line-height: 1.65;
+}
+.assistant-widget .message.bot > .assistant-label {
+  font-size: 12px;
+}
+.assistant-widget .message-body,
+.assistant-widget .product-card,
+.assistant-widget .review-row {
+  color: var(--card-foreground);
+  background: var(--card);
+  border-color: var(--border);
+}
+.assistant-widget .product-card {
+  background: var(--secondary);
 }
 .assistant-widget .message.user {
-  background: #263d47;
-  color: #e5f4f9;
+  background: var(--accent);
+  color: var(--accent-foreground);
 }
-.assistant-widget .button,
-.assistant-widget .composer .send {
-  background: #9bebc0;
-  color: #10281d;
+.assistant-widget .message-body h3,
+.assistant-widget .product-meta h3,
+.assistant-widget .consent b,
+.assistant-widget .cart-row b {
+  font-size: 14px;
+  line-height: 1.55;
 }
-.assistant-widget .button:hover,
-.assistant-widget .composer .send:hover {
-  background: #b7f6d4;
+.assistant-widget .product-price {
+  color: var(--foreground);
+  font-size: 18px;
 }
-.assistant-widget .button.outline,
-.assistant-widget .chip {
-  background: #1b2a35;
-  border-color: #3b5060;
-  color: #d9eaf3;
+.assistant-widget .message-body .muted,
+.assistant-widget .product-meta small,
+.assistant-widget .source-note,
+.assistant-widget .specs dt {
+  color: var(--muted-foreground);
+  font-size: 12px;
 }
-.assistant-widget .chip:hover,
-.assistant-widget .button.outline:hover,
-.assistant-widget .composer .icon-button:hover {
-  background: #29404b;
+.assistant-widget .specs,
+.assistant-widget .qty-label,
+.assistant-widget .cart-row p,
+.assistant-widget .product-card details {
+  font-size: 13px;
 }
-.assistant-widget .composer {
-  background: #121d27;
-}
-.assistant-widget .composer form,
-.assistant-widget .quantity {
-  border-color: #3c505e;
-  color: #e6edf4;
-  background: #101b24;
-}
-.assistant-widget .composer textarea {
-  color: #e6edf4;
-}
-.assistant-widget .composer-hint,
-.assistant-widget .chat-status {
-  color: #9dafbb;
-}
-.assistant-widget .consent {
-  background: #172d25;
-  border-color: #406d57;
-}
-.assistant-widget .warning {
-  background: #392e1d;
-  border-color: #79613e;
-  color: #f2d99d;
+.assistant-widget .specs dd {
+  color: var(--foreground);
 }
 .assistant-widget .specs dt,
 .assistant-widget .specs dd,
 .assistant-widget .source-note,
 .assistant-widget .purchase-terms section + section {
-  border-color: #2d3e4a;
+  border-color: var(--border);
+}
+.assistant-widget .purchase-terms h4 {
+  font-size: 14px;
+}
+.assistant-widget .button,
+.assistant-widget .composer .send {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+.assistant-widget .button:hover,
+.assistant-widget .composer .send:hover {
+  background: color-mix(in srgb, var(--primary) 88%, white);
+}
+.assistant-widget .button.small,
+.assistant-widget .chip {
+  font-size: 13px;
+  min-height: 36px;
+}
+.assistant-widget .button.outline,
+.assistant-widget .chip {
+  background: var(--secondary);
+  border-color: var(--input);
+  color: var(--secondary-foreground);
+}
+.assistant-widget .chip:hover,
+.assistant-widget .button.outline:hover,
+.assistant-widget .icon-button:hover {
+  background: var(--accent);
+  border-color: var(--ring);
+  color: var(--accent-foreground);
+}
+.assistant-widget .composer form,
+.assistant-widget .quantity,
+.assistant-widget .manager-panel textarea {
+  border-color: var(--input);
+  color: var(--foreground);
+  background: var(--background);
+}
+.assistant-widget .composer form:focus-within {
+  border-color: var(--ring);
+  box-shadow: 0 0 0 1px var(--ring);
+}
+.assistant-widget .composer textarea {
+  color: var(--foreground);
+  caret-color: var(--primary);
+  font-size: 14px;
+}
+.assistant-widget textarea::placeholder,
+.assistant-widget input::placeholder {
+  color: var(--muted-foreground);
+  opacity: 1;
+}
+.assistant-widget .composer .icon-button {
+  color: var(--muted-foreground);
+}
+.assistant-widget .consent {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--primary) 10%, var(--card));
+  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+}
+.assistant-widget .warning {
+  background: #392e1d;
+  border-color: #79613e;
+  color: #ffe0a6;
+  font-size: 13px;
 }
 .assistant-widget .stock {
   background: #203a2e;
   color: #b4ebca;
+  font-size: 13px;
 }
 .assistant-widget .stock.unknown {
   background: #3a3327;
-  color: #f0d7a4;
+  color: #ffe0a6;
 }
 .assistant-widget .attachment {
-  background: #1f303a;
-  border-color: #405966;
-  color: #d6e7ec;
+  background: var(--secondary);
+  border-color: var(--input);
+  color: var(--secondary-foreground);
+  font-size: 13px;
 }
 .assistant-widget .launcher {
   z-index: 40;
-  border: 1px solid #adf3cf;
+  border: 1px solid var(--primary);
   border-radius: 99px;
-  box-shadow:
-    0 6px 40px #0006,
-    0 0 18px #9bebc014;
+  box-shadow: 0 6px 40px #0006;
 }
 .assistant-widget .launcher-dot {
-  background: #256e4e;
-  border-color: #9bebc0;
+  background: var(--primary-foreground);
+  border-color: var(--primary);
 }
 .assistant-widget .toast {
   z-index: 60;
-  background: #d9f2e5;
-  color: #122e21;
+  background: var(--primary);
+  color: var(--primary-foreground);
 }
 .assistant-widget .messages {
-  scrollbar-color: #415869 transparent;
+  scrollbar-color: var(--input) transparent;
 }
 .assistant-widget .product-glyph {
   background: #d9e2df;
@@ -138,8 +210,12 @@
   flex-wrap: wrap;
 }
 .assistant-widget .manager-panel textarea {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.65;
+}
+.assistant-widget :is(button, a, input, textarea, summary):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
 }
 @media (max-width: 760px) {
   .assistant-widget .chat {
@@ -152,10 +228,9 @@
   .assistant-widget .chat-header {
     padding-top: max(14px, env(safe-area-inset-top));
   }
-  .assistant-widget .message {
-    font-size: 13px;
-  }
-  .assistant-widget .composer textarea {
+  .assistant-widget .composer textarea,
+  .assistant-widget .quantity,
+  .assistant-widget .manager-panel textarea {
     font-size: 16px;
   }
 }
