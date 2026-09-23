@@ -17,7 +17,7 @@ from app.schemas.ekt_catalog import (
     EktProductPage,
 )
 
-OUTPUT = Path(__file__).resolve().parent.parent / "docs" / "ekt-catalog.openapi.json"
+OUTPUT = Path(__file__).resolve().parent.parent / "contracts" / "ekt-catalog.openapi.json"
 
 
 def build_schema() -> dict:
