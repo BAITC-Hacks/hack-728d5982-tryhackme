@@ -106,23 +106,30 @@ test("live UC-01…05: facts, absent product, terms, consent, persistent cart UR
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 
-test("live specification: two verified rows, batch proposal, separate consent and cart", async ({
+test("live procurement: two sheets, duplicate rows, separate consent and six units", async ({
   page,
 }) => {
   const picker = page.waitForEvent("filechooser");
   await page.getByRole("button", { name: "Прикрепить спецификацию ↗", exact: true }).click();
-  await (await picker).setFiles("../out/inputs/specification.xlsx");
-  await expect(page.locator("#attachments")).toContainText("specification.xlsx");
+  await (await picker).setFiles("../out/inputs/purchase_request.xlsx");
+  await expect(page.locator("#attachments")).toContainText("purchase_request.xlsx");
   await expect(page.locator(".message.user")).toHaveCount(0);
   await expect(page.locator("#cartCount")).toHaveText("0");
   const reply = await ask(page, "Найди все товары и количества из спецификации");
-  expect(reply.review).toHaveLength(2);
-  expect(reply.review.map((r: { status: string }) => r.status)).toEqual(["ready", "ready"]);
+  expect(reply.review).toHaveLength(4);
+  expect(reply.review.map((r: { status: string }) => r.status)).toEqual([
+    "ready",
+    "ready",
+    "ready",
+    "ready",
+  ]);
   expect(
     reply.review.map((r: { product_id: number; quantity: number }) => [r.product_id, r.quantity]),
   ).toEqual([
     [515280, 2],
     [515281, 1],
+    [515280, 1],
+    [515285, 2],
   ]);
   expect(reply.proposal).toBeNull();
   const review = page.locator(".spec-review");
@@ -141,18 +148,73 @@ test("live specification: two verified rows, batch proposal, separate consent an
     .locator("[data-pending]")
     .getByRole("button", { name: "Да, добавить", exact: true })
     .click();
-  await expect(page.locator("#cartCount")).toHaveText("3");
+  await expect(page.locator("#cartCount")).toHaveText("6");
   await page.getByRole("link", { name: "Открыть корзину →", exact: true }).last().click();
-  await expect(page.locator("#cartSummary .cart-row")).toHaveCount(2);
+  await expect(page.locator("#cartSummary .cart-row")).toHaveCount(3);
   await expect(page.locator("#cartSummary")).toContainText("200300274_");
   await expect(page.locator("#cartSummary")).toContainText("200300275_");
   const cart = await (await page.request.get("/api/cart")).json();
   expect(
     cart.items.map((r: { product_id: number; quantity: number }) => [r.product_id, r.quantity]),
   ).toEqual([
-    [515280, 2],
+    [515280, 3],
     [515281, 1],
+    [515285, 2],
   ]);
   await page.reload();
-  await expect(page.locator("#cartSummary .cart-row")).toHaveCount(2);
+  await expect(page.locator("#cartSummary .cart-row")).toHaveCount(3);
+});
+
+test("live help: typo-aware ordering instructions and manager without cart changes", async ({
+  page,
+}) => {
+  await page.getByRole("button", { name: "Открыть чат", exact: true }).click();
+  let reply = await ask(page, "Если я хочу закаазть товарр как это сделать");
+  expect(reply.text).toContain("отдельно нажмите «Да, добавить»");
+  expect(reply.text.length).toBeGreaterThan(150);
+  reply = await ask(page, "С чем ты можешь помочь");
+  expect(reply.text).toContain("фото");
+  expect(reply.suggestions.length).toBeGreaterThan(0);
+  await page.locator(".chat-help [data-manager]").click();
+  const panel = page.locator(".manager-panel");
+  await expect(panel).toContainText("Обращение ещё не отправлено");
+  await expect(panel.getByRole("textbox")).toBeEditable();
+  await expect(panel.getByRole("link", { name: "Контакты и филиалы ekt.kz ↗" })).toHaveAttribute(
+    "href",
+    "https://ekt.kz/about/contacts/",
+  );
+  await expect(page.locator("#cartCount")).toHaveText("0");
+  expect((await (await page.request.get("/api/cart")).json()).count).toBe(0);
+  await expect(page.getByRole("dialog")).toHaveCount(1);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
+
+test("live JPEG: readable delivery note yields both original positions without cart mutation", async ({
+  page,
+}) => {
+  await page.getByRole("button", { name: "Открыть чат", exact: true }).click();
+  await page.locator("#fileInput").setInputFiles("../out/inputs/delivery_note_image.jpg");
+  await page
+    .getByRole("textbox", { name: "Сообщение" })
+    .fill("Это изображение накладной. Найди обе позиции, нужно докупить столько же штук.");
+  const response = page.waitForResponse(
+    (r) => r.url().endsWith("/api/chat") && r.request().method() === "POST",
+  );
+  await page.getByRole("button", { name: "Отправить", exact: true }).click();
+  await expect(page.getByRole("dialog")).toContainText(
+    "Читаю вложения и сопоставляю позиции с каталогом",
+  );
+  const result = await response;
+  expect(result.ok(), await result.text()).toBe(true);
+  const reply = await result.json();
+  expect(
+    reply.review.map((r: { product_id: number; quantity: number }) => [r.product_id, r.quantity]),
+  ).toEqual([
+    [515283, 2],
+    [515285, 1],
+  ]);
+  await expect(page.locator(".spec-review")).toContainText("Требуют уточнения: 0");
+  await expect(page.locator("#cartCount")).toHaveText("0");
+  await expect(page.locator("[data-pending]")).toHaveCount(0);
+  await expect(page.getByRole("dialog")).toHaveCount(1);
 });

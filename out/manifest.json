@@ -1,68 +1,266 @@
 {
-  "kind": "synthetic_inputs_and_expected_semantics_not_live_answers",
-  "requirements": "HackAlem Word sections 3–7, 9; UC-01…05",
-  "prompt": "Покажи наличие и характеристики всех позиций из вложения.",
-  "expected_items": [
-    {
-      "code": "027005",
-      "article": "200300274_",
-      "id": 515280,
-      "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
-      "quantity": 2
-    },
-    {
-      "code": "027028",
-      "article": "200300275_",
-      "id": 515281,
-      "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
-      "quantity": 1
-    }
-  ],
+  "version": 2,
+  "kind": "realistic_procurement_documents_and_original_catalog_photo",
+  "provenance": "Document layouts, project names and quantities are constructed, not customer records. Product codes come from partner catalogue. delivery_note_image.jpg is a raster rendering of the constructed form; product_photo.jpg is unchanged from the published ekt.kz photograph.",
+  "requirements": "HackAlem Word sections 3–7, 8 (manager), 9; UC-01…05",
+  "prices_and_stock": "Always read from live catalogue; document prices and desired deadlines are not store facts",
   "cart_before_explicit_confirmation": "unchanged",
-  "quantities_are_synthetic": true,
-  "prices_and_stock": "read from live catalog, never from these examples",
   "files": [
     {
-      "path": "inputs/specification-scan.pdf",
-      "size_bytes": 136352,
-      "sha256": "bf5331a89f317efa3e1a2a6d7551a13c8967ce9f9caaebfef5460423185e0dcf",
-      "required_input_family": true
+      "path": "inputs/purchase_request.xlsx",
+      "scenario": "Заявка снабжения из ERP: два листа, внутренние коды, повтор товара, вычисленное количество",
+      "uc": [
+        "UC-01",
+        "UC-04",
+        "UC-05"
+      ],
+      "prompt": "Это заявка на закупку. Проверь все позиции и количества на обоих листах по вашему каталогу.",
+      "expected_items": [
+        {
+          "id": 515280,
+          "article": "200300274_",
+          "code": "027005",
+          "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+          "quantity": 2
+        },
+        {
+          "id": 515281,
+          "article": "200300275_",
+          "code": "027028",
+          "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+          "quantity": 1
+        },
+        {
+          "id": 515280,
+          "article": "200300274_",
+          "code": "027005",
+          "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+          "quantity": 1
+        },
+        {
+          "id": 515285,
+          "article": "200300279_",
+          "code": "027220",
+          "name": "027220 АВ DRX125 MT 3ф 63А 20ka Legrand (1)",
+          "quantity": 2
+        }
+      ],
+      "confirm_cart": true,
+      "size_bytes": 3093,
+      "sha256": "bc9005ad2e354bb70d603380b2045b41c73c08043c24aa759b6c59ca7e7fd305"
     },
     {
-      "path": "inputs/specification.csv",
-      "size_bytes": 255,
-      "sha256": "69eaf8f52a144828a4d062b2bfbb65f54a9937c4d3fc41e2b89a3bbe9409689b",
-      "required_input_family": false
+      "path": "inputs/procurement_request.docx",
+      "scenario": "Письмо отдела снабжения: позиции в тексте и таблице, количество одной позиции уточняется",
+      "uc": [
+        "UC-01",
+        "UC-04"
+      ],
+      "prompt": "Проверь товары из письма: наличие, характеристики и что нужно уточнить перед заказом.",
+      "expected_items": [
+        {
+          "id": 515279,
+          "article": "200300273_",
+          "code": "027004",
+          "name": "027004 АВ DRX125 MT 3ф 40А 10ka Legrand (1)",
+          "quantity": 3
+        },
+        {
+          "id": 515283,
+          "article": "200300277_",
+          "code": "027024",
+          "name": "027024 АВ DRX125 MT 3ф 40А 20ka Legrand (1)",
+          "quantity": 2
+        },
+        {
+          "id": 515291,
+          "article": "200300285_",
+          "code": "027228",
+          "name": "027228 АВ DRX250 MT 3ф 160А 18ka Legrand (1)",
+          "quantity": null
+        }
+      ],
+      "size_bytes": 37524,
+      "sha256": "4897f0073bc5afbb13a72cf43cddccf08696b95150ae2196f0d6c0824a9e0cbc"
     },
     {
-      "path": "inputs/specification.docx",
-      "size_bytes": 37217,
-      "sha256": "13289c20c9549709ff65970d26be63d9eaebdf751b1c345856deec6de1479f68",
-      "required_input_family": true
+      "path": "inputs/project_specification.pdf",
+      "scenario": "Двухстраничная проектная спецификация: позиции QF/EL и отсутствующий товар",
+      "uc": [
+        "UC-01",
+        "UC-02"
+      ],
+      "prompt": "Проверь спецификацию с обеих страниц. Покажи наличие всех позиций и аналоги отсутствующих.",
+      "expected_items": [
+        {
+          "id": 515280,
+          "article": "200300274_",
+          "code": "027005",
+          "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+          "quantity": 2
+        },
+        {
+          "id": 515281,
+          "article": "200300275_",
+          "code": "027028",
+          "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+          "quantity": 1
+        },
+        {
+          "id": 45357,
+          "article": "ярп4520",
+          "code": "ярп4520",
+          "name": "***LED STARK 30W 2400Lm d98x180 4000K IP20 MEGALIGHT (20)",
+          "quantity": 4
+        }
+      ],
+      "size_bytes": 417412,
+      "sha256": "a779b0d31dedd448a8f0685a574c9e8522d2a9b8e8ef4f387bb91440500849be"
     },
     {
-      "path": "inputs/specification.jpeg",
-      "size_bytes": 132983,
-      "sha256": "10bbc2089edc91a994d425a418095e0bfcaa6ef843ab546a4106b2fbdcbdab24",
-      "required_input_family": true
+      "path": "inputs/delivery_note_scan.pdf",
+      "scenario": "Скан накладной для повторной закупки, без текстового слоя",
+      "uc": [
+        "UC-01",
+        "UC-04"
+      ],
+      "prompt": "Нужно докупить те же позиции в тех же количествах, что в этой накладной. Проверь по каталогу.",
+      "expected_items": [
+        {
+          "id": 515283,
+          "article": "200300277_",
+          "code": "027024",
+          "name": "027024 АВ DRX125 MT 3ф 40А 20ka Legrand (1)",
+          "quantity": 2
+        },
+        {
+          "id": 515285,
+          "article": "200300279_",
+          "code": "027220",
+          "name": "027220 АВ DRX125 MT 3ф 63А 20ka Legrand (1)",
+          "quantity": 1
+        }
+      ],
+      "size_bytes": 76097,
+      "sha256": "08ffa216c554e6258ca9f91998621a90477bc19eb4e2765a739f52b8db35e603"
     },
     {
-      "path": "inputs/specification.pdf",
-      "size_bytes": 410049,
-      "sha256": "1ee8539d95d8399ab85c491dc18e3afab927d207d5363cf3d8392cbad39782bd",
-      "required_input_family": true
+      "path": "inputs/delivery_note_image.jpg",
+      "scenario": "JPEG страницы накладной из мессенджера: две позиции, без текстового слоя",
+      "uc": [
+        "UC-01",
+        "UC-04"
+      ],
+      "prompt": "Это изображение накладной. Найди обе позиции, нужно докупить столько же штук.",
+      "expected_items": [
+        {
+          "id": 515283,
+          "article": "200300277_",
+          "code": "027024",
+          "name": "027024 АВ DRX125 MT 3ф 40А 20ka Legrand (1)",
+          "quantity": 2
+        },
+        {
+          "id": 515285,
+          "article": "200300279_",
+          "code": "027220",
+          "name": "027220 АВ DRX125 MT 3ф 63А 20ka Legrand (1)",
+          "quantity": 1
+        }
+      ],
+      "origin": "Raster rendering of the constructed delivery note; not a customer photograph",
+      "size_bytes": 72716,
+      "sha256": "7b62e67a431100e131f4c4a7b512cb6653683abcb9bdf0adfeff387775db3abf"
     },
     {
-      "path": "inputs/specification.txt",
-      "size_bytes": 243,
-      "sha256": "276dc42aedb0e4e34deb4e70f5fcdd52a554a76ada31b7acbbafd2e1e7bd4155",
-      "required_input_family": false
+      "path": "inputs/product_photo.jpg",
+      "scenario": "Фото автомата с мелкой неоднозначной маркировкой: уточнение точного кода покупателем",
+      "uc": [
+        "UC-01",
+        "UC-04"
+      ],
+      "prompt": "Найди такой же автомат по маркировке на фото. Нужны 2 штуки. Покажи характеристики и наличие.",
+      "expected_items": [
+        {
+          "id": 515280,
+          "article": "200300274_",
+          "code": "027005",
+          "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+          "quantity": 2
+        }
+      ],
+      "origin": "Unmodified ekt.kz catalogue photograph, not a customer field photo",
+      "source_url": "https://ekt.kz/upload/iblock/e99/yqvedowbaop1fju39ky9pau7rmv6qj63/027005_av_drx125_mt_3f_50a_10ka_legrand_1.jpg",
+      "marking_limitation": "The source URL identifies 027005, but the small photographed reference is not reliably readable. The URL is provenance, not visual ground truth.",
+      "requires_clarification": true,
+      "clarification": "Уточнил маркировку на самом аппарате: код производителя 027005. Нужны 2 штуки. Покажи этот товар и наличие, пока не добавляй.",
+      "size_bytes": 164782,
+      "sha256": "a92f8fc54ff069b6a10c86848aa41dec4c55e9207c7d78100e0fb102fcede905"
     },
     {
-      "path": "inputs/specification.xlsx",
-      "size_bytes": 1890,
-      "sha256": "c900482fb0d906fea89ae34b327ec20cd792a61eafc22853a9aa92bc3824f52e",
-      "required_input_family": true
+      "path": "inputs/erp_export.csv",
+      "scenario": "CSV экспорта ERP: разделитель ;, внутренний код и цена стороннего предложения",
+      "uc": [
+        "UC-01",
+        "UC-04"
+      ],
+      "prompt": "Найди позиции этой выгрузки у вас. Цена в файле от другого поставщика; нужна ваша цена и наличие.",
+      "expected_items": [
+        {
+          "id": 515278,
+          "article": "200300272_",
+          "code": "027008",
+          "name": "027008 АВ DRX125 MT 3ф 100А 10ka Legrand (1)",
+          "quantity": 4
+        },
+        {
+          "id": 515282,
+          "article": "200300276_",
+          "code": "027022",
+          "name": "027022 АВ DRX125 MT 3ф 25А 20ka Legrand (1)",
+          "quantity": 2
+        }
+      ],
+      "external_prices": [
+        1,
+        2
+      ],
+      "size_bytes": 341,
+      "sha256": "b9864f148f97f7e87b32ffbb3487d32570c65d436635fcc96278c00ff98e0f86"
+    },
+    {
+      "path": "inputs/electrician_request.txt",
+      "scenario": "Неформальная заявка электрика: числа словами, количество одной позиции не определено",
+      "uc": [
+        "UC-01",
+        "UC-04"
+      ],
+      "prompt": "Проверь заявку электрика. Найди все позиции и покажи, что ещё надо уточнить.",
+      "expected_items": [
+        {
+          "id": 515280,
+          "article": "200300274_",
+          "code": "027005",
+          "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+          "quantity": 2
+        },
+        {
+          "id": 515281,
+          "article": "200300275_",
+          "code": "027028",
+          "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+          "quantity": 1
+        },
+        {
+          "id": 515285,
+          "article": "200300279_",
+          "code": "027220",
+          "name": "027220 АВ DRX125 MT 3ф 63А 20ka Legrand (1)",
+          "quantity": null
+        }
+      ],
+      "size_bytes": 420,
+      "sha256": "64c09aab980a3fad623657a8931f84170a04e35b53f1d675d9631be3b6d8031d"
     }
   ]
 }

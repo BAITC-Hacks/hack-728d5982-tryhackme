@@ -168,6 +168,14 @@ def client(monkeypatch):
             raise HTTPException(404, "Fixture product not found")
         return state[pid].model_copy(deep=True)
 
+    async def fixture_contacts():
+        return {
+            "phone": "tel:+77273468888",
+            "whatsapp": "https://wa.me/77782768888/",
+            "fetched_at": "2026-09-23T00:00:00Z",
+        }
+
+    monkeypatch.setattr(landing, "manager_contacts", fixture_contacts)
     monkeypatch.setattr(landing, "detail", fixture_detail)
     with TestClient(landing.app) as browser:
         session = browser.get("/api/session").json()
@@ -325,7 +333,7 @@ def test_existing_input_examples_are_valid(entry):
     )
     assert content["type"] in {"input_text", "input_image", "input_file"}
     if content["type"] == "input_text":
-        assert "027005" in content["text"] and "027028" in content["text"]
+        assert all(row["code"] in content["text"] for row in entry["expected_items"])
 
 
 def test_broken_pdf_is_rejected():
@@ -448,3 +456,122 @@ def test_document_zero_stock_multiple_and_failed_lookup_are_not_dropped(client, 
     assert reply["review"][0]["product_id"] == absent.id
     assert reply["proposal"] is None
     assert browser.get("/api/cart").json()["items"] == []
+
+
+@pytest.mark.parametrize("intent_name", ["order_help", "capabilities"])
+def test_help_is_actionable_and_preserves_pending_consent(client, monkeypatch, intent_name):
+    browser, _ = client
+    proposal = prepare(browser, 2).json()
+
+    async def interpret(_session, _payload):
+        return landing.Intent(intent=intent_name, items=[], reply="Я помогу", extracted=[])
+
+    monkeypatch.setattr(landing, "interpret", interpret)
+    reply = browser.post("/api/chat", json={"text": "Как мне заказать товар"}).json()
+    assert len(reply["text"]) > 150
+    assert "отдельн" in reply["text"]
+    assert reply["suggestions"]
+    assert reply["proposal"]["id"] == proposal["id"]
+    assert browser.get("/api/cart").json()["count"] == 0
+    assert confirm(browser, proposal).json()["count"] == 2
+
+
+def test_manager_is_user_sent_draft_without_documents_or_history(client):
+    browser, _ = client
+    confirm(browser, prepare(browser, 2).json()).raise_for_status()
+    session = next(iter(landing.sessions.values()))
+    session.history = [{"text": "PRIVATE CUSTOMER MESSAGE", "files": ["private-file.pdf"]}]
+    response = browser.get("/api/manager")
+    assert response.status_code == 200
+    manager = response.json()
+    assert manager["sent"] is False
+    assert manager["source"] == landing.CONTACTS_URL
+    assert manager["phone"].startswith("tel:")
+    assert "200300285_ — 2 шт." in manager["draft"]
+    assert "PRIVATE" not in manager["draft"] and "private-file" not in manager["draft"]
+    assert browser.get("/api/cart").json()["count"] == 2
+
+
+def test_model_outage_offers_manager_and_invalidates_hidden_consent(client, monkeypatch):
+    browser, _ = client
+    proposal = prepare(browser).json()
+
+    async def interpret(_session, _payload):
+        raise HTTPException(502, "Model unavailable")
+
+    monkeypatch.setattr(landing, "interpret", interpret)
+    reply = browser.post("/api/chat", json={"text": "Посмотри другую позицию"}).json()
+    assert reply["manager"]["sent"] is False
+    assert reply["website"] == "https://ekt.kz/"
+    assert confirm(browser, proposal).status_code == 409
+    assert browser.get("/api/cart").json()["count"] == 0
+
+
+def test_known_code_in_brand_phrase_and_spaced_reference_are_exact(client):
+    _, state = client
+    p = state[515291]
+    row = landing.review_row(
+        1,
+        landing.IntentItem(query="Legrand 027228", product_id=None, quantity=2),
+        [p],
+        landing.Session(),
+    )
+    assert row.product_id == p.id and row.status == "ready"
+    assert landing.local_search("270 05") == [515280]
+    p = p.model_copy(update={"id": 515280, "name": "027005 АВ DRX125 MT", "article": "200300274_"})
+    row = landing.review_row(
+        1, landing.IntentItem(query="270 05", product_id=None, quantity=2), [p], landing.Session()
+    )
+    assert row.status == "ready"
+
+
+def test_spreadsheets_keep_header_meaning_duplicate_rows_and_formula_value():
+    path = ROOT / "out/inputs/purchase_request.xlsx"
+    result = landing.file_content(
+        landing.Attachment(name=path.name, data=base64.b64encode(path.read_bytes()).decode())
+    )
+    text = result["text"]
+    assert text.count('"Код производителя": "027005"') == 2
+    assert '"Код производителя": "027028"' in text
+    assert '"Количество": 1.0' in text
+
+
+def test_scan_has_no_hidden_text_and_photo_bytes_match_manifest():
+    import pymupdf
+
+    with pymupdf.open(ROOT / "out/inputs/delivery_note_scan.pdf") as pdf:
+        assert pdf.page_count == 1 and not pdf[0].get_text().strip()
+    with pymupdf.open(ROOT / "out/inputs/project_specification.pdf") as pdf:
+        assert pdf.page_count == 2
+        assert "ярп4520" in pdf[1].get_text()
+
+
+@pytest.mark.parametrize("available", [True, False])
+def test_terms_keep_visible_consent_and_offer_manager_on_outage(client, monkeypatch, available):
+    browser, _ = client
+    proposal = prepare(browser, 2).json()
+
+    async def interpret(_session, _payload):
+        return landing.Intent(intent="terms", items=[], reply="Условия", extracted=[])
+
+    async def terms():
+        if not available:
+            raise HTTPException(503, "Terms unavailable")
+        return landing.Terms(
+            source=landing.TERMS_URL,
+            fetched_at=landing.now(),
+            payment="Картой",
+            delivery="Уточните адрес",
+            minimum="Не указан",
+        )
+
+    monkeypatch.setattr(landing, "interpret", interpret)
+    monkeypatch.setattr(landing, "terms", terms)
+    reply = browser.post("/api/chat", json={"text": "Как оплатить?"}).json()
+    assert reply["proposal"]["id"] == proposal["id"]
+    assert browser.get("/api/cart").json()["count"] == 0
+    if not available:
+        assert reply["manager"]["sent"] is False
+        assert reply["website"] == landing.TERMS_URL
+        assert reply["terms"] is None
+    assert confirm(browser, proposal).json()["count"] == 2

@@ -141,6 +141,17 @@ async function mockServer(page: Page) {
     const path = new URL(route.request().url()).pathname;
     if (path === "/api/session") {
       await route.fulfill({ json: { csrf: "test-only", ai: true, live: true, cart } });
+    } else if (path === "/api/manager") {
+      await route.fulfill({
+        json: {
+          reason: "Нужно уточнить параметры",
+          draft: "Здравствуйте! Уточните TEST-001. <img src=x onerror=alert(1)>",
+          phone: "tel:+77273468888",
+          whatsapp: "https://wa.me/77782768888/",
+          fetched_at: "2026-09-23T00:00:00Z",
+          sent: false,
+        },
+      });
     } else if (path === "/api/cart") {
       await route.fulfill({ json: cart });
     } else if (path === "/api/chat") {
@@ -362,4 +373,48 @@ test("specification review preserves exceptions, aggregates selection and requir
   await page
     .locator("#chat")
     .screenshot({ path: test.info().outputPath("specification-review.png") });
+});
+
+test("manager: editable draft, explicit copy, official contacts and unchanged cart", async ({
+  page,
+  context,
+}) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  await mockServer(page);
+  await open(page);
+  await expect(page.locator("#modeBanner")).toContainText("ИИ подключён");
+  const posts: string[] = [];
+  page.on("request", (r) => {
+    if (r.method() === "POST") posts.push(r.url());
+  });
+  await page.locator(".chat-help [data-manager]").click();
+  const panel = page.locator(".manager-panel");
+  await expect(panel).toContainText("Обращение ещё не отправлено");
+  await expect(panel.locator("img")).toHaveCount(0);
+  await expect(panel.getByRole("link", { name: "Позвонить в магазин" })).toHaveAttribute(
+    "href",
+    "tel:+77273468888",
+  );
+  await expect(panel.getByRole("link", { name: "Открыть WhatsApp ↗" })).toHaveAttribute(
+    "href",
+    "https://wa.me/77782768888/",
+  );
+  await panel.getByRole("textbox").fill("Мой вопрос о TEST-001, нужно 2 штуки.");
+  await panel.getByRole("button", { name: "Скопировать обращение" }).click();
+  await expect
+    .poll(() => page.evaluate(() => navigator.clipboard.readText()))
+    .toBe("Мой вопрос о TEST-001, нужно 2 штуки.");
+  await expect(page.locator("#cartCount")).toHaveText("2");
+  expect(posts).toEqual([]);
+  await expect(page.getByRole("dialog")).toHaveCount(1);
+});
+
+test("manager remains reachable when backend and AI are unavailable", async ({ page }) => {
+  await open(page);
+  await page.locator(".chat-help [data-manager]").click();
+  const panel = page.locator(".manager-panel");
+  await expect(panel).toContainText("Телефон сейчас не удалось проверить");
+  await expect(panel.getByRole("link")).toHaveAttribute("href", "https://ekt.kz/about/contacts/");
+  await expect(panel.getByRole("textbox")).toBeEditable();
+  await expect(page.locator("#cartCount")).toHaveText("0");
 });

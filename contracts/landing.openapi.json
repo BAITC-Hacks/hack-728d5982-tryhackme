@@ -176,6 +176,16 @@
             "title": "Extracted",
             "type": "array"
           },
+          "manager": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ManagerHelp"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "products": {
             "items": {
               "$ref": "#/components/schemas/ProductFacts"
@@ -200,6 +210,13 @@
             "title": "Review",
             "type": "array"
           },
+          "suggestions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Suggestions",
+            "type": "array"
+          },
           "terms": {
             "anyOf": [
               {
@@ -213,6 +230,17 @@
           "text": {
             "title": "Text",
             "type": "string"
+          },
+          "website": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Website"
           }
         },
         "required": [
@@ -389,6 +417,68 @@
           }
         },
         "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "ManagerHelp": {
+        "properties": {
+          "draft": {
+            "title": "Draft",
+            "type": "string"
+          },
+          "fetched_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fetched At"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "sent": {
+            "const": false,
+            "default": false,
+            "title": "Sent",
+            "type": "boolean"
+          },
+          "source": {
+            "default": "https://ekt.kz/about/contacts/",
+            "title": "Source",
+            "type": "string"
+          },
+          "whatsapp": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Whatsapp"
+          }
+        },
+        "required": [
+          "reason",
+          "draft"
+        ],
+        "title": "ManagerHelp",
         "type": "object"
       },
       "PrepareRequest": {
@@ -1067,6 +1157,24 @@
           }
         },
         "summary": "Chat"
+      }
+    },
+    "/api/manager": {
+      "get": {
+        "operationId": "get_manager_api_manager_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagerHelp"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Get Manager"
       }
     },
     "/api/session": {

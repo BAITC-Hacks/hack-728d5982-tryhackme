@@ -1,140 +1,1357 @@
 {
-  "kind": "live_verification_of_generated_samples",
-  "checked_at": "2026-09-23T10:53:59.065838+00:00",
-  "local_validation": "passed",
+  "kind": "live_processing_of_realistic_inputs",
+  "checked_at": "2026-09-23T12:32:26.270498+00:00",
+  "git_head": "85aa4de93481bc9a22d79eda16764110cef7d2ee",
+  "implementation_sha256": {
+    "backend/app/landing.py": "f82836684c79e0cb4461a41a2aabc5c7a5c217179c7403463a6d836dfb38a2e6",
+    "index.html": "d1547c5f01adcc1b5c8d05d696a452000814b2ad7429ea765a95a06650615d76",
+    "out/manifest.json": "d538e436538f80c2bbfba8062dd821007a2d6f9ac48e5bd7bce021a09b2d9597"
+  },
   "files": [
     {
-      "file": "inputs/specification-scan.pdf",
-      "model": "gpt-4o-mini",
-      "seconds": 2.913,
-      "product_ids": [
-        515280,
-        515281
-      ],
-      "extracted": [
-        "027005 — 2 шт.",
-        "027028 — 1 шт."
-      ],
-      "cart_count": 0,
+      "file": "inputs/purchase_request.xlsx",
+      "sha256": "bc9005ad2e354bb70d603380b2045b41c73c08043c24aa759b6c59ca7e7fd305",
       "passed": true,
-      "sha256": "bf5331a89f317efa3e1a2a6d7551a13c8967ce9f9caaebfef5460423185e0dcf"
+      "seconds": 3.716,
+      "model": "gpt-4o-mini",
+      "actual_items": [
+        [
+          515280,
+          2
+        ],
+        [
+          515281,
+          1
+        ],
+        [
+          515280,
+          1
+        ],
+        [
+          515285,
+          2
+        ]
+      ],
+      "expected_items": [
+        [
+          515280,
+          2
+        ],
+        [
+          515281,
+          1
+        ],
+        [
+          515280,
+          1
+        ],
+        [
+          515285,
+          2
+        ]
+      ],
+      "direct_match": true,
+      "statuses": [
+        "ready",
+        "ready",
+        "ready",
+        "ready"
+      ],
+      "outcome": "direct_catalogue_match",
+      "cart_before_confirmation": 0,
+      "confirmed_cart": {
+        "items": [
+          {
+            "product_id": 515280,
+            "article": "200300274_",
+            "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+            "quantity": 3,
+            "price": 26930,
+            "line_total": 80790
+          },
+          {
+            "product_id": 515281,
+            "article": "200300275_",
+            "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+            "quantity": 1,
+            "price": 33130,
+            "line_total": 33130
+          },
+          {
+            "product_id": 515285,
+            "article": "200300279_",
+            "name": "027220 АВ DRX125 MT 3ф 63А 20ka Legrand (1)",
+            "quantity": 2,
+            "price": 31620,
+            "line_total": 63240
+          }
+        ],
+        "count": 6,
+        "total": 177160,
+        "currency": null,
+        "url": "/cart",
+        "mode": "server"
+      }
     },
     {
-      "file": "inputs/specification.csv",
-      "model": "gpt-4o-mini",
-      "seconds": 1.22,
-      "product_ids": [
-        515280,
-        515281
-      ],
-      "extracted": [
-        "027005 — 2 шт.",
-        "027028 — 1 шт."
-      ],
-      "cart_count": 0,
+      "file": "inputs/procurement_request.docx",
+      "sha256": "4897f0073bc5afbb13a72cf43cddccf08696b95150ae2196f0d6c0824a9e0cbc",
       "passed": true,
-      "sha256": "69eaf8f52a144828a4d062b2bfbb65f54a9937c4d3fc41e2b89a3bbe9409689b"
+      "seconds": 3.044,
+      "model": "gpt-4o-mini",
+      "actual_items": [
+        [
+          515279,
+          3
+        ],
+        [
+          515283,
+          2
+        ],
+        [
+          515291,
+          null
+        ]
+      ],
+      "expected_items": [
+        [
+          515279,
+          3
+        ],
+        [
+          515283,
+          2
+        ],
+        [
+          515291,
+          null
+        ]
+      ],
+      "direct_match": true,
+      "statuses": [
+        "ready",
+        "ready",
+        "needs_quantity"
+      ],
+      "outcome": "direct_catalogue_match",
+      "cart_before_confirmation": 0
     },
     {
-      "file": "inputs/specification.docx",
-      "model": "gpt-4o-mini",
-      "seconds": 1.176,
-      "product_ids": [
-        515280,
-        515281
-      ],
-      "extracted": [
-        "027005",
-        "027028"
-      ],
-      "cart_count": 0,
+      "file": "inputs/project_specification.pdf",
+      "sha256": "a779b0d31dedd448a8f0685a574c9e8522d2a9b8e8ef4f387bb91440500849be",
       "passed": true,
-      "sha256": "13289c20c9549709ff65970d26be63d9eaebdf751b1c345856deec6de1479f68"
+      "seconds": 6.046,
+      "model": "gpt-4o-mini",
+      "actual_items": [
+        [
+          515280,
+          2
+        ],
+        [
+          515281,
+          1
+        ],
+        [
+          45357,
+          4
+        ]
+      ],
+      "expected_items": [
+        [
+          515280,
+          2
+        ],
+        [
+          515281,
+          1
+        ],
+        [
+          45357,
+          4
+        ]
+      ],
+      "direct_match": true,
+      "statuses": [
+        "ready",
+        "ready",
+        "out_of_stock"
+      ],
+      "outcome": "direct_catalogue_match",
+      "cart_before_confirmation": 0
     },
     {
-      "file": "inputs/specification.jpeg",
-      "model": "gpt-4o-mini",
-      "seconds": 2.145,
-      "product_ids": [
-        515280,
-        515281
-      ],
-      "extracted": [
-        "027005",
-        "027028"
-      ],
-      "cart_count": 0,
+      "file": "inputs/delivery_note_scan.pdf",
+      "sha256": "08ffa216c554e6258ca9f91998621a90477bc19eb4e2765a739f52b8db35e603",
       "passed": true,
-      "sha256": "10bbc2089edc91a994d425a418095e0bfcaa6ef843ab546a4106b2fbdcbdab24"
+      "seconds": 3.195,
+      "model": "gpt-4o-mini",
+      "actual_items": [
+        [
+          515283,
+          2
+        ],
+        [
+          515285,
+          1
+        ]
+      ],
+      "expected_items": [
+        [
+          515283,
+          2
+        ],
+        [
+          515285,
+          1
+        ]
+      ],
+      "direct_match": true,
+      "statuses": [
+        "ready",
+        "ready"
+      ],
+      "outcome": "direct_catalogue_match",
+      "cart_before_confirmation": 0
     },
     {
-      "file": "inputs/specification.pdf",
-      "model": "gpt-4o-mini",
-      "seconds": 1.678,
-      "product_ids": [
-        515280,
-        515281
-      ],
-      "extracted": [
-        "027005 — 2 шт.",
-        "027028 — 1 шт."
-      ],
-      "cart_count": 0,
+      "file": "inputs/delivery_note_image.jpg",
+      "sha256": "7b62e67a431100e131f4c4a7b512cb6653683abcb9bdf0adfeff387775db3abf",
       "passed": true,
-      "sha256": "1ee8539d95d8399ab85c491dc18e3afab927d207d5363cf3d8392cbad39782bd"
+      "seconds": 2.009,
+      "model": "gpt-4o-mini",
+      "actual_items": [
+        [
+          515283,
+          2
+        ],
+        [
+          515285,
+          1
+        ]
+      ],
+      "expected_items": [
+        [
+          515283,
+          2
+        ],
+        [
+          515285,
+          1
+        ]
+      ],
+      "direct_match": true,
+      "statuses": [
+        "ready",
+        "ready"
+      ],
+      "outcome": "direct_catalogue_match",
+      "cart_before_confirmation": 0
     },
     {
-      "file": "inputs/specification.txt",
-      "model": "gpt-4o-mini",
-      "seconds": 1.264,
-      "product_ids": [
-        515280,
-        515281
-      ],
-      "extracted": [
-        "027005 — 2 шт.",
-        "027028 — 1 шт."
-      ],
-      "cart_count": 0,
+      "file": "inputs/product_photo.jpg",
+      "sha256": "a92f8fc54ff069b6a10c86848aa41dec4c55e9207c7d78100e0fb102fcede905",
       "passed": true,
-      "sha256": "276dc42aedb0e4e34deb4e70f5fcdd52a554a76ada31b7acbbafd2e1e7bd4155"
+      "seconds": 4.988,
+      "model": "gpt-4o-mini",
+      "actual_items": [
+        [
+          null,
+          2
+        ]
+      ],
+      "expected_items": [
+        [
+          515280,
+          2
+        ]
+      ],
+      "direct_match": false,
+      "statuses": [
+        "ambiguous"
+      ],
+      "clarified_product_ids": [
+        515280
+      ],
+      "outcome": "clarification_required_then_catalogue_match",
+      "cart_before_confirmation": 0
     },
     {
-      "file": "inputs/specification.xlsx",
-      "model": "gpt-4o-mini",
-      "seconds": 1.435,
-      "product_ids": [
-        515280,
-        515281
-      ],
-      "extracted": [
-        "027005",
-        "027028"
-      ],
-      "cart_count": 0,
+      "file": "inputs/erp_export.csv",
+      "sha256": "b9864f148f97f7e87b32ffbb3487d32570c65d436635fcc96278c00ff98e0f86",
       "passed": true,
-      "sha256": "c900482fb0d906fea89ae34b327ec20cd792a61eafc22853a9aa92bc3824f52e"
+      "seconds": 3.141,
+      "model": "gpt-4o-mini",
+      "actual_items": [
+        [
+          515278,
+          4
+        ],
+        [
+          515282,
+          2
+        ]
+      ],
+      "expected_items": [
+        [
+          515278,
+          4
+        ],
+        [
+          515282,
+          2
+        ]
+      ],
+      "direct_match": true,
+      "statuses": [
+        "ready",
+        "ready"
+      ],
+      "outcome": "direct_catalogue_match",
+      "cart_before_confirmation": 0
+    },
+    {
+      "file": "inputs/electrician_request.txt",
+      "sha256": "64c09aab980a3fad623657a8931f84170a04e35b53f1d675d9631be3b6d8031d",
+      "passed": true,
+      "seconds": 2.397,
+      "model": "gpt-4o-mini",
+      "actual_items": [
+        [
+          515280,
+          2
+        ],
+        [
+          515281,
+          1
+        ],
+        [
+          515285,
+          null
+        ]
+      ],
+      "expected_items": [
+        [
+          515280,
+          2
+        ],
+        [
+          515281,
+          1
+        ],
+        [
+          515285,
+          null
+        ]
+      ],
+      "direct_match": true,
+      "statuses": [
+        "ready",
+        "ready",
+        "needs_quantity"
+      ],
+      "outcome": "direct_catalogue_match",
+      "cart_before_confirmation": 0
+    }
+  ],
+  "conversation": [
+    {
+      "prompt": "Как мне заказать товар",
+      "passed": true
+    },
+    {
+      "prompt": "Если я хочу закаазть товарр как это сделать",
+      "passed": true
+    },
+    {
+      "prompt": "С чем ты можешь помочь",
+      "passed": true
+    },
+    {
+      "prompt": "Хочу поговорить с менеджером",
+      "passed": true
+    }
+  ],
+  "previous_runs": [
+    {
+      "checked_at": "2026-09-23T12:14:32.727170+00:00",
+      "implementation_sha256": {
+        "backend/app/landing.py": "7cd8f26d86852c71625803916dff07fa12aa5d5b2aeaddb6d41c4e8906205cbc",
+        "index.html": "d1547c5f01adcc1b5c8d05d696a452000814b2ad7429ea765a95a06650615d76",
+        "out/manifest.json": "fe9a4c2b03a5391238352ae93aa63d5fece4473e5fadf94f05b6387b3937e581"
+      },
+      "files": [
+        {
+          "file": "inputs/purchase_request.xlsx",
+          "sha256": "ced381c7d2393ec66692a8c86fd0692809451d3892731776b694e409a919fc7f",
+          "passed": false,
+          "seconds": 15.783,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              null,
+              2
+            ],
+            [
+              null,
+              1
+            ],
+            [
+              null,
+              2
+            ]
+          ],
+          "expected_items": [
+            [
+              515280,
+              2
+            ],
+            [
+              515281,
+              1
+            ],
+            [
+              515280,
+              1
+            ],
+            [
+              515285,
+              2
+            ]
+          ],
+          "statuses": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ],
+          "error": "AssertionError: Extracted item identities/counts/quantities differ from input"
+        },
+        {
+          "file": "inputs/procurement_request.docx",
+          "sha256": "93f96ec372181af10a7e1bf05546edad307129002b714c1a1fbcd2ce5c5761e3",
+          "passed": true,
+          "seconds": 3.317,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              515279,
+              3
+            ],
+            [
+              515283,
+              2
+            ],
+            [
+              515291,
+              null
+            ]
+          ],
+          "expected_items": [
+            [
+              515279,
+              3
+            ],
+            [
+              515283,
+              2
+            ],
+            [
+              515291,
+              null
+            ]
+          ],
+          "statuses": [
+            "ready",
+            "ready",
+            "needs_quantity"
+          ],
+          "cart_before_confirmation": 0
+        },
+        {
+          "file": "inputs/project_specification.pdf",
+          "sha256": "f6a9563188ae32af3e1a8d6a49ebb06a63b5e6634fbccfa072e98b49fff9b3cf",
+          "passed": true,
+          "seconds": 7.648,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              515280,
+              2
+            ],
+            [
+              515281,
+              1
+            ],
+            [
+              45357,
+              4
+            ]
+          ],
+          "expected_items": [
+            [
+              515280,
+              2
+            ],
+            [
+              515281,
+              1
+            ],
+            [
+              45357,
+              4
+            ]
+          ],
+          "statuses": [
+            "ready",
+            "ready",
+            "out_of_stock"
+          ],
+          "cart_before_confirmation": 0
+        },
+        {
+          "file": "inputs/delivery_note_scan.pdf",
+          "sha256": "92b8ccd7a628e6e5a597a8394972dd5a79814fe258307b62a8637bbfd316030c",
+          "passed": true,
+          "seconds": 2.835,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              515283,
+              2
+            ],
+            [
+              515285,
+              1
+            ]
+          ],
+          "expected_items": [
+            [
+              515283,
+              2
+            ],
+            [
+              515285,
+              1
+            ]
+          ],
+          "statuses": [
+            "ready",
+            "ready"
+          ],
+          "cart_before_confirmation": 0
+        },
+        {
+          "file": "inputs/product_photo.jpg",
+          "sha256": "a92f8fc54ff069b6a10c86848aa41dec4c55e9207c7d78100e0fb102fcede905",
+          "passed": false,
+          "seconds": 2.309,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              null,
+              2
+            ]
+          ],
+          "expected_items": [
+            [
+              515280,
+              2
+            ]
+          ],
+          "statuses": [
+            "ambiguous"
+          ],
+          "error": "AssertionError: Extracted item identities/counts/quantities differ from input"
+        },
+        {
+          "file": "inputs/erp_export.csv",
+          "sha256": "b9864f148f97f7e87b32ffbb3487d32570c65d436635fcc96278c00ff98e0f86",
+          "passed": false,
+          "seconds": 7.634,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              null,
+              4
+            ],
+            [
+              null,
+              2
+            ]
+          ],
+          "expected_items": [
+            [
+              515278,
+              4
+            ],
+            [
+              515282,
+              2
+            ]
+          ],
+          "statuses": [
+            "ambiguous",
+            "ambiguous"
+          ],
+          "error": "AssertionError: Extracted item identities/counts/quantities differ from input"
+        },
+        {
+          "file": "inputs/electrician_request.txt",
+          "sha256": "64c09aab980a3fad623657a8931f84170a04e35b53f1d675d9631be3b6d8031d",
+          "passed": false,
+          "seconds": 2.479,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              null,
+              2
+            ],
+            [
+              null,
+              1
+            ],
+            [
+              null,
+              null
+            ]
+          ],
+          "expected_items": [
+            [
+              515280,
+              2
+            ],
+            [
+              515281,
+              1
+            ],
+            [
+              515285,
+              null
+            ]
+          ],
+          "statuses": [
+            "ambiguous",
+            "ambiguous",
+            "ambiguous"
+          ],
+          "error": "AssertionError: Extracted item identities/counts/quantities differ from input"
+        }
+      ],
+      "conversation": [
+        {
+          "prompt": "Как мне заказать товар",
+          "passed": true
+        },
+        {
+          "prompt": "Если я хочу закаазть товарр как это сделать",
+          "passed": true
+        },
+        {
+          "prompt": "С чем ты можешь помочь",
+          "passed": true
+        },
+        {
+          "prompt": "Хочу поговорить с менеджером",
+          "passed": true
+        }
+      ],
+      "all_passed": false
+    },
+    {
+      "checked_at": "2026-09-23T12:17:24.010033+00:00",
+      "implementation_sha256": {
+        "backend/app/landing.py": "f6a0b4e93c189b7aeb91de05ddac3661de7d3f4a8a0a189b71fad53d9cc29dc9",
+        "index.html": "d1547c5f01adcc1b5c8d05d696a452000814b2ad7429ea765a95a06650615d76",
+        "out/manifest.json": "fe9a4c2b03a5391238352ae93aa63d5fece4473e5fadf94f05b6387b3937e581"
+      },
+      "files": [
+        {
+          "file": "inputs/purchase_request.xlsx",
+          "sha256": "ced381c7d2393ec66692a8c86fd0692809451d3892731776b694e409a919fc7f",
+          "passed": true,
+          "seconds": 3.169,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              515280,
+              2
+            ],
+            [
+              515281,
+              1
+            ],
+            [
+              515280,
+              1
+            ],
+            [
+              515285,
+              2
+            ]
+          ],
+          "expected_items": [
+            [
+              515280,
+              2
+            ],
+            [
+              515281,
+              1
+            ],
+            [
+              515280,
+              1
+            ],
+            [
+              515285,
+              2
+            ]
+          ],
+          "statuses": [
+            "ready",
+            "ready",
+            "ready",
+            "ready"
+          ],
+          "cart_before_confirmation": 0,
+          "confirmed_cart": {
+            "items": [
+              {
+                "product_id": 515280,
+                "article": "200300274_",
+                "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+                "quantity": 3,
+                "price": 26930,
+                "line_total": 80790
+              },
+              {
+                "product_id": 515281,
+                "article": "200300275_",
+                "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+                "quantity": 1,
+                "price": 33130,
+                "line_total": 33130
+              },
+              {
+                "product_id": 515285,
+                "article": "200300279_",
+                "name": "027220 АВ DRX125 MT 3ф 63А 20ka Legrand (1)",
+                "quantity": 2,
+                "price": 31620,
+                "line_total": 63240
+              }
+            ],
+            "count": 6,
+            "total": 177160,
+            "currency": null,
+            "url": "/cart",
+            "mode": "server"
+          }
+        },
+        {
+          "file": "inputs/procurement_request.docx",
+          "sha256": "93f96ec372181af10a7e1bf05546edad307129002b714c1a1fbcd2ce5c5761e3",
+          "passed": true,
+          "seconds": 3.645,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              515279,
+              3
+            ],
+            [
+              515283,
+              2
+            ],
+            [
+              515291,
+              null
+            ]
+          ],
+          "expected_items": [
+            [
+              515279,
+              3
+            ],
+            [
+              515283,
+              2
+            ],
+            [
+              515291,
+              null
+            ]
+          ],
+          "statuses": [
+            "ready",
+            "ready",
+            "needs_quantity"
+          ],
+          "cart_before_confirmation": 0
+        },
+        {
+          "file": "inputs/project_specification.pdf",
+          "sha256": "f6a9563188ae32af3e1a8d6a49ebb06a63b5e6634fbccfa072e98b49fff9b3cf",
+          "passed": true,
+          "seconds": 5.136,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              515280,
+              2
+            ],
+            [
+              515281,
+              1
+            ],
+            [
+              45357,
+              4
+            ]
+          ],
+          "expected_items": [
+            [
+              515280,
+              2
+            ],
+            [
+              515281,
+              1
+            ],
+            [
+              45357,
+              4
+            ]
+          ],
+          "statuses": [
+            "ready",
+            "ready",
+            "out_of_stock"
+          ],
+          "cart_before_confirmation": 0
+        },
+        {
+          "file": "inputs/delivery_note_scan.pdf",
+          "sha256": "92b8ccd7a628e6e5a597a8394972dd5a79814fe258307b62a8637bbfd316030c",
+          "passed": true,
+          "seconds": 2.64,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              515283,
+              2
+            ],
+            [
+              515285,
+              1
+            ]
+          ],
+          "expected_items": [
+            [
+              515283,
+              2
+            ],
+            [
+              515285,
+              1
+            ]
+          ],
+          "statuses": [
+            "ready",
+            "ready"
+          ],
+          "cart_before_confirmation": 0
+        },
+        {
+          "file": "inputs/product_photo.jpg",
+          "sha256": "a92f8fc54ff069b6a10c86848aa41dec4c55e9207c7d78100e0fb102fcede905",
+          "passed": false,
+          "seconds": 3.024,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              null,
+              2
+            ]
+          ],
+          "expected_items": [
+            [
+              515280,
+              2
+            ]
+          ],
+          "statuses": [
+            "ambiguous"
+          ],
+          "error": "AssertionError: Extracted item identities/counts/quantities differ from input"
+        },
+        {
+          "file": "inputs/erp_export.csv",
+          "sha256": "b9864f148f97f7e87b32ffbb3487d32570c65d436635fcc96278c00ff98e0f86",
+          "passed": true,
+          "seconds": 1.711,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              515278,
+              4
+            ],
+            [
+              515282,
+              2
+            ]
+          ],
+          "expected_items": [
+            [
+              515278,
+              4
+            ],
+            [
+              515282,
+              2
+            ]
+          ],
+          "statuses": [
+            "ready",
+            "ready"
+          ],
+          "cart_before_confirmation": 0
+        },
+        {
+          "file": "inputs/electrician_request.txt",
+          "sha256": "64c09aab980a3fad623657a8931f84170a04e35b53f1d675d9631be3b6d8031d",
+          "passed": true,
+          "seconds": 2.665,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              515280,
+              2
+            ],
+            [
+              515281,
+              1
+            ],
+            [
+              515285,
+              null
+            ]
+          ],
+          "expected_items": [
+            [
+              515280,
+              2
+            ],
+            [
+              515281,
+              1
+            ],
+            [
+              515285,
+              null
+            ]
+          ],
+          "statuses": [
+            "ready",
+            "ready",
+            "needs_quantity"
+          ],
+          "cart_before_confirmation": 0
+        }
+      ],
+      "conversation": [
+        {
+          "prompt": "Как мне заказать товар",
+          "passed": true
+        },
+        {
+          "prompt": "Если я хочу закаазть товарр как это сделать",
+          "passed": true
+        },
+        {
+          "prompt": "С чем ты можешь помочь",
+          "passed": true
+        },
+        {
+          "prompt": "Хочу поговорить с менеджером",
+          "passed": true
+        }
+      ],
+      "all_passed": false
+    },
+    {
+      "checked_at": "2026-09-23T12:26:10.980397+00:00",
+      "implementation_sha256": {
+        "backend/app/landing.py": "49802269e45af709448941ebffb2ce205782eb109cdddc25f4b06b9fe1753765",
+        "index.html": "d1547c5f01adcc1b5c8d05d696a452000814b2ad7429ea765a95a06650615d76",
+        "out/manifest.json": "d538e436538f80c2bbfba8062dd821007a2d6f9ac48e5bd7bce021a09b2d9597"
+      },
+      "files": [
+        {
+          "file": "inputs/purchase_request.xlsx",
+          "sha256": "bc9005ad2e354bb70d603380b2045b41c73c08043c24aa759b6c59ca7e7fd305",
+          "passed": true,
+          "seconds": 5.411,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              515280,
+              2
+            ],
+            [
+              515281,
+              1
+            ],
+            [
+              515280,
+              1
+            ],
+            [
+              515285,
+              2
+            ]
+          ],
+          "expected_items": [
+            [
+              515280,
+              2
+            ],
+            [
+              515281,
+              1
+            ],
+            [
+              515280,
+              1
+            ],
+            [
+              515285,
+              2
+            ]
+          ],
+          "direct_match": true,
+          "statuses": [
+            "ready",
+            "ready",
+            "ready",
+            "ready"
+          ],
+          "outcome": "direct_catalogue_match",
+          "cart_before_confirmation": 0,
+          "confirmed_cart": {
+            "items": [
+              {
+                "product_id": 515280,
+                "article": "200300274_",
+                "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+                "quantity": 3,
+                "price": 26930,
+                "line_total": 80790
+              },
+              {
+                "product_id": 515281,
+                "article": "200300275_",
+                "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+                "quantity": 1,
+                "price": 33130,
+                "line_total": 33130
+              },
+              {
+                "product_id": 515285,
+                "article": "200300279_",
+                "name": "027220 АВ DRX125 MT 3ф 63А 20ka Legrand (1)",
+                "quantity": 2,
+                "price": 31620,
+                "line_total": 63240
+              }
+            ],
+            "count": 6,
+            "total": 177160,
+            "currency": null,
+            "url": "/cart",
+            "mode": "server"
+          }
+        },
+        {
+          "file": "inputs/procurement_request.docx",
+          "sha256": "4897f0073bc5afbb13a72cf43cddccf08696b95150ae2196f0d6c0824a9e0cbc",
+          "passed": true,
+          "seconds": 2.948,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              515279,
+              3
+            ],
+            [
+              515283,
+              2
+            ],
+            [
+              515291,
+              null
+            ]
+          ],
+          "expected_items": [
+            [
+              515279,
+              3
+            ],
+            [
+              515283,
+              2
+            ],
+            [
+              515291,
+              null
+            ]
+          ],
+          "direct_match": true,
+          "statuses": [
+            "ready",
+            "ready",
+            "needs_quantity"
+          ],
+          "outcome": "direct_catalogue_match",
+          "cart_before_confirmation": 0
+        },
+        {
+          "file": "inputs/project_specification.pdf",
+          "sha256": "a779b0d31dedd448a8f0685a574c9e8522d2a9b8e8ef4f387bb91440500849be",
+          "passed": true,
+          "seconds": 5.056,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              515280,
+              2
+            ],
+            [
+              515281,
+              1
+            ],
+            [
+              45357,
+              4
+            ]
+          ],
+          "expected_items": [
+            [
+              515280,
+              2
+            ],
+            [
+              515281,
+              1
+            ],
+            [
+              45357,
+              4
+            ]
+          ],
+          "direct_match": true,
+          "statuses": [
+            "ready",
+            "ready",
+            "out_of_stock"
+          ],
+          "outcome": "direct_catalogue_match",
+          "cart_before_confirmation": 0
+        },
+        {
+          "file": "inputs/delivery_note_scan.pdf",
+          "sha256": "08ffa216c554e6258ca9f91998621a90477bc19eb4e2765a739f52b8db35e603",
+          "passed": true,
+          "seconds": 2.606,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              515283,
+              2
+            ],
+            [
+              515285,
+              1
+            ]
+          ],
+          "expected_items": [
+            [
+              515283,
+              2
+            ],
+            [
+              515285,
+              1
+            ]
+          ],
+          "direct_match": true,
+          "statuses": [
+            "ready",
+            "ready"
+          ],
+          "outcome": "direct_catalogue_match",
+          "cart_before_confirmation": 0
+        },
+        {
+          "file": "inputs/delivery_note_image.jpg",
+          "sha256": "7b62e67a431100e131f4c4a7b512cb6653683abcb9bdf0adfeff387775db3abf",
+          "passed": true,
+          "seconds": 2.032,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              515283,
+              2
+            ],
+            [
+              515285,
+              1
+            ]
+          ],
+          "expected_items": [
+            [
+              515283,
+              2
+            ],
+            [
+              515285,
+              1
+            ]
+          ],
+          "direct_match": true,
+          "statuses": [
+            "ready",
+            "ready"
+          ],
+          "outcome": "direct_catalogue_match",
+          "cart_before_confirmation": 0
+        },
+        {
+          "file": "inputs/product_photo.jpg",
+          "sha256": "a92f8fc54ff069b6a10c86848aa41dec4c55e9207c7d78100e0fb102fcede905",
+          "passed": true,
+          "seconds": 3.123,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              null,
+              2
+            ]
+          ],
+          "expected_items": [
+            [
+              515280,
+              2
+            ]
+          ],
+          "direct_match": false,
+          "statuses": [
+            "ambiguous"
+          ],
+          "clarified_product_ids": [
+            515280
+          ],
+          "outcome": "clarification_required_then_catalogue_match",
+          "cart_before_confirmation": 0
+        },
+        {
+          "file": "inputs/erp_export.csv",
+          "sha256": "b9864f148f97f7e87b32ffbb3487d32570c65d436635fcc96278c00ff98e0f86",
+          "passed": true,
+          "seconds": 2.473,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              515278,
+              4
+            ],
+            [
+              515282,
+              2
+            ]
+          ],
+          "expected_items": [
+            [
+              515278,
+              4
+            ],
+            [
+              515282,
+              2
+            ]
+          ],
+          "direct_match": true,
+          "statuses": [
+            "ready",
+            "ready"
+          ],
+          "outcome": "direct_catalogue_match",
+          "cart_before_confirmation": 0
+        },
+        {
+          "file": "inputs/electrician_request.txt",
+          "sha256": "64c09aab980a3fad623657a8931f84170a04e35b53f1d675d9631be3b6d8031d",
+          "passed": true,
+          "seconds": 2.519,
+          "model": "gpt-4o-mini",
+          "actual_items": [
+            [
+              515280,
+              2
+            ],
+            [
+              515281,
+              1
+            ],
+            [
+              515285,
+              null
+            ]
+          ],
+          "expected_items": [
+            [
+              515280,
+              2
+            ],
+            [
+              515281,
+              1
+            ],
+            [
+              515285,
+              null
+            ]
+          ],
+          "direct_match": true,
+          "statuses": [
+            "ready",
+            "ready",
+            "needs_quantity"
+          ],
+          "outcome": "direct_catalogue_match",
+          "cart_before_confirmation": 0
+        }
+      ],
+      "conversation": [
+        {
+          "prompt": "Как мне заказать товар",
+          "passed": true
+        },
+        {
+          "prompt": "Если я хочу закаазть товарр как это сделать",
+          "passed": true
+        },
+        {
+          "prompt": "С чем ты можешь помочь",
+          "passed": true
+        },
+        {
+          "prompt": "Хочу поговорить с менеджером",
+          "passed": true
+        }
+      ],
+      "all_passed": true
     }
   ],
   "all_passed": true,
-  "session_file": "observed-session.json",
-  "file_to_cart": {
-    "file": "inputs/specification.xlsx",
-    "passed": true,
-    "model": "gpt-4o-mini",
-    "seconds": 2.81,
-    "quantities_from_file": {
-      "027005": 2,
-      "027028": 1
-    },
-    "before_confirmation_count": 0,
-    "after_confirmation_count": 3
-  },
-  "uc_checks": {
-    "UC-01": "passed",
-    "UC-02": "passed",
-    "UC-03": "passed: payment/delivery/minimum present; unknown general minimum disclosed",
-    "UC-04": "passed: proposal, ambiguous reply, explicit consent, two quantities",
-    "UC-05": "passed: /cart HTTP 200 and actual session cart"
-  }
+  "all_files_matched_without_clarification": false
 }

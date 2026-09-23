@@ -911,6 +911,31 @@
       .message-body .muted {
         font-size: 10px;
       }
+      .chat-help {
+        display: flex;
+        gap: 8px;
+        padding: 7px 16px;
+        border-bottom: 1px solid var(--line);
+        background: var(--white);
+      }
+      .manager-panel textarea {
+        display: block;
+        width: 100%;
+        min-height: 150px;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        resize: vertical;
+        color: var(--ink);
+        background: var(--white);
+      }
+      .manager-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 10px 0;
+      }
       .review-list {
         list-style: none;
         padding: 0;
@@ -2016,6 +2041,12 @@
       <div id="modeBanner" class="mode-banner">
         Демо: примеры каталога ekt.kz · корзина в этой вкладке
       </div>
+      <div class="chat-help" aria-label="Помощь с покупкой">
+        <button class="chip" data-query="Как заказать товар?">
+          Как заказать?
+        </button>
+        <button class="chip" data-manager>Связаться с менеджером</button>
+      </div>
       <div
         id="messages"
         class="messages"
@@ -2897,6 +2928,60 @@
             container.getBoundingClientRect().top -
             16;
         }
+        function renderManager(info) {
+          const phone = /^tel:\+7\d{10}$/.test(info.phone || "")
+            ? info.phone
+            : "";
+          const whatsapp = /^https:\/\/wa\.me\/7\d{10}\/?$/.test(
+            info.whatsapp || "",
+          )
+            ? info.whatsapp
+            : "";
+          const node = message(
+            "bot",
+            '<section class="manager-panel"><h3>Связаться с менеджером</h3><p>' +
+              esc(info.reason) +
+              "</p><p>Проверьте текст ниже, при необходимости дополните его и отправьте удобным способом. Обращение ещё не отправлено; файлы и история чата автоматически не передаются.</p>" +
+              '<label>Текст обращения<textarea aria-label="Текст обращения менеджеру">' +
+              esc(info.draft) +
+              "</textarea></label>" +
+              '<div class="manager-links"><button class="button small" data-copy-manager>Скопировать обращение</button>' +
+              (phone
+                ? '<a class="chip" href="' +
+                  esc(phone) +
+                  '">Позвонить в магазин</a>'
+                : "") +
+              (whatsapp
+                ? '<a class="chip" href="' +
+                  esc(whatsapp) +
+                  '" target="_blank" rel="noopener noreferrer">Открыть WhatsApp ↗</a>'
+                : "") +
+              '<a class="chip" href="https://ekt.kz/about/contacts/" target="_blank" rel="noopener noreferrer">Контакты и филиалы ekt.kz ↗</a></div>' +
+              '<p class="source-note">' +
+              (info.fetched_at
+                ? "Контакты прочитаны с сайта магазина " +
+                  esc(new Date(info.fetched_at).toLocaleString("ru-RU"))
+                : "Телефон сейчас не удалось проверить. Контакты можно посмотреть на сайте магазина.") +
+              '</p><p class="copy-status" aria-live="polite"></p></section>',
+          );
+          return node;
+        }
+        async function showManager() {
+          openChat(false);
+          if (server) {
+            try {
+              renderManager(await serverRequest("/manager"));
+              return;
+            } catch {
+              /* Contacts page remains usable. */
+            }
+          }
+          renderManager({
+            reason: "Помощь с подбором или условиями покупки",
+            draft:
+              "Здравствуйте! Нужна консультация по подбору электротехнической продукции. Мой вопрос: ",
+          });
+        }
         function renderServerReply(reply) {
           const sameProposal = reply.proposal?.id === pending?.token;
           if (!sameProposal) clearPending();
@@ -2968,6 +3053,32 @@
           if (reply.cart) {
             showServerCart(reply.cart);
           }
+          if (reply.website && safeUrl(reply.website))
+            message(
+              "bot",
+              '<a class="chip" href="' +
+                esc(safeUrl(reply.website)) +
+                '" target="_blank" rel="noopener noreferrer">Проверить на сайте ekt.kz ↗</a>',
+            );
+          if (reply.suggestions?.length)
+            message(
+              "bot",
+              '<div class="suggestions">' +
+                reply.suggestions
+                  .map(
+                    (q) =>
+                      '<button class="chip" ' +
+                      (q === "Связаться с менеджером"
+                        ? "data-manager"
+                        : 'data-query="' + esc(q) + '"') +
+                      ">" +
+                      esc(q) +
+                      "</button>",
+                  )
+                  .join("") +
+                "</div>",
+            );
+          if (reply.manager) renderManager(reply.manager);
           if (reply.review?.length)
             renderReview(reply.review, reply.products || []);
         }
@@ -3740,7 +3851,10 @@
           else if (/аналог|замен|похож/.test(low)) await showAnalogs(p.id);
           else await showProduct(p.id);
         }
-        async function run(action) {
+        async function run(
+          action,
+          statusText = "Разбираю запрос и проверяю данные…",
+        ) {
           if (busy || reading) return;
           busy = true;
           $("#sendButton").disabled = true;
@@ -3748,8 +3862,16 @@
           $("#messages").setAttribute("aria-busy", "true");
           const loading = message(
             "bot",
-            '<span class="loading">Проверяю данные <i></i><i></i><i></i></span>',
+            '<span class="loading"><span class="progress-text">' +
+              esc(statusText) +
+              "</span><i></i><i></i><i></i></span>",
           );
+          const waiting = setTimeout(() => {
+            const label = loading.querySelector(".progress-text");
+            if (label)
+              label.textContent =
+                "Ответ ещё готовится. Вложения и поиск по каталогу могут занять больше времени; корзина без согласия не меняется.";
+          }, 8000);
           try {
             await action();
           } catch (error) {
@@ -3760,7 +3882,12 @@
                   "Не удалось обработать запрос. Попробуйте ещё раз.",
               ),
             );
+            message(
+              "bot",
+              '<p>Можно повторить запрос, уточнить артикул или обратиться к менеджеру.</p><button class="chip" data-manager>Связаться с менеджером</button><a class="chip" href="https://ekt.kz/" target="_blank" rel="noopener noreferrer">Сайт магазина ↗</a>',
+            );
           } finally {
+            clearTimeout(waiting);
             loading.remove();
             busy = false;
             $("#sendButton").disabled = false;
@@ -3786,17 +3913,22 @@
                   ? "\n📎 " + attached.map((f) => f.name).join(", ")
                   : ""),
             );
-            await run(async () => {
-              renderServerReply(
-                await serverRequest("/chat", {
-                  text,
-                  attachments: attached.map((f) => ({
-                    name: f.name,
-                    data: f.data,
-                  })),
-                }),
-              );
-            });
+            await run(
+              async () => {
+                renderServerReply(
+                  await serverRequest("/chat", {
+                    text,
+                    attachments: attached.map((f) => ({
+                      name: f.name,
+                      data: f.data,
+                    })),
+                  }),
+                );
+              },
+              attached.length
+                ? "Читаю вложения и сопоставляю позиции с каталогом…"
+                : "Разбираю ваш вопрос…",
+            );
             return;
           }
           const text = value.trim();
@@ -4010,6 +4142,35 @@
         document.addEventListener("click", (event) => {
           const button = event.target.closest("button");
           if (!button) return;
+          if (button.hasAttribute("data-manager")) {
+            if (busy)
+              renderManager({
+                reason: "Можно обратиться в магазин, пока ожидается ответ.",
+                draft:
+                  "Здравствуйте! Нужна помощь с подбором электротехники. Мой вопрос: ",
+              });
+            else run(showManager, "Проверяю контакты магазина…");
+            return;
+          }
+          if (button.hasAttribute("data-copy-manager")) {
+            const panel = button.closest(".manager-panel");
+            const input = panel.querySelector("textarea");
+            (navigator.clipboard
+              ? navigator.clipboard.writeText(input.value)
+              : Promise.reject(new Error("Clipboard unavailable"))
+            )
+              .then(() => {
+                panel.querySelector(".copy-status").textContent =
+                  "Текст скопирован. Отправьте его менеджеру выбранным способом.";
+              })
+              .catch(() => {
+                input.focus();
+                input.select();
+                panel.querySelector(".copy-status").textContent =
+                  "Выделил текст. Скопируйте его вручную.";
+              });
+            return;
+          }
           if (button.hasAttribute("data-review-clarify")) {
             openChat();
             if (!$("#prompt").value.trim())

@@ -1,337 +1,4823 @@
 {
-  "kind": "observed_response_projection_not_reference_answers",
-  "checked_at": "2026-09-23T10:53:59.065838+00:00",
-  "note": "Historical observations; prices and stock may change. Secrets, consent tokens and raw files omitted. Terms payment/delivery text omitted; source URL retained.",
-  "steps": [
+  "kind": "observed_live_responses_not_reference_answers",
+  "checked_at": "2026-09-23T12:32:26.270498+00:00",
+  "files": [
     {
-      "uc": "UC-01, file input from section 5",
-      "input_file": "inputs/specification.docx",
-      "user": "Покажи наличие и характеристики всех позиций из вложения.",
+      "file": "inputs/purchase_request.xlsx",
+      "prompt": "Это заявка на закупку. Проверь все позиции и количества на обоих листах по вашему каталогу.",
       "response": {
-        "text": "Запрос на наличие и характеристики товаров принят.",
+        "text": "Разобрал позиций: 4. Ниже карточки каталога и проверка каждой строки. Сверьте результат с документом, выберите подходящее и подтвердите состав отдельно.",
         "extracted": [
           "027005",
-          "027028"
+          "027028",
+          "027005",
+          "027220"
+        ],
+        "review": [
+          {
+            "position": 1,
+            "query": "027005",
+            "quantity": 2,
+            "product_id": 515280,
+            "candidates": [
+              515280
+            ],
+            "status": "ready",
+            "message": "Совпадение по коду; запрошенное количество доступно.",
+            "available": 33
+          },
+          {
+            "position": 2,
+            "query": "027028",
+            "quantity": 1,
+            "product_id": 515281,
+            "candidates": [
+              515281
+            ],
+            "status": "ready",
+            "message": "Совпадение по коду; запрошенное количество доступно.",
+            "available": 17
+          },
+          {
+            "position": 3,
+            "query": "027005",
+            "quantity": 1,
+            "product_id": 515280,
+            "candidates": [
+              515280
+            ],
+            "status": "ready",
+            "message": "Совпадение по коду; запрошенное количество доступно.",
+            "available": 33
+          },
+          {
+            "position": 4,
+            "query": "027220",
+            "quantity": 2,
+            "product_id": 515285,
+            "candidates": [
+              515285
+            ],
+            "status": "ready",
+            "message": "Совпадение по коду; запрошенное количество доступно.",
+            "available": 26
+          }
         ],
         "products": [
           {
             "id": 515280,
-            "article": "200300274_",
             "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
-            "quantity": 33,
+            "article": "200300274_",
+            "description": "Автоматический выключатель DRX125 MT 3P 50А 10kA (арт. 027005) Legrand – это надежное защитное устройство, предназначенное для защиты электрических цепей от перегрузок и коротких замыканий.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX125 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 50А\r\n\tОтключающая способность: 10kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Автоматический выключатель применяется в распределительных системах для защиты оборудования и проводки в промышленных, коммерческих и жилых объектах. Обеспечивает надежную работу, прост в установке и обслуживании.",
             "price": 26930,
-            "fetched_at": "2026-09-23T10:54:02.004291+00:00",
+            "quantity": 33,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 2
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 25
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 0
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 3
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 0
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 2
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/bd5/b274l2s036wwlnwky905ike1p56e1094/027005_av_drx125_mt_3f_50a_10ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027005_av_drx125_mt_3f_50a_10ka_legrand_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "200300274_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "RECOMMEND": [
+                "28725",
+                "24048",
+                "37429"
+              ],
+              "CML2_BAR_CODE": "3245060270056",
+              "CML2_TRAITS": [
+                "Готовая продукция",
+                "Товар",
+                "200300274_",
+                "Да",
+                "Нет",
+                "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+                "0,001215",
+                "0,831",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "Legrand.jpg",
+              "KOLICHESTVOVREZERVE": "2",
+              "ARTIKULPOSTAVSHCHIKA": "027005",
+              "OBYEM": "Автоматический выключатель",
+              "BLOG_POST_ID": "1826",
+              "KOLICHESTVO_POLYUSOV": "3",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "10кА",
+              "NOMINALNOE_NAPRYAZHENIE": "400В",
+              "NOMINALNYY_TOK": "50 А",
+              "TORGOVAYA_MARKA": "Legrand"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:29.597320+00:00",
             "certificates": [],
             "warnings": []
           },
           {
             "id": 515281,
-            "article": "200300275_",
             "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
-            "quantity": 17,
+            "article": "200300275_",
+            "description": "Автоматический выключатель DRX125 MT 3P 10А 20kA (арт. 027028) Legrand – защитное устройство для предотвращения перегрузок и коротких замыканий в электрических сетях, обеспечивающее стабильную и безопасную работу оборудования.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX125 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 10А\r\n\tОтключающая способность: 20kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Этот автоматический выключатель предназначен для применения в промышленных и коммерческих электроустановках. Обладает высокой надежностью, прост в установке и эксплуатации.",
             "price": 33130,
-            "fetched_at": "2026-09-23T10:54:02.089382+00:00",
+            "quantity": 17,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 1
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 11
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 0
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 4
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 0
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 0
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/ae7/0yitjpyjbua30sptdgoy3kf0r5spgbl7/027028_av_drx125_mt_3f_10a_20ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027028_av_drx125_mt_3f_10a_20ka_legrand_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "200300275_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "RECOMMEND": [
+                "18465",
+                "48789",
+                "24156",
+                "34347"
+              ],
+              "CML2_BAR_CODE": "3245060270285",
+              "CML2_TRAITS": [
+                "Готовая продукция",
+                "Товар",
+                "200300275_",
+                "Да",
+                "Нет",
+                "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+                "0,001215",
+                "0,875",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "Legrand.jpg",
+              "ARTIKULPOSTAVSHCHIKA": "027028",
+              "OBYEM": "Автоматический выключатель",
+              "BLOG_POST_ID": "1827",
+              "KOLICHESTVO_POLYUSOV": "3",
+              "VYKHODNOE_NAPRYAZHENIE_": "30",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "20кА",
+              "NOMINALNOE_NAPRYAZHENIE": "400В",
+              "NOMINALNYY_TOK": "100 А",
+              "TORGOVAYA_MARKA": "Legrand"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:29.832907+00:00",
+            "certificates": [],
+            "warnings": []
+          },
+          {
+            "id": 515285,
+            "name": "027220 АВ DRX125 MT 3ф 63А 20ka Legrand (1)",
+            "article": "200300279_",
+            "description": "Автоматический выключатель DRX125 MT 3P 63А 20kA (арт. 027220) Legrand – надежное устройство для защиты электрических цепей от перегрузок и коротких замыканий в распределительных сетях.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX125 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 63А\r\n\tОтключающая способность: 20kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Автоматический выключатель применяется в промышленных и коммерческих электроустановках, обеспечивая надежную и долговечную защиту оборудования. Прост в установке и эксплуатации.",
+            "price": 31620,
+            "quantity": 26,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 3
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 6
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 2
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 8
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 1
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 5
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/bcb/704wk40y4bhqiw3r8fx1k30vxudgn97b/027220_av_drx125_mt_3f_63a_20ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027220_av_drx125_mt_3f_63a_20ka_legrand_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "200300279_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "RECOMMEND": [
+                "19297",
+                "30554",
+                "57764"
+              ],
+              "CML2_BAR_CODE": "3414970344045",
+              "CML2_TRAITS": [
+                "Готовая продукция",
+                "Товар",
+                "200300279_",
+                "Да",
+                "Нет",
+                "027220 АВ DRX125 MT 3ф 63А 20ka Legrand (1)",
+                "0,001215",
+                "0,857",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "Legrand.jpg",
+              "ARTIKULPOSTAVSHCHIKA": "027220",
+              "OBYEM": "Автоматический выключатель",
+              "KOLICHESTVO_POLYUSOV": "3",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "20кА",
+              "NOMINALNOE_NAPRYAZHENIE": "400В",
+              "NOMINALNYY_TOK": "63 А",
+              "TORGOVAYA_MARKA": "Legrand"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:30.018960+00:00",
             "certificates": [],
             "warnings": []
           }
         ],
-        "alternatives": []
+        "suggestions": [
+          "Как заказать товар?",
+          "Какие условия оплаты и доставки?"
+        ]
       }
     },
     {
-      "uc": "UC-01",
-      "user": "Есть ли 027005? Покажи технические характеристики и сертификат.",
-      "seconds": 2.135,
+      "file": "inputs/procurement_request.docx",
+      "prompt": "Проверь товары из письма: наличие, характеристики и что нужно уточнить перед заказом.",
       "response": {
-        "text": "Мы проверяем наличие и характеристики по коду 027005.",
-        "extracted": [],
+        "text": "Разобрал позиций: 3. Ниже карточки каталога и проверка каждой строки. Сверьте результат с документом, выберите подходящее и подтвердите состав отдельно.\nДля позиций без количества уточните, сколько штук нужно — пока они не выбраны для корзины.",
+        "extracted": [
+          "027004",
+          "3 шт.",
+          "027024",
+          "2 шт.",
+          "027228",
+          "Уточняется"
+        ],
+        "review": [
+          {
+            "position": 1,
+            "query": "027004",
+            "quantity": 3,
+            "product_id": 515279,
+            "candidates": [
+              515279
+            ],
+            "status": "ready",
+            "message": "Совпадение по коду; запрошенное количество доступно.",
+            "available": 36
+          },
+          {
+            "position": 2,
+            "query": "027024",
+            "quantity": 2,
+            "product_id": 515283,
+            "candidates": [
+              515283
+            ],
+            "status": "ready",
+            "message": "Совпадение по коду; запрошенное количество доступно.",
+            "available": 16
+          },
+          {
+            "position": 3,
+            "query": "027228",
+            "quantity": null,
+            "product_id": 515291,
+            "candidates": [
+              515291
+            ],
+            "status": "needs_quantity",
+            "message": "Количество не указано. Уточните его; 1 шт. не подставляется.",
+            "available": 23
+          }
+        ],
+        "products": [
+          {
+            "id": 515279,
+            "name": "027004 АВ DRX125 MT 3ф 40А 10ka Legrand (1)",
+            "article": "200300273_",
+            "description": "Автоматический выключатель DRX125 MT 3P 40А 10kA (арт. 027004) Legrand – надежное устройство для защиты электрических цепей от перегрузок и коротких замыканий.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX125 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 40А\r\n\tОтключающая способность: 10kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Автоматический выключатель предназначен для использования в промышленных и коммерческих электроустановках, обеспечивая надежную защиту оборудования и электросетей. Прост в монтаже и эксплуатации.",
+            "price": 26930,
+            "quantity": 36,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 3
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 19
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 3
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 4
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 0
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 5
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 2
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/14b/paepqdd52vxxi62c6a0szbduffnqexzn/027004_av_drx125_mt_3f_40a_10ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027004_av_drx125_mt_3f_40a_10ka_legrand_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "200300273_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "RECOMMEND": [
+                "22493",
+                "24883",
+                "21977",
+                "21651"
+              ],
+              "CML2_BAR_CODE": "3245060270049",
+              "CML2_TRAITS": [
+                "Готовая продукция",
+                "Товар",
+                "200300273_",
+                "Да",
+                "Нет",
+                "027004 АВ DRX125 MT 3ф 40А 10ka Legrand (1)",
+                "0,001215",
+                "0,829",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "Legrand.jpg",
+              "ARTIKULPOSTAVSHCHIKA": "027004",
+              "OBYEM": "Автоматический выключатель",
+              "BLOG_POST_ID": "1806",
+              "KOLICHESTVO_POLYUSOV": "3",
+              "VYKHODNOE_NAPRYAZHENIE_": "30",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "10кА",
+              "NOMINALNOE_NAPRYAZHENIE": "400В",
+              "NOMINALNYY_TOK": "125 А",
+              "TORGOVAYA_MARKA": "Legrand"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:32.951390+00:00",
+            "certificates": [],
+            "warnings": [
+              "Расхождение: в названии 40 А, в свойствах 125 А. Для замены требуется уточнение у магазина."
+            ]
+          },
+          {
+            "id": 515283,
+            "name": "027024 АВ DRX125 MT 3ф 40А 20ka Legrand (1)",
+            "article": "200300277_",
+            "description": "Автоматический выключатель DRX125 MT 3P 40А 20kA (арт. 027024) Legrand – эффективное защитное устройство для предотвращения перегрузок и коротких замыканий в электрических сетях.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX125 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 40А\r\n\tОтключающая способность: 20kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Применяется в промышленных и коммерческих электроустановках, обеспечивая надежную защиту оборудования и электросетей. Прост в установке и эксплуатации, устойчив к высоким нагрузкам.",
+            "price": 29810,
+            "quantity": 16,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 3
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 5
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 0
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 4
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 2
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 1
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/a3c/f5e37vjhbl97v75imhto4jhgjes7h4bj/027024_av_drx125_mt_3f_40a_20ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027024_av_drx125_mt_3f_40a_20ka_legrand_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "200300277_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "RECOMMEND": [
+                "21856",
+                "20516",
+                "48783",
+                "57780"
+              ],
+              "CML2_BAR_CODE": "3245060270247",
+              "CML2_TRAITS": [
+                "Готовая продукция",
+                "Товар",
+                "200300277_",
+                "Да",
+                "Нет",
+                "027024 АВ DRX125 MT 3ф 40А 20ka Legrand (1)",
+                "0,001215",
+                "0,836",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "Legrand.jpg",
+              "ARTIKULPOSTAVSHCHIKA": "027024",
+              "OBYEM": "Автоматический выключатель",
+              "BLOG_POST_ID": "1781",
+              "KOLICHESTVO_POLYUSOV": "3",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "20кА",
+              "NOMINALNOE_NAPRYAZHENIE": "400В",
+              "NOMINALNYY_TOK": "40А",
+              "TORGOVAYA_MARKA": "Legrand"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:33.124264+00:00",
+            "certificates": [],
+            "warnings": []
+          },
+          {
+            "id": 515291,
+            "name": "027228 АВ DRX250 MT 3ф 160А 18ka Legrand (1)",
+            "article": "200300285_",
+            "description": "Автоматический выключатель DRX250 MT 3P 160А 18kA (арт. 027228) Legrand – мощное защитное устройство для предотвращения перегрузок и коротких замыканий в электрических сетях.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX250 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 160А\r\n\tОтключающая способность: 18kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Этот автоматический выключатель применяется в промышленных, коммерческих и распределительных системах, обеспечивая надежную защиту электрооборудования. Отличается долговечностью, высокой износостойкостью и простотой монтажа.",
+            "price": 64920,
+            "quantity": 23,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 2
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 5
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 2
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 3
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 2
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 8
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/1ca/8mdfx6517jvalt5da1n9865q2fzpj6jp/027228_av_drx250_mt_3f_160a_18ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027228_av_drx250_mt_3f_160a_18ka_legrand_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "200300285_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "RECOMMEND": [
+                "48783",
+                "23466",
+                "28727"
+              ],
+              "CML2_BAR_CODE": "3414970344526",
+              "CML2_TRAITS": [
+                "Готовая продукция",
+                "Товар",
+                "200300285_",
+                "Да",
+                "Нет",
+                "027228 АВ DRX250 MT 3ф 160А 18ka Legrand (1)",
+                "0,00212",
+                "1,467",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "Legrand.jpg",
+              "ARTIKULPOSTAVSHCHIKA": "027228",
+              "OBYEM": "Автоматический выключатель",
+              "KOLICHESTVO_POLYUSOV": "3",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "18кА",
+              "NOMINALNOE_NAPRYAZHENIE": "400В",
+              "NOMINALNYY_TOK": "250 А",
+              "TIP_USTANOVKI": "Винтовое",
+              "TORGOVAYA_MARKA": "Legrand"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:33.287082+00:00",
+            "certificates": [],
+            "warnings": [
+              "Расхождение: в названии 160 А, в свойствах 250 А. Для замены требуется уточнение у магазина."
+            ]
+          }
+        ],
+        "suggestions": [
+          "Как заказать товар?",
+          "Какие условия оплаты и доставки?"
+        ],
+        "manager": {
+          "reason": "В данных товара есть расхождения; нужна проверка специалиста.",
+          "draft": "Здравствуйте! Нужна консультация по электротехнической продукции.\nВ данных товара есть расхождения; нужна проверка специалиста.\nТовар: 027228 АВ DRX250 MT 3ф 160А 18ka Legrand (1). Артикул: 200300285_.\nПрошу уточнить необходимые параметры и условия покупки.",
+          "source": "https://ekt.kz/about/contacts/",
+          "phone": "tel:+77273468888",
+          "whatsapp": "https://wa.me/77782768888/",
+          "fetched_at": "2026-09-23T12:32:33.863334+00:00",
+          "sent": false
+        }
+      }
+    },
+    {
+      "file": "inputs/project_specification.pdf",
+      "prompt": "Проверь спецификацию с обеих страниц. Покажи наличие всех позиций и аналоги отсутствующих.",
+      "response": {
+        "text": "Разобрал позиций: 3. Ниже карточки каталога и проверка каждой строки. Сверьте результат с документом, выберите подходящее и подтвердите состав отдельно.",
+        "extracted": [
+          "027005",
+          "027028",
+          "ярп4520"
+        ],
+        "review": [
+          {
+            "position": 1,
+            "query": "027005",
+            "quantity": 2,
+            "product_id": 515280,
+            "candidates": [
+              515280
+            ],
+            "status": "ready",
+            "message": "Совпадение по коду; запрошенное количество доступно.",
+            "available": 33
+          },
+          {
+            "position": 2,
+            "query": "027028",
+            "quantity": 1,
+            "product_id": 515281,
+            "candidates": [
+              515281
+            ],
+            "status": "ready",
+            "message": "Совпадение по коду; запрошенное количество доступно.",
+            "available": 17
+          },
+          {
+            "position": 3,
+            "query": "ярп4520",
+            "quantity": 4,
+            "product_id": 45357,
+            "candidates": [
+              45357
+            ],
+            "status": "out_of_stock",
+            "message": "Нет в наличии. Доступные аналоги показаны отдельно; замену выбираете вы.",
+            "available": 0
+          }
+        ],
         "products": [
           {
             "id": 515280,
-            "article": "200300274_",
             "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
-            "quantity": 33,
+            "article": "200300274_",
+            "description": "Автоматический выключатель DRX125 MT 3P 50А 10kA (арт. 027005) Legrand – это надежное защитное устройство, предназначенное для защиты электрических цепей от перегрузок и коротких замыканий.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX125 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 50А\r\n\tОтключающая способность: 10kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Автоматический выключатель применяется в распределительных системах для защиты оборудования и проводки в промышленных, коммерческих и жилых объектах. Обеспечивает надежную работу, прост в установке и обслуживании.",
             "price": 26930,
-            "fetched_at": "2026-09-23T10:54:02.004291+00:00",
+            "quantity": 33,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 2
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 25
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 0
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 3
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 0
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 2
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/bd5/b274l2s036wwlnwky905ike1p56e1094/027005_av_drx125_mt_3f_50a_10ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027005_av_drx125_mt_3f_50a_10ka_legrand_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "200300274_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "RECOMMEND": [
+                "28725",
+                "24048",
+                "37429"
+              ],
+              "CML2_BAR_CODE": "3245060270056",
+              "CML2_TRAITS": [
+                "Готовая продукция",
+                "Товар",
+                "200300274_",
+                "Да",
+                "Нет",
+                "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+                "0,001215",
+                "0,831",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "Legrand.jpg",
+              "KOLICHESTVOVREZERVE": "2",
+              "ARTIKULPOSTAVSHCHIKA": "027005",
+              "OBYEM": "Автоматический выключатель",
+              "BLOG_POST_ID": "1826",
+              "KOLICHESTVO_POLYUSOV": "3",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "10кА",
+              "NOMINALNOE_NAPRYAZHENIE": "400В",
+              "NOMINALNYY_TOK": "50 А",
+              "TORGOVAYA_MARKA": "Legrand"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:30.544523+00:00",
             "certificates": [],
             "warnings": []
-          }
-        ],
-        "alternatives": []
-      }
-    },
-    {
-      "uc": "UC-02",
-      "user": "Есть ли ярп4520? Если нет, предложи аналог.",
-      "seconds": 3.687,
-      "response": {
-        "text": "Проверяю наличие по коду ярп4520.",
-        "extracted": [],
-        "products": [
+          },
+          {
+            "id": 515281,
+            "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+            "article": "200300275_",
+            "description": "Автоматический выключатель DRX125 MT 3P 10А 20kA (арт. 027028) Legrand – защитное устройство для предотвращения перегрузок и коротких замыканий в электрических сетях, обеспечивающее стабильную и безопасную работу оборудования.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX125 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 10А\r\n\tОтключающая способность: 20kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Этот автоматический выключатель предназначен для применения в промышленных и коммерческих электроустановках. Обладает высокой надежностью, прост в установке и эксплуатации.",
+            "price": 33130,
+            "quantity": 17,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 1
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 11
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 0
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 4
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 0
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 0
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/ae7/0yitjpyjbua30sptdgoy3kf0r5spgbl7/027028_av_drx125_mt_3f_10a_20ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027028_av_drx125_mt_3f_10a_20ka_legrand_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "200300275_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "RECOMMEND": [
+                "18465",
+                "48789",
+                "24156",
+                "34347"
+              ],
+              "CML2_BAR_CODE": "3245060270285",
+              "CML2_TRAITS": [
+                "Готовая продукция",
+                "Товар",
+                "200300275_",
+                "Да",
+                "Нет",
+                "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+                "0,001215",
+                "0,875",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "Legrand.jpg",
+              "ARTIKULPOSTAVSHCHIKA": "027028",
+              "OBYEM": "Автоматический выключатель",
+              "BLOG_POST_ID": "1827",
+              "KOLICHESTVO_POLYUSOV": "3",
+              "VYKHODNOE_NAPRYAZHENIE_": "30",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "20кА",
+              "NOMINALNOE_NAPRYAZHENIE": "400В",
+              "NOMINALNYY_TOK": "100 А",
+              "TORGOVAYA_MARKA": "Legrand"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:30.644393+00:00",
+            "certificates": [],
+            "warnings": []
+          },
           {
             "id": 45357,
-            "article": "ярп4520",
             "name": "***LED STARK 30W 2400Lm d98x180 4000K IP20 MEGALIGHT (20)",
-            "quantity": 0,
+            "article": "ярп4520",
+            "description": "Светодиодный светильник направленного освещения. Применяется для освещения выставочных залов, в магазинах, в музее, для освещения витрин и т.п. Адаптер крепления к шинопроводу идёт в комплекте. Способ установки: Крепится на 2-линейный алюминиевый шинопровод. Технические характеристики: Материал светильника: алюминий. Корпус адаптера: ABS пластик (черного цвета). Шинопровод: листовая сталь. Мощность: 30 Вт. Цветность: 4000 К. Световой поток: 2400 Лм. Размеры: d-98x180. IP20",
             "price": 1810,
-            "fetched_at": "2026-09-23T10:54:14.479560+00:00",
+            "quantity": 0,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 0
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 0
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 0
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 0
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 0
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 0
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 0
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/544/dfm8r3a7ko5r82et94g423dyzibu1wfr/led_stark_30w_2400lm_d98x180_4000k_ip20_megalight_20.jpg",
+            "url": "https://ekt.kz/catalog/spets_predlozhenie/aktsiya_megalight_polnyy_sklad_polnyy_bak/_led_stark_30w_2400lm_d98x180_4000k_ip20_megalight_20/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "ярп4520",
+              "NOVINKA": "Нет",
+              "SPETSPREDLOZHENIE": "Нет",
+              "CML2_TRAITS": [
+                "Товары приобретенные",
+                "Товар",
+                "ярп4520",
+                "Нет",
+                "Нет",
+                "Светодиодный светильник LED STARK 30w 2400Lm d98*180 4000K IP20 (внутреннее освещение) MEGALIGHT NEW (20)\n",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "ARTIKULPOSTAVSHCHIKA": "ярп4520",
+              "TORGOVAYA_MARKA": " MEGALIGHT"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:36.484763+00:00",
             "certificates": [],
             "warnings": []
           }
         ],
         "alternatives": [
           {
-            "id": 18284,
-            "article": "150200474_",
-            "quantity": 341,
-            "reason": "Совпадают полное обозначение модели и параметры в названии: LED STARK 30W 2400Lm d98x180 4000K IP20 MEGALIGHT (20). Торговая марка также совпадает; наличие проверено по API.",
+            "product": {
+              "id": 18284,
+              "name": "LED STARK 30W 2400Lm d98x180 4000K IP20 MEGALIGHT (20)",
+              "article": "150200474_",
+              "description": "Светодиодный светильник направленного освещения. Применяется для освещения выставочных залов, в магазинах, в музее, для освещения витрин и т.п. Адаптер крепления к шинопроводу идёт в комплекте. Способ установки: Крепится на 2-линейный алюминиевый шинопровод. Технические характеристики: Материал светильника: алюминий. Корпус адаптера: ABS пластик (черного цвета). Шинопровод: листовая сталь. Мощность: 30 Вт. Цветность: 4000 К. Световой поток: 2400 Лм. Размеры: d-98x180. IP20",
+              "price": 6330,
+              "quantity": 341,
+              "stores": [
+                {
+                  "id": 2,
+                  "name": "Брак MEGALIGHT",
+                  "quantity": 0
+                },
+                {
+                  "id": 3,
+                  "name": "Шымкент (ул.Байдукова)",
+                  "quantity": 0
+                },
+                {
+                  "id": 4,
+                  "name": "Маркетинг MEGALIGHT",
+                  "quantity": 0
+                },
+                {
+                  "id": 5,
+                  "name": "Никонов",
+                  "quantity": 0
+                },
+                {
+                  "id": 6,
+                  "name": "РЦ MEGALIGHT",
+                  "quantity": 0
+                },
+                {
+                  "id": 7,
+                  "name": "Талдыкорган",
+                  "quantity": 0
+                },
+                {
+                  "id": 8,
+                  "name": "Тастак",
+                  "quantity": 0
+                },
+                {
+                  "id": 9,
+                  "name": "Торговый зал",
+                  "quantity": 0
+                },
+                {
+                  "id": 10,
+                  "name": "Востановленный продукт",
+                  "quantity": 0
+                },
+                {
+                  "id": 11,
+                  "name": "перемещение",
+                  "quantity": 0
+                },
+                {
+                  "id": 12,
+                  "name": "Основной склад",
+                  "quantity": 0
+                },
+                {
+                  "id": 13,
+                  "name": "Алматы",
+                  "quantity": 248
+                },
+                {
+                  "id": 14,
+                  "name": "ЩИТОВОЕ",
+                  "quantity": 0
+                },
+                {
+                  "id": 15,
+                  "name": "РЦ UNIT",
+                  "quantity": 0
+                },
+                {
+                  "id": 16,
+                  "name": "Образцы Отдел Закупа",
+                  "quantity": 0
+                },
+                {
+                  "id": 17,
+                  "name": "Витрина ТЗ",
+                  "quantity": 0
+                },
+                {
+                  "id": 18,
+                  "name": "Усть-Каменогорск",
+                  "quantity": 1
+                },
+                {
+                  "id": 19,
+                  "name": "Тараз",
+                  "quantity": 40
+                },
+                {
+                  "id": 20,
+                  "name": "Атырау",
+                  "quantity": 10
+                },
+                {
+                  "id": 21,
+                  "name": "Караганда",
+                  "quantity": 11
+                },
+                {
+                  "id": 22,
+                  "name": "Новосибирск",
+                  "quantity": 0
+                },
+                {
+                  "id": 23,
+                  "name": "Актау",
+                  "quantity": 5
+                },
+                {
+                  "id": 24,
+                  "name": "Нур-Султан",
+                  "quantity": 20
+                },
+                {
+                  "id": 25,
+                  "name": "Шымкент (Тассай)",
+                  "quantity": 6
+                }
+              ],
+              "image": "https://ekt.kz/upload/iblock/f0c/okc3o1y3puqex74xi3k9ec7zqhbsf0k2/led_stark_30w_2400lm_d98x180_4000k_ip20_megalight_20.jpg",
+              "url": "https://ekt.kz/catalog/svetilniki_lampy/svetilniki_dlya_vnutrennego_osveshcheniya/lampy_led_nastolnye/svetilniki_1/led_stark_30w_2400lm_d98x180_4000k_ip20_megalight_20/",
+              "offers": [],
+              "properties": {
+                "BRAND_PRIORITY": "1",
+                "DOPOLNITELNAYA_ZASHCHITA": "Без решетки",
+                "CML2_ARTICLE": "150200474_",
+                "NOVINKA": "Нет",
+                "SPETSPREDLOZHENIE": "Нет",
+                "CML2_BAR_CODE": "4870200484186",
+                "CML2_TRAITS": [
+                  "Товары приобретенные",
+                  "Товар",
+                  "150200474_",
+                  "Нет",
+                  "Нет",
+                  "Светодиодный светильник LED STARK 30w 2400Lm d98*180 4000K IP20 (внутреннее освещение) MEGALIGHT NEW (20)\n",
+                  "0,002",
+                  "0,2",
+                  "0,13",
+                  "0,32",
+                  "0,13"
+                ],
+                "CML2_TAXES": "16",
+                "KRATNOST_MIN": "1",
+                "KRATNOST_MAKS": "20",
+                "IMYAKARTINKI": "LOGO-MEGALIGHT.jpg",
+                "KRATNOST_MAKS_1": "20",
+                "ARTIKULPOSTAVSHCHIKA": "150200474_",
+                "KATEGORIYA_SVETILNIKA": "Светильники для внутреннего освещения",
+                "MATERIAL_KORPUSA": "Металл",
+                "MOSHCHNOST_W": "30",
+                "OBLAST_PRIMENENIYA": "Торговое освещение",
+                "SVETOVOY_POTOK_LM": "2400",
+                "SPOSOB_MONTAZHA": "На шинопровод",
+                "TIP_ISTOCHNIKA": "Светодиодный источник света (LED)",
+                "TIP_RASSEIVATELYA_": "Стекло",
+                "TIP_SVETILNIKA": "Трековый",
+                "TORGOVAYA_MARKA": " MEGALIGHT",
+                "FORMA_LAMPY": "Рефлекторная (MR16)",
+                "TSVET_KORPUSA": "Белый/Черный",
+                "TSVETOVAYA_TEMPERATURA": "4000"
+              },
+              "source": "https://ekt.kz/api/products",
+              "fetched_at": "2026-09-23T12:32:38.665078+00:00",
+              "certificates": [],
+              "warnings": []
+            },
+            "reason": "Для артикула ярп4520: Совпадает полное обозначение модели в каталоге. Наличие 341 шт. проверено по API.",
             "differences": [
-              "Другой артикул каталога: ярп4520 → 150200474_. Проверьте исполнение и комплектность перед заменой."
+              "Артикул: ярп4520 → 150200474_. Проверьте исполнение, габариты и комплектность перед заменой."
+            ]
+          },
+          {
+            "product": {
+              "id": 23092,
+              "name": "LED TRADE 30W 2400Lm d92x152 4000K IP20 MEGALIGHT (30)",
+              "article": "150200473_",
+              "description": "Светодиодный светильник направленного освещения. Применяется для освещения выставочных залов, в магазинах, в музее, для освещения витрин и т.п. Адаптер крепления к шинопроводу идёт в комплекте. Способ установки: Крепится на 2-линейный алюминиевый шинопровод. Технические характеристики: Материал светильника: алюминий. Корпус адаптера: ABS пластик . Шинопровод: листовая сталь. Мощность: 30 Вт. Цветность: 4000 К. Световой поток: 2400 Лм. Размеры: d-92x152. IP20",
+              "price": 3990,
+              "quantity": 960,
+              "stores": [
+                {
+                  "id": 3,
+                  "name": "Шымкент (ул.Байдукова)",
+                  "quantity": 0
+                },
+                {
+                  "id": 9,
+                  "name": "Торговый зал",
+                  "quantity": 0
+                },
+                {
+                  "id": 13,
+                  "name": "Алматы",
+                  "quantity": 890
+                },
+                {
+                  "id": 17,
+                  "name": "Витрина ТЗ",
+                  "quantity": 0
+                },
+                {
+                  "id": 18,
+                  "name": "Усть-Каменогорск",
+                  "quantity": 25
+                },
+                {
+                  "id": 19,
+                  "name": "Тараз",
+                  "quantity": 12
+                },
+                {
+                  "id": 20,
+                  "name": "Атырау",
+                  "quantity": 1
+                },
+                {
+                  "id": 21,
+                  "name": "Караганда",
+                  "quantity": 8
+                },
+                {
+                  "id": 22,
+                  "name": "Новосибирск",
+                  "quantity": 0
+                },
+                {
+                  "id": 23,
+                  "name": "Актау",
+                  "quantity": 1
+                },
+                {
+                  "id": 24,
+                  "name": "Нур-Султан",
+                  "quantity": 17
+                },
+                {
+                  "id": 25,
+                  "name": "Шымкент (Тассай)",
+                  "quantity": 6
+                }
+              ],
+              "image": "https://ekt.kz/upload/iblock/73d/fdmrdy20vjexlq9a4emjpgcjt9r0twuz/led_trade_30w_2400lm_d92x152_4000k_ip20_megalight_30.jpg",
+              "url": "https://ekt.kz/catalog/svetilniki_lampy/svetilniki_dlya_vnutrennego_osveshcheniya/lampy_led_nastolnye/svetilniki_1/led_trade_30w_2400lm_d92x152_4000k_ip20_megalight_30/",
+              "offers": [],
+              "properties": {
+                "BRAND_PRIORITY": "1",
+                "DOPOLNITELNAYA_ZASHCHITA": "Без решетки",
+                "CML2_ARTICLE": "150200473_",
+                "NOVINKA": "Нет",
+                "SPETSPREDLOZHENIE": "Да",
+                "CML2_BAR_CODE": "4870200484001",
+                "CML2_TRAITS": [
+                  "Товары приобретенные",
+                  "Товар",
+                  "150200473_",
+                  "Нет",
+                  "Да",
+                  "LED TRADE 30w 2400Lm d92х152 4000K IP20 MEGALIGHT (30)",
+                  "0,001",
+                  "0,2",
+                  "0,1",
+                  "0,27",
+                  "0,1"
+                ],
+                "CML2_TAXES": "16",
+                "KRATNOST_MIN": "1",
+                "KRATNOST_MAKS": "30",
+                "IMYAKARTINKI": "LOGO-MEGALIGHT.jpg",
+                "KRATNOST_MAKS_1": "30",
+                "ARTIKULPOSTAVSHCHIKA": "150200473_",
+                "KATEGORIYA_SVETILNIKA": "Светильники для внутреннего освещения",
+                "MATERIAL_KORPUSA": "Металл",
+                "MOSHCHNOST_W": "30",
+                "OBLAST_PRIMENENIYA": "Торговое освещение",
+                "SVETOVOY_POTOK_LM": "2400",
+                "SPOSOB_MONTAZHA": "На шинопровод",
+                "TIP_ISTOCHNIKA": "Светодиодный источник света (LED)",
+                "TIP_RASSEIVATELYA_": "Стекло",
+                "TIP_SVETILNIKA": "Трековый",
+                "TORGOVAYA_MARKA": " MEGALIGHT",
+                "FORMA_LAMPY": "Рефлекторная (MR16)",
+                "TSVET_KORPUSA": " Белый",
+                "TSVETOVAYA_TEMPERATURA": "4000"
+              },
+              "source": "https://ekt.kz/api/products",
+              "fetched_at": "2026-09-23T12:32:39.766496+00:00",
+              "certificates": [],
+              "warnings": []
+            },
+            "reason": "Для артикула ярп4520: Совпадают характеристики: Мощность — 30; Цветовая температура — 4000; Степень защиты — IP20. Наличие 960 шт. проверено по API.",
+            "differences": [
+              "Артикул: ярп4520 → 150200473_. Проверьте исполнение, габариты и комплектность перед заменой.",
+              "Полная взаимозаменяемость не подтверждена данными каталога."
+            ]
+          },
+          {
+            "product": {
+              "id": 18989,
+              "name": "LED ДПБ KOMPAS 30W 2250Lm d320х102 4000K IP65 MEGALIGHT (10)",
+              "article": "150600651_",
+              "description": "Светильники Kompas Megalight - светодиодные энергосберегающие пылевлагозащищенные. Обладают степенью защиты от пыли и влаги IP65 и могут быть использованы в помещениях с повышенным содержанием пыли и влаги. Светильники повторяют форму и размеры стандартных светильников НПБ и обладают противоударными свойствами. \r\n\r\n\r\n Технические характеристики:\r\n\r\n\r\n\t Тип источника света: высокоэффективные светодиоды\r\n\t Материал: корпус выполнен из высокопрочного пластика и обладает противоударными свойствами, светильник оснащен алюминиевым радиатором, что обеспечивает стабильный срок службы светодиодов. Светильник оснащен алюминиевым отражателем, что обеспечивает равномерное распределение света\r\n\t Установка: осуществляется на поверхность потолка или на стену\r\n\r\n\r\n Назначение:\r\n\r\n\r\n\t Применяется для общего освещения:\r\n\t • промышленных помещений\r\n\t • складских помещений\r\n\t • лестниц и коридоров",
+              "price": 6955,
+              "quantity": 3618,
+              "stores": [
+                {
+                  "id": 2,
+                  "name": "Брак MEGALIGHT",
+                  "quantity": 0
+                },
+                {
+                  "id": 3,
+                  "name": "Шымкент (ул.Байдукова)",
+                  "quantity": 46
+                },
+                {
+                  "id": 4,
+                  "name": "Маркетинг MEGALIGHT",
+                  "quantity": 0
+                },
+                {
+                  "id": 5,
+                  "name": "Никонов",
+                  "quantity": 0
+                },
+                {
+                  "id": 6,
+                  "name": "РЦ MEGALIGHT",
+                  "quantity": 0
+                },
+                {
+                  "id": 7,
+                  "name": "Талдыкорган",
+                  "quantity": 0
+                },
+                {
+                  "id": 8,
+                  "name": "Тастак",
+                  "quantity": 0
+                },
+                {
+                  "id": 9,
+                  "name": "Торговый зал",
+                  "quantity": 0
+                },
+                {
+                  "id": 10,
+                  "name": "Востановленный продукт",
+                  "quantity": 0
+                },
+                {
+                  "id": 11,
+                  "name": "перемещение",
+                  "quantity": 0
+                },
+                {
+                  "id": 12,
+                  "name": "Основной склад",
+                  "quantity": 0
+                },
+                {
+                  "id": 13,
+                  "name": "Алматы",
+                  "quantity": 2748
+                },
+                {
+                  "id": 14,
+                  "name": "ЩИТОВОЕ",
+                  "quantity": 0
+                },
+                {
+                  "id": 15,
+                  "name": "РЦ UNIT",
+                  "quantity": 0
+                },
+                {
+                  "id": 16,
+                  "name": "Образцы Отдел Закупа",
+                  "quantity": 0
+                },
+                {
+                  "id": 17,
+                  "name": "Витрина ТЗ",
+                  "quantity": 0
+                },
+                {
+                  "id": 18,
+                  "name": "Усть-Каменогорск",
+                  "quantity": 34
+                },
+                {
+                  "id": 19,
+                  "name": "Тараз",
+                  "quantity": 11
+                },
+                {
+                  "id": 20,
+                  "name": "Атырау",
+                  "quantity": 94
+                },
+                {
+                  "id": 21,
+                  "name": "Караганда",
+                  "quantity": 136
+                },
+                {
+                  "id": 22,
+                  "name": "Новосибирск",
+                  "quantity": 0
+                },
+                {
+                  "id": 23,
+                  "name": "Актау",
+                  "quantity": 28
+                },
+                {
+                  "id": 24,
+                  "name": "Нур-Султан",
+                  "quantity": 340
+                },
+                {
+                  "id": 25,
+                  "name": "Шымкент (Тассай)",
+                  "quantity": 181
+                }
+              ],
+              "image": "https://ekt.kz/upload/iblock/06e/uox9vdkp0pgy9lb9o7hu0d48ndqdcz27/led_dpb_kompas_30w_2250lm_d320kh113_4000k_ip65_megalight_10.jpg",
+              "url": "https://ekt.kz/catalog/svetilniki_lampy/svetilniki_dlya_vnutrennego_osveshcheniya/vstraivaemye_lyuministsentnye_lvo/bez_datchika_dvizheniya/led_dpb_kompas_30w_2250lm_d320kh113_4000k_ip65_megalight_10/",
+              "offers": [],
+              "properties": {
+                "BRAND_PRIORITY": "1",
+                "DOPOLNITELNAYA_ZASHCHITA": "Без решетки",
+                "CML2_ARTICLE": "150600651_",
+                "NOVINKA": "Нет",
+                "SPETSPREDLOZHENIE": "Нет",
+                "CML2_TRAITS": [
+                  "Товары приобретенные",
+                  "Товар",
+                  "150600651_",
+                  "Нет",
+                  "Нет",
+                  "Светодиодный светильник LED ДПБ KOMPAS 30w 2250Lm D320х113 4000K IP65 MEGALIGHT (10) BL320CP06 уличное освещение",
+                  "0,012",
+                  "0,63",
+                  "0,1",
+                  "0,32",
+                  "0,32"
+                ],
+                "CML2_TAXES": "16",
+                "KRATNOST_MIN": "1",
+                "KRATNOST_MAKS": "10",
+                "IMYAKARTINKI": "LOGO-MEGALIGHT.jpg",
+                "KRATNOST_MAKS_1": "10",
+                "KOLICHESTVOVREZERVE": "44",
+                "ARTIKULPOSTAVSHCHIKA": "150600651_",
+                "KATEGORIYA_SVETILNIKA": "Герметичные для внутреннего и наружнего освещения",
+                "MATERIAL_KORPUSA": "Металл",
+                "MOSHCHNOST_W": "30",
+                "OBLAST_PRIMENENIYA": "Светильники для ЖКХ",
+                "SVETOVOY_POTOK_LM": "2400",
+                "SPOSOB_MONTAZHA": "Накладной",
+                "TIP_ISTOCHNIKA": "Светодиодный источник света (LED)",
+                "TIP_RASSEIVATELYA_": "Опаловый рассеиватель (белый)",
+                "TIP_SVETILNIKA": "Влагозащищенный",
+                "TORGOVAYA_MARKA": " MEGALIGHT",
+                "TSVET_KORPUSA": " Белый",
+                "TSVETOVAYA_TEMPERATURA": "4000"
+              },
+              "source": "https://ekt.kz/api/products",
+              "fetched_at": "2026-09-23T12:32:39.476293+00:00",
+              "certificates": [],
+              "warnings": []
+            },
+            "reason": "Для артикула ярп4520: Совпадают характеристики: Мощность — 30; Цветовая температура — 4000. Наличие 3618 шт. проверено по API.",
+            "differences": [
+              "Степень защиты: IP20 → IP65.",
+              "Артикул: ярп4520 → 150600651_. Проверьте исполнение, габариты и комплектность перед заменой.",
+              "Полная взаимозаменяемость не подтверждена данными каталога."
             ]
           }
+        ],
+        "suggestions": [
+          "Как заказать товар?",
+          "Какие условия оплаты и доставки?"
         ]
       }
     },
     {
-      "uc": "UC-03",
-      "user": "Как оплатить покупку, получить доставку и какая минимальная партия?",
-      "seconds": 1.279,
+      "file": "inputs/delivery_note_scan.pdf",
+      "prompt": "Нужно докупить те же позиции в тех же количествах, что в этой накладной. Проверь по каталогу.",
       "response": {
-        "text": "Я понял ваш запрос о способах оплаты, доставке и минимальной партии.",
-        "extracted": [],
+        "text": "Разобрал позиций: 2. Ниже карточки каталога и проверка каждой строки. Сверьте результат с документом, выберите подходящее и подтвердите состав отдельно.",
+        "extracted": [
+          "027024",
+          "2",
+          "027220",
+          "1"
+        ],
+        "review": [
+          {
+            "position": 1,
+            "query": "027024",
+            "quantity": 2,
+            "product_id": 515283,
+            "candidates": [
+              515283
+            ],
+            "status": "ready",
+            "message": "Совпадение по коду; запрошенное количество доступно.",
+            "available": 16
+          },
+          {
+            "position": 2,
+            "query": "027220",
+            "quantity": 1,
+            "product_id": 515285,
+            "candidates": [
+              515285
+            ],
+            "status": "ready",
+            "message": "Совпадение по коду; запрошенное количество доступно.",
+            "available": 26
+          }
+        ],
         "products": [
           {
-            "id": 45357,
-            "article": "ярп4520",
-            "name": "***LED STARK 30W 2400Lm d98x180 4000K IP20 MEGALIGHT (20)",
-            "quantity": 0,
-            "price": 1810,
-            "fetched_at": "2026-09-23T10:54:14.479560+00:00",
+            "id": 515283,
+            "name": "027024 АВ DRX125 MT 3ф 40А 20ka Legrand (1)",
+            "article": "200300277_",
+            "description": "Автоматический выключатель DRX125 MT 3P 40А 20kA (арт. 027024) Legrand – эффективное защитное устройство для предотвращения перегрузок и коротких замыканий в электрических сетях.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX125 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 40А\r\n\tОтключающая способность: 20kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Применяется в промышленных и коммерческих электроустановках, обеспечивая надежную защиту оборудования и электросетей. Прост в установке и эксплуатации, устойчив к высоким нагрузкам.",
+            "price": 29810,
+            "quantity": 16,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 3
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 5
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 0
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 4
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 2
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 1
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/a3c/f5e37vjhbl97v75imhto4jhgjes7h4bj/027024_av_drx125_mt_3f_40a_20ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027024_av_drx125_mt_3f_40a_20ka_legrand_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "200300277_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "RECOMMEND": [
+                "21856",
+                "20516",
+                "48783",
+                "57780"
+              ],
+              "CML2_BAR_CODE": "3245060270247",
+              "CML2_TRAITS": [
+                "Готовая продукция",
+                "Товар",
+                "200300277_",
+                "Да",
+                "Нет",
+                "027024 АВ DRX125 MT 3ф 40А 20ka Legrand (1)",
+                "0,001215",
+                "0,836",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "Legrand.jpg",
+              "ARTIKULPOSTAVSHCHIKA": "027024",
+              "OBYEM": "Автоматический выключатель",
+              "BLOG_POST_ID": "1781",
+              "KOLICHESTVO_POLYUSOV": "3",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "20кА",
+              "NOMINALNOE_NAPRYAZHENIE": "400В",
+              "NOMINALNYY_TOK": "40А",
+              "TORGOVAYA_MARKA": "Legrand"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:33.124264+00:00",
+            "certificates": [],
+            "warnings": []
+          },
+          {
+            "id": 515285,
+            "name": "027220 АВ DRX125 MT 3ф 63А 20ka Legrand (1)",
+            "article": "200300279_",
+            "description": "Автоматический выключатель DRX125 MT 3P 63А 20kA (арт. 027220) Legrand – надежное устройство для защиты электрических цепей от перегрузок и коротких замыканий в распределительных сетях.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX125 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 63А\r\n\tОтключающая способность: 20kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Автоматический выключатель применяется в промышленных и коммерческих электроустановках, обеспечивая надежную и долговечную защиту оборудования. Прост в установке и эксплуатации.",
+            "price": 31620,
+            "quantity": 26,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 3
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 6
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 2
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 8
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 1
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 5
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/bcb/704wk40y4bhqiw3r8fx1k30vxudgn97b/027220_av_drx125_mt_3f_63a_20ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027220_av_drx125_mt_3f_63a_20ka_legrand_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "200300279_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "RECOMMEND": [
+                "19297",
+                "30554",
+                "57764"
+              ],
+              "CML2_BAR_CODE": "3414970344045",
+              "CML2_TRAITS": [
+                "Готовая продукция",
+                "Товар",
+                "200300279_",
+                "Да",
+                "Нет",
+                "027220 АВ DRX125 MT 3ф 63А 20ka Legrand (1)",
+                "0,001215",
+                "0,857",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "Legrand.jpg",
+              "ARTIKULPOSTAVSHCHIKA": "027220",
+              "OBYEM": "Автоматический выключатель",
+              "KOLICHESTVO_POLYUSOV": "3",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "20кА",
+              "NOMINALNOE_NAPRYAZHENIE": "400В",
+              "NOMINALNYY_TOK": "63 А",
+              "TORGOVAYA_MARKA": "Legrand"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:30.796086+00:00",
             "certificates": [],
             "warnings": []
           }
         ],
-        "alternatives": [],
-        "terms": {
-          "source": "https://ekt.kz/checkout-delivery/",
-          "fetched_at": "2026-09-23T10:54:18.121419+00:00",
-          "minimum": "Общая минимальная сумма или партия на странице не опубликована. Для товара используйте минимальную кратность в его карточке; это не минимальная сумма заказа."
+        "suggestions": [
+          "Как заказать товар?",
+          "Какие условия оплаты и доставки?"
+        ]
+      }
+    },
+    {
+      "file": "inputs/delivery_note_image.jpg",
+      "prompt": "Это изображение накладной. Найди обе позиции, нужно докупить столько же штук.",
+      "response": {
+        "text": "Разобрал позиций: 2. Ниже карточки каталога и проверка каждой строки. Сверьте результат с документом, выберите подходящее и подтвердите состав отдельно.",
+        "extracted": [
+          "027024",
+          "2",
+          "027220",
+          "1"
+        ],
+        "review": [
+          {
+            "position": 1,
+            "query": "027024",
+            "quantity": 2,
+            "product_id": 515283,
+            "candidates": [
+              515283
+            ],
+            "status": "ready",
+            "message": "Совпадение по коду; запрошенное количество доступно.",
+            "available": 16
+          },
+          {
+            "position": 2,
+            "query": "027220",
+            "quantity": 1,
+            "product_id": 515285,
+            "candidates": [
+              515285
+            ],
+            "status": "ready",
+            "message": "Совпадение по коду; запрошенное количество доступно.",
+            "available": 26
+          }
+        ],
+        "products": [
+          {
+            "id": 515283,
+            "name": "027024 АВ DRX125 MT 3ф 40А 20ka Legrand (1)",
+            "article": "200300277_",
+            "description": "Автоматический выключатель DRX125 MT 3P 40А 20kA (арт. 027024) Legrand – эффективное защитное устройство для предотвращения перегрузок и коротких замыканий в электрических сетях.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX125 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 40А\r\n\tОтключающая способность: 20kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Применяется в промышленных и коммерческих электроустановках, обеспечивая надежную защиту оборудования и электросетей. Прост в установке и эксплуатации, устойчив к высоким нагрузкам.",
+            "price": 29810,
+            "quantity": 16,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 3
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 5
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 0
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 4
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 2
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 1
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/a3c/f5e37vjhbl97v75imhto4jhgjes7h4bj/027024_av_drx125_mt_3f_40a_20ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027024_av_drx125_mt_3f_40a_20ka_legrand_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "200300277_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "RECOMMEND": [
+                "21856",
+                "20516",
+                "48783",
+                "57780"
+              ],
+              "CML2_BAR_CODE": "3245060270247",
+              "CML2_TRAITS": [
+                "Готовая продукция",
+                "Товар",
+                "200300277_",
+                "Да",
+                "Нет",
+                "027024 АВ DRX125 MT 3ф 40А 20ka Legrand (1)",
+                "0,001215",
+                "0,836",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "Legrand.jpg",
+              "ARTIKULPOSTAVSHCHIKA": "027024",
+              "OBYEM": "Автоматический выключатель",
+              "BLOG_POST_ID": "1781",
+              "KOLICHESTVO_POLYUSOV": "3",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "20кА",
+              "NOMINALNOE_NAPRYAZHENIE": "400В",
+              "NOMINALNYY_TOK": "40А",
+              "TORGOVAYA_MARKA": "Legrand"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:33.124264+00:00",
+            "certificates": [],
+            "warnings": []
+          },
+          {
+            "id": 515285,
+            "name": "027220 АВ DRX125 MT 3ф 63А 20ka Legrand (1)",
+            "article": "200300279_",
+            "description": "Автоматический выключатель DRX125 MT 3P 63А 20kA (арт. 027220) Legrand – надежное устройство для защиты электрических цепей от перегрузок и коротких замыканий в распределительных сетях.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX125 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 63А\r\n\tОтключающая способность: 20kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Автоматический выключатель применяется в промышленных и коммерческих электроустановках, обеспечивая надежную и долговечную защиту оборудования. Прост в установке и эксплуатации.",
+            "price": 31620,
+            "quantity": 26,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 3
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 6
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 2
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 8
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 1
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 5
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/bcb/704wk40y4bhqiw3r8fx1k30vxudgn97b/027220_av_drx125_mt_3f_63a_20ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027220_av_drx125_mt_3f_63a_20ka_legrand_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "200300279_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "RECOMMEND": [
+                "19297",
+                "30554",
+                "57764"
+              ],
+              "CML2_BAR_CODE": "3414970344045",
+              "CML2_TRAITS": [
+                "Готовая продукция",
+                "Товар",
+                "200300279_",
+                "Да",
+                "Нет",
+                "027220 АВ DRX125 MT 3ф 63А 20ka Legrand (1)",
+                "0,001215",
+                "0,857",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "Legrand.jpg",
+              "ARTIKULPOSTAVSHCHIKA": "027220",
+              "OBYEM": "Автоматический выключатель",
+              "KOLICHESTVO_POLYUSOV": "3",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "20кА",
+              "NOMINALNOE_NAPRYAZHENIE": "400В",
+              "NOMINALNYY_TOK": "63 А",
+              "TORGOVAYA_MARKA": "Legrand"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:30.796086+00:00",
+            "certificates": [],
+            "warnings": []
+          }
+        ],
+        "suggestions": [
+          "Как заказать товар?",
+          "Какие условия оплаты и доставки?"
+        ]
+      }
+    },
+    {
+      "file": "inputs/product_photo.jpg",
+      "prompt": "Найди такой же автомат по маркировке на фото. Нужны 2 штуки. Покажи характеристики и наличие.",
+      "response": {
+        "text": "Разобрал позиций: 1. Ниже карточки каталога и проверка каждой строки. Сверьте результат с документом, выберите подходящее и подтвердите состав отдельно.\nДля строк без точного совпадения напишите код производителя или пришлите крупное чёткое фото маркировки. По внешнему виду точную модель не подтверждаю.",
+        "extracted": [
+          "EDRX 125 50A"
+        ],
+        "review": [
+          {
+            "position": 1,
+            "query": "EDRX 125 50A",
+            "quantity": 2,
+            "product_id": null,
+            "candidates": [
+              509499,
+              509506,
+              20802,
+              24539
+            ],
+            "status": "ambiguous",
+            "message": "Нужен выбор: проверьте карточки и уточните точный артикул. Замена не выбрана автоматически.",
+            "available": null
+          }
+        ],
+        "products": [
+          {
+            "id": 509499,
+            "name": "Авт.выкл. G125T 10kA 3П/3Т 50A (1)",
+            "article": "010400871_",
+            "description": "Новая серия GoPact — это специально разработанная линейка автоматических выключателей в литом корпусе, представляющая собой доступное и надежное решение для организации функций защиты при распределении электроэнергии.\r\n \r\nНовая линейка GoPact представлена на номинальные токи до 800 А, оснащена расцепителями различного типа, обладает отключающей способностью до 70 кА и имеет большой набор аксессуаров, что позволяет применять эти аппараты на гражданских, коммерческих и промышленных объектах.",
+            "price": 18430,
+            "quantity": 5,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 1
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 3
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 0
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 0
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 0
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 0
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/e9e/b3wnx2gw10m5gmdjg8k6ebzujv7gpv88/avt_vykl_g125t_10ka_3p_3t_50a_1.jpg",
+            "url": "https://ekt.kz/catalog/novinki/novinka_gopact_se/avt_vykl_g125t_10ka_3p_3t_50a_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "010400871_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "RECOMMEND": [
+                "48798",
+                "25439",
+                "34322",
+                "21473",
+                "49525"
+              ],
+              "CML2_BAR_CODE": "3606482192355",
+              "CML2_TRAITS": [
+                "Товары приобретенные",
+                "Товар",
+                "010400871_",
+                "Нет",
+                "Нет",
+                "Авт.выкл. G125T 10kA 3П/3Т  50A (1)",
+                "0,003",
+                "0,7",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "SchneiderElectric.png",
+              "KOLICHESTVOVREZERVE": "1",
+              "ARTIKULPOSTAVSHCHIKA": "G12T3F50",
+              "OBYEM": "Автоматический выключатель",
+              "VYKHODNOE_NAPRYAZHENIE_": "20",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "10кА",
+              "NOMINALNYY_TOK": "50А",
+              "TORGOVAYA_MARKA": "Schneider Electric"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:49.617186+00:00",
+            "certificates": [],
+            "warnings": []
+          },
+          {
+            "id": 509506,
+            "name": "Авт.выкл. G125E 15kA 3П/3Т 50A (1)",
+            "article": "010400878_",
+            "description": "Новая серия GoPact — это специально разработанная линейка автоматических выключателей в литом корпусе, представляющая собой доступное и надежное решение для организации функций защиты при распределении электроэнергии.\r\n \r\nНовая линейка GoPact представлена на номинальные токи до 800 А, оснащена расцепителями различного типа, обладает отключающей способностью до 70 кА и имеет большой набор аксессуаров, что позволяет применять эти аппараты на гражданских, коммерческих и промышленных объектах.",
+            "price": 20270,
+            "quantity": 6,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 1
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 4
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 0
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 0
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 0
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 0
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/8d2/uapcg5oholehs320rg9e465uaglv1uv3/avt_vykl_g125e_15ka_3p_3t_50a_1.jpg",
+            "url": "https://ekt.kz/catalog/novinki/novinka_gopact_se/avt_vykl_g125e_15ka_3p_3t_50a_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "010400878_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "RECOMMEND": [
+                "22801",
+                "41139",
+                "20974",
+                "34331"
+              ],
+              "CML2_BAR_CODE": "\n3606482192553",
+              "CML2_TRAITS": [
+                "Товары приобретенные",
+                "Товар",
+                "010400878_",
+                "Нет",
+                "Нет",
+                "Авт.выкл. G125E 15kA 3П/3Т  50A (1)",
+                "0,003",
+                "0,7",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "SchneiderElectric.png",
+              "KOLICHESTVOVREZERVE": "1",
+              "ARTIKULPOSTAVSHCHIKA": "G12E3F50",
+              "OBYEM": "Автоматический выключатель",
+              "VYKHODNOE_NAPRYAZHENIE_": "20",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "15кА",
+              "NOMINALNYY_TOK": "50А",
+              "TORGOVAYA_MARKA": "Schneider Electric"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:50.114206+00:00",
+            "certificates": [],
+            "warnings": []
+          },
+          {
+            "id": 20802,
+            "name": "Стационарная розетка 125 3р+ре+n 32А 380В IP 44 UNIT (10/60)",
+            "article": "020100116_",
+            "description": "Стационарная розетка  125 3р+ре+n 32А 380В IP 44 UNIT (10/100)",
+            "price": 1880,
+            "quantity": 2115,
+            "stores": [
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 2043
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 71
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 0
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 0
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 0
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/848/statsionarnaya_rozetka_125_3r_re_n_32a_380v_ip_44_unit_10_100.png",
+            "url": "https://ekt.kz/catalog/spets_predlozhenie/unit_cashback/statsionarnaya_rozetka_125_3r_re_n_32a_380v_ip_44_unit_10_60/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "020100116_",
+              "NOVINKA": "Нет",
+              "SPETSPREDLOZHENIE": "Нет",
+              "CML2_BAR_CODE": "4870200486135",
+              "CML2_TRAITS": [
+                "Товары приобретенные",
+                "Товар",
+                "020100116_",
+                "Нет",
+                "Нет",
+                "Стационарная розетка 125 3р+ре+n 32А 380В IP 44 UNIT (10/100)",
+                "0,001",
+                "0,01",
+                "0,11",
+                "0,15",
+                "0,07"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "KRATNOST_MAKS": "100",
+              "IMYAKARTINKI": "UNIT-logo1.png",
+              "KOLICHESTVOVREZERVE": "267",
+              "ARTIKULPOSTAVSHCHIKA": "020100116_",
+              "KATEGORIYA": " Силовая розетка",
+              "MATERIAL_IZOLIRUYUSHCHEY_CHASTI_KORPUSA": "Пластик",
+              "NALICHIE_KRYSHKI_ZAGLUSHKI": "Да",
+              "NOMINALNOE_NAPRYAZHENIE": "380В",
+              "NOMINALNYY_TOK": "32А",
+              "TIP_KONTAKTOV": "3L+N+Pe",
+              "TIP_USTANOVKI": "Накладная",
+              "TORGOVAYA_MARKA": "UNIT"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:49.956058+00:00",
+            "certificates": [],
+            "warnings": []
+          },
+          {
+            "id": 24539,
+            "name": "Доп. контакт ДК-125/160 (АК 32/33) TDM !!!",
+            "article": "011100125_",
+            "description": "Дополнительный контакт ДК предназначен для сигнализации о положении силовых контактов выключателя - включено или отключено.\r\n\t Дистанционное оповещение и мониторинг состояния автоматического выключателя.",
+            "price": 365,
+            "quantity": 415,
+            "stores": [
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 415
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 0
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 0
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 0
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 0
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 0
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/9fe/dop_kontakt_dk_125_160_ak_32_33_tdm_.png",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/dop_ustroystva_k_avt_vyklyuchatelyam/dop_kontakty_dk_dkp/dop_kontakt_dk_125_160_ak_32_33_tdm_/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "011100125_",
+              "NOVINKA": "Нет",
+              "SPETSPREDLOZHENIE": "Да",
+              "CML2_TRAITS": [
+                "Товары приобретенные",
+                "Товар",
+                "011100125_",
+                "Нет",
+                "Да",
+                "Доп. контакт ДК-125/160 (АК 32/33) TDM",
+                "0",
+                "0,05",
+                "0,04",
+                "0,05",
+                "0,06"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "KRATNOST_MAKS": "1",
+              "IMYAKARTINKI": "tdm-logo.jpg",
+              "ARTIKULPOSTAVSHCHIKA": "011100125_",
+              "TORGOVAYA_MARKA": "TDM"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:49.799839+00:00",
+            "certificates": [],
+            "warnings": []
+          }
+        ],
+        "suggestions": [
+          "Связаться с менеджером",
+          "Как уточнить артикул по фото?"
+        ],
+        "website": "https://ekt.kz/catalog/"
+      },
+      "clarification": {
+        "prompt": "Уточнил маркировку на самом аппарате: код производителя 027005. Нужны 2 штуки. Покажи этот товар и наличие, пока не добавляй.",
+        "response": {
+          "text": "Проверю наличие и характеристики товара с кодом 027005. Одну минуту, пожалуйста.",
+          "extracted": [
+            "027005"
+          ],
+          "products": [
+            {
+              "id": 515280,
+              "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+              "article": "200300274_",
+              "description": "Автоматический выключатель DRX125 MT 3P 50А 10kA (арт. 027005) Legrand – это надежное защитное устройство, предназначенное для защиты электрических цепей от перегрузок и коротких замыканий.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX125 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 50А\r\n\tОтключающая способность: 10kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Автоматический выключатель применяется в распределительных системах для защиты оборудования и проводки в промышленных, коммерческих и жилых объектах. Обеспечивает надежную работу, прост в установке и обслуживании.",
+              "price": 26930,
+              "quantity": 33,
+              "stores": [
+                {
+                  "id": 2,
+                  "name": "Брак MEGALIGHT",
+                  "quantity": 0
+                },
+                {
+                  "id": 3,
+                  "name": "Шымкент (ул.Байдукова)",
+                  "quantity": 2
+                },
+                {
+                  "id": 4,
+                  "name": "Маркетинг MEGALIGHT",
+                  "quantity": 0
+                },
+                {
+                  "id": 5,
+                  "name": "Никонов",
+                  "quantity": 0
+                },
+                {
+                  "id": 6,
+                  "name": "РЦ MEGALIGHT",
+                  "quantity": 0
+                },
+                {
+                  "id": 7,
+                  "name": "Талдыкорган",
+                  "quantity": 0
+                },
+                {
+                  "id": 8,
+                  "name": "Тастак",
+                  "quantity": 0
+                },
+                {
+                  "id": 9,
+                  "name": "Торговый зал",
+                  "quantity": 0
+                },
+                {
+                  "id": 10,
+                  "name": "Востановленный продукт",
+                  "quantity": 0
+                },
+                {
+                  "id": 11,
+                  "name": "перемещение",
+                  "quantity": 0
+                },
+                {
+                  "id": 12,
+                  "name": "Основной склад",
+                  "quantity": 0
+                },
+                {
+                  "id": 13,
+                  "name": "Алматы",
+                  "quantity": 25
+                },
+                {
+                  "id": 14,
+                  "name": "ЩИТОВОЕ",
+                  "quantity": 0
+                },
+                {
+                  "id": 15,
+                  "name": "РЦ UNIT",
+                  "quantity": 0
+                },
+                {
+                  "id": 16,
+                  "name": "Образцы Отдел Закупа",
+                  "quantity": 0
+                },
+                {
+                  "id": 17,
+                  "name": "Витрина ТЗ",
+                  "quantity": 0
+                },
+                {
+                  "id": 18,
+                  "name": "Усть-Каменогорск",
+                  "quantity": 0
+                },
+                {
+                  "id": 19,
+                  "name": "Тараз",
+                  "quantity": 0
+                },
+                {
+                  "id": 20,
+                  "name": "Атырау",
+                  "quantity": 3
+                },
+                {
+                  "id": 21,
+                  "name": "Караганда",
+                  "quantity": 0
+                },
+                {
+                  "id": 22,
+                  "name": "Новосибирск",
+                  "quantity": 0
+                },
+                {
+                  "id": 23,
+                  "name": "Актау",
+                  "quantity": 0
+                },
+                {
+                  "id": 24,
+                  "name": "Нур-Султан",
+                  "quantity": 2
+                },
+                {
+                  "id": 25,
+                  "name": "Шымкент (Тассай)",
+                  "quantity": 1
+                }
+              ],
+              "image": "https://ekt.kz/upload/iblock/bd5/b274l2s036wwlnwky905ike1p56e1094/027005_av_drx125_mt_3f_50a_10ka_legrand_1.jpg",
+              "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027005_av_drx125_mt_3f_50a_10ka_legrand_1/",
+              "offers": [],
+              "properties": {
+                "BRAND_PRIORITY": "1",
+                "CML2_ARTICLE": "200300274_",
+                "NOVINKA": "Да",
+                "SPETSPREDLOZHENIE": "Нет",
+                "RECOMMEND": [
+                  "28725",
+                  "24048",
+                  "37429"
+                ],
+                "CML2_BAR_CODE": "3245060270056",
+                "CML2_TRAITS": [
+                  "Готовая продукция",
+                  "Товар",
+                  "200300274_",
+                  "Да",
+                  "Нет",
+                  "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+                  "0,001215",
+                  "0,831",
+                  "0",
+                  "0",
+                  "0"
+                ],
+                "CML2_TAXES": "16",
+                "KRATNOST_MIN": "1",
+                "IMYAKARTINKI": "Legrand.jpg",
+                "KOLICHESTVOVREZERVE": "2",
+                "ARTIKULPOSTAVSHCHIKA": "027005",
+                "OBYEM": "Автоматический выключатель",
+                "BLOG_POST_ID": "1826",
+                "KOLICHESTVO_POLYUSOV": "3",
+                "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "10кА",
+                "NOMINALNOE_NAPRYAZHENIE": "400В",
+                "NOMINALNYY_TOK": "50 А",
+                "TORGOVAYA_MARKA": "Legrand"
+              },
+              "source": "https://ekt.kz/api/products",
+              "fetched_at": "2026-09-23T12:32:30.544523+00:00",
+              "certificates": [],
+              "warnings": []
+            }
+          ],
+          "suggestions": [
+            "Как заказать товар?",
+            "Какие условия оплаты и доставки?"
+          ]
         }
       }
     },
     {
-      "uc": "UC-04",
-      "user": "Подготовь добавление 2 шт 027005 и 1 шт 027028 в корзину.",
-      "seconds": 1.562,
+      "file": "inputs/erp_export.csv",
+      "prompt": "Найди позиции этой выгрузки у вас. Цена в файле от другого поставщика; нужна ваша цена и наличие.",
       "response": {
-        "text": "Проверьте выбранные позиции и количество. Для изменения корзины нужно ваше отдельное подтверждение.",
-        "extracted": [],
+        "text": "Разобрал позиций: 2. Ниже карточки каталога и проверка каждой строки. Сверьте результат с документом, выберите подходящее и подтвердите состав отдельно.",
+        "extracted": [
+          "REQ-8421;00004521;027008;Legrand DRX125 MT 3P 100A 10kA;4;шт;1;\"Цена другого поставщика; перепроверить\"",
+          "REQ-8421;00004522;027022;Legrand DRX125 MT 3P 25A 20kA;2;шт;2;\"Щит; запасная линия\""
+        ],
+        "review": [
+          {
+            "position": 1,
+            "query": "027008",
+            "quantity": 4,
+            "product_id": 515278,
+            "candidates": [
+              515278
+            ],
+            "status": "ready",
+            "message": "Совпадение по коду; запрошенное количество доступно.",
+            "available": 37
+          },
+          {
+            "position": 2,
+            "query": "027022",
+            "quantity": 2,
+            "product_id": 515282,
+            "candidates": [
+              515282
+            ],
+            "status": "ready",
+            "message": "Совпадение по коду; запрошенное количество доступно.",
+            "available": 34
+          }
+        ],
+        "products": [
+          {
+            "id": 515278,
+            "name": "027008 АВ DRX125 MT 3ф 100А 10ka Legrand (1)",
+            "article": "200300272_",
+            "description": "Автоматический выключатель DRX125 MT 3P 100А 10kA (арт. 027008) Legrand – надежное устройство защиты трехфазных электрических цепей от перегрузок и коротких замыканий. Предназначен для использования в коммерческих и промышленных установках.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX125 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 100А\r\n\tОтключающая способность: 10kA\r\n\tНоминальное напряжение: 400В AC\r\n\tТип расцепителя: термомагнитный\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Прост в установке и эксплуатации, обеспечивает стабильную работу электрических сетей, соответствует современным стандартам безопасности.",
+            "price": 29190,
+            "quantity": 37,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 2
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 13
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 6
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 4
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 3
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 8
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/b45/extoy4rcmfodfcxyjy2yiw99kt9y5qew/027008_av_drx125_mt_3f_100a_10ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027008_av_drx125_mt_3f_100a_10ka_legrand_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "200300272_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "CML2_BAR_CODE": "3245060270087",
+              "CML2_TRAITS": [
+                "Готовая продукция",
+                "Товар",
+                "200300272_",
+                "Да",
+                "Нет",
+                "027008 АВ DRX125 MT 3ф 100А 10ka Legrand (1)",
+                "0,001215",
+                "0,857",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "Legrand.jpg",
+              "KOLICHESTVOVREZERVE": "1",
+              "ARTIKULPOSTAVSHCHIKA": "027008",
+              "OBYEM": "Автоматический выключатель",
+              "BLOG_POST_ID": "1843",
+              "KOLICHESTVO_POLYUSOV": "3",
+              "VYKHODNOE_NAPRYAZHENIE_": "30",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "10кА",
+              "NOMINALNOE_NAPRYAZHENIE": "400В",
+              "NOMINALNYY_TOK": "100 А",
+              "TORGOVAYA_MARKA": "Legrand"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:54.623015+00:00",
+            "certificates": [],
+            "warnings": []
+          },
+          {
+            "id": 515282,
+            "name": "027022 АВ DRX125 MT 3ф 25А 20ka Legrand (1)",
+            "article": "200300276_",
+            "description": "Автоматический выключатель DRX125 MT 3P 25А 20kA (арт. 027022) Legrand – надежное устройство для защиты электрических сетей от перегрузок и коротких замыканий, обеспечивающее стабильную работу электрооборудования.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX125 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 25А\r\n\tОтключающая способность: 20kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Этот автоматический выключатель подходит для использования в промышленных и коммерческих электроустановках. Прост в монтаже, обладает высокой надежностью и долговечностью.",
+            "price": 29810,
+            "quantity": 34,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 3
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 23
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 0
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 2
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 3
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 2
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/0c0/b6j7ae4q60d8m1u8aojbpb0pwl3qpqug/027022_av_drx125_mt_3f_25a_20ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027022_av_drx125_mt_3f_25a_20ka_legrand_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "200300276_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "CML2_BAR_CODE": "3245060270223",
+              "CML2_TRAITS": [
+                "Готовая продукция",
+                "Товар",
+                "200300276_",
+                "Да",
+                "Нет",
+                "027022 АВ DRX125 MT 3ф 25А 20ka Legrand (1)",
+                "0,001215",
+                "0,833",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "Legrand.jpg",
+              "ARTIKULPOSTAVSHCHIKA": "027022",
+              "OBYEM": "Автоматический выключатель",
+              "BLOG_POST_ID": "1798",
+              "KOLICHESTVO_POLYUSOV": "3",
+              "VYKHODNOE_NAPRYAZHENIE_": "30",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "20кА",
+              "NOMINALNOE_NAPRYAZHENIE": "400В",
+              "NOMINALNYY_TOK": "25 А",
+              "TORGOVAYA_MARKA": "Legrand"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:54.745787+00:00",
+            "certificates": [],
+            "warnings": []
+          }
+        ],
+        "suggestions": [
+          "Как заказать товар?",
+          "Какие условия оплаты и доставки?"
+        ]
+      }
+    },
+    {
+      "file": "inputs/electrician_request.txt",
+      "prompt": "Проверь заявку электрика. Найди все позиции и покажи, что ещё надо уточнить.",
+      "response": {
+        "text": "Разобрал позиций: 3. Ниже карточки каталога и проверка каждой строки. Сверьте результат с документом, выберите подходящее и подтвердите состав отдельно.\nДля позиций без количества уточните, сколько штук нужно — пока они не выбраны для корзины.",
+        "extracted": [
+          "Legrand 027005",
+          "Legrand 027028",
+          "Legrand 027220"
+        ],
+        "review": [
+          {
+            "position": 1,
+            "query": "Legrand 027005",
+            "quantity": 2,
+            "product_id": 515280,
+            "candidates": [
+              515280
+            ],
+            "status": "ready",
+            "message": "Совпадение по коду; запрошенное количество доступно.",
+            "available": 33
+          },
+          {
+            "position": 2,
+            "query": "Legrand 027028",
+            "quantity": 1,
+            "product_id": 515281,
+            "candidates": [
+              515281
+            ],
+            "status": "ready",
+            "message": "Совпадение по коду; запрошенное количество доступно.",
+            "available": 17
+          },
+          {
+            "position": 3,
+            "query": "Legrand 027220",
+            "quantity": null,
+            "product_id": 515285,
+            "candidates": [
+              515285
+            ],
+            "status": "needs_quantity",
+            "message": "Количество не указано. Уточните его; 1 шт. не подставляется.",
+            "available": 26
+          }
+        ],
         "products": [
           {
             "id": 515280,
-            "article": "200300274_",
             "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
-            "quantity": 33,
+            "article": "200300274_",
+            "description": "Автоматический выключатель DRX125 MT 3P 50А 10kA (арт. 027005) Legrand – это надежное защитное устройство, предназначенное для защиты электрических цепей от перегрузок и коротких замыканий.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX125 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 50А\r\n\tОтключающая способность: 10kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Автоматический выключатель применяется в распределительных системах для защиты оборудования и проводки в промышленных, коммерческих и жилых объектах. Обеспечивает надежную работу, прост в установке и обслуживании.",
             "price": 26930,
-            "fetched_at": "2026-09-23T10:54:02.004291+00:00",
+            "quantity": 33,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 2
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 25
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 0
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 3
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 0
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 2
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/bd5/b274l2s036wwlnwky905ike1p56e1094/027005_av_drx125_mt_3f_50a_10ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027005_av_drx125_mt_3f_50a_10ka_legrand_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "200300274_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "RECOMMEND": [
+                "28725",
+                "24048",
+                "37429"
+              ],
+              "CML2_BAR_CODE": "3245060270056",
+              "CML2_TRAITS": [
+                "Готовая продукция",
+                "Товар",
+                "200300274_",
+                "Да",
+                "Нет",
+                "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+                "0,001215",
+                "0,831",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "Legrand.jpg",
+              "KOLICHESTVOVREZERVE": "2",
+              "ARTIKULPOSTAVSHCHIKA": "027005",
+              "OBYEM": "Автоматический выключатель",
+              "BLOG_POST_ID": "1826",
+              "KOLICHESTVO_POLYUSOV": "3",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "10кА",
+              "NOMINALNOE_NAPRYAZHENIE": "400В",
+              "NOMINALNYY_TOK": "50 А",
+              "TORGOVAYA_MARKA": "Legrand"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:30.544523+00:00",
             "certificates": [],
             "warnings": []
           },
           {
             "id": 515281,
-            "article": "200300275_",
             "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
-            "quantity": 17,
+            "article": "200300275_",
+            "description": "Автоматический выключатель DRX125 MT 3P 10А 20kA (арт. 027028) Legrand – защитное устройство для предотвращения перегрузок и коротких замыканий в электрических сетях, обеспечивающее стабильную и безопасную работу оборудования.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX125 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 10А\r\n\tОтключающая способность: 20kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Этот автоматический выключатель предназначен для применения в промышленных и коммерческих электроустановках. Обладает высокой надежностью, прост в установке и эксплуатации.",
             "price": 33130,
-            "fetched_at": "2026-09-23T10:54:02.089382+00:00",
+            "quantity": 17,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 1
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 11
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 0
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 4
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 0
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 0
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/ae7/0yitjpyjbua30sptdgoy3kf0r5spgbl7/027028_av_drx125_mt_3f_10a_20ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027028_av_drx125_mt_3f_10a_20ka_legrand_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "200300275_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "RECOMMEND": [
+                "18465",
+                "48789",
+                "24156",
+                "34347"
+              ],
+              "CML2_BAR_CODE": "3245060270285",
+              "CML2_TRAITS": [
+                "Готовая продукция",
+                "Товар",
+                "200300275_",
+                "Да",
+                "Нет",
+                "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+                "0,001215",
+                "0,875",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "Legrand.jpg",
+              "ARTIKULPOSTAVSHCHIKA": "027028",
+              "OBYEM": "Автоматический выключатель",
+              "BLOG_POST_ID": "1827",
+              "KOLICHESTVO_POLYUSOV": "3",
+              "VYKHODNOE_NAPRYAZHENIE_": "30",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "20кА",
+              "NOMINALNOE_NAPRYAZHENIE": "400В",
+              "NOMINALNYY_TOK": "100 А",
+              "TORGOVAYA_MARKA": "Legrand"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:30.644393+00:00",
+            "certificates": [],
+            "warnings": []
+          },
+          {
+            "id": 515285,
+            "name": "027220 АВ DRX125 MT 3ф 63А 20ka Legrand (1)",
+            "article": "200300279_",
+            "description": "Автоматический выключатель DRX125 MT 3P 63А 20kA (арт. 027220) Legrand – надежное устройство для защиты электрических цепей от перегрузок и коротких замыканий в распределительных сетях.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX125 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 63А\r\n\tОтключающая способность: 20kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Автоматический выключатель применяется в промышленных и коммерческих электроустановках, обеспечивая надежную и долговечную защиту оборудования. Прост в установке и эксплуатации.",
+            "price": 31620,
+            "quantity": 26,
+            "stores": [
+              {
+                "id": 2,
+                "name": "Брак MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 3,
+                "name": "Шымкент (ул.Байдукова)",
+                "quantity": 3
+              },
+              {
+                "id": 4,
+                "name": "Маркетинг MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 5,
+                "name": "Никонов",
+                "quantity": 0
+              },
+              {
+                "id": 6,
+                "name": "РЦ MEGALIGHT",
+                "quantity": 0
+              },
+              {
+                "id": 7,
+                "name": "Талдыкорган",
+                "quantity": 0
+              },
+              {
+                "id": 8,
+                "name": "Тастак",
+                "quantity": 0
+              },
+              {
+                "id": 9,
+                "name": "Торговый зал",
+                "quantity": 0
+              },
+              {
+                "id": 10,
+                "name": "Востановленный продукт",
+                "quantity": 0
+              },
+              {
+                "id": 11,
+                "name": "перемещение",
+                "quantity": 0
+              },
+              {
+                "id": 12,
+                "name": "Основной склад",
+                "quantity": 0
+              },
+              {
+                "id": 13,
+                "name": "Алматы",
+                "quantity": 6
+              },
+              {
+                "id": 14,
+                "name": "ЩИТОВОЕ",
+                "quantity": 0
+              },
+              {
+                "id": 15,
+                "name": "РЦ UNIT",
+                "quantity": 0
+              },
+              {
+                "id": 16,
+                "name": "Образцы Отдел Закупа",
+                "quantity": 0
+              },
+              {
+                "id": 17,
+                "name": "Витрина ТЗ",
+                "quantity": 0
+              },
+              {
+                "id": 18,
+                "name": "Усть-Каменогорск",
+                "quantity": 0
+              },
+              {
+                "id": 19,
+                "name": "Тараз",
+                "quantity": 2
+              },
+              {
+                "id": 20,
+                "name": "Атырау",
+                "quantity": 8
+              },
+              {
+                "id": 21,
+                "name": "Караганда",
+                "quantity": 1
+              },
+              {
+                "id": 22,
+                "name": "Новосибирск",
+                "quantity": 0
+              },
+              {
+                "id": 23,
+                "name": "Актау",
+                "quantity": 0
+              },
+              {
+                "id": 24,
+                "name": "Нур-Султан",
+                "quantity": 5
+              },
+              {
+                "id": 25,
+                "name": "Шымкент (Тассай)",
+                "quantity": 1
+              }
+            ],
+            "image": "https://ekt.kz/upload/iblock/bcb/704wk40y4bhqiw3r8fx1k30vxudgn97b/027220_av_drx125_mt_3f_63a_20ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027220_av_drx125_mt_3f_63a_20ka_legrand_1/",
+            "offers": [],
+            "properties": {
+              "BRAND_PRIORITY": "1",
+              "CML2_ARTICLE": "200300279_",
+              "NOVINKA": "Да",
+              "SPETSPREDLOZHENIE": "Нет",
+              "RECOMMEND": [
+                "19297",
+                "30554",
+                "57764"
+              ],
+              "CML2_BAR_CODE": "3414970344045",
+              "CML2_TRAITS": [
+                "Готовая продукция",
+                "Товар",
+                "200300279_",
+                "Да",
+                "Нет",
+                "027220 АВ DRX125 MT 3ф 63А 20ka Legrand (1)",
+                "0,001215",
+                "0,857",
+                "0",
+                "0",
+                "0"
+              ],
+              "CML2_TAXES": "16",
+              "KRATNOST_MIN": "1",
+              "IMYAKARTINKI": "Legrand.jpg",
+              "ARTIKULPOSTAVSHCHIKA": "027220",
+              "OBYEM": "Автоматический выключатель",
+              "KOLICHESTVO_POLYUSOV": "3",
+              "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "20кА",
+              "NOMINALNOE_NAPRYAZHENIE": "400В",
+              "NOMINALNYY_TOK": "63 А",
+              "TORGOVAYA_MARKA": "Legrand"
+            },
+            "source": "https://ekt.kz/api/products",
+            "fetched_at": "2026-09-23T12:32:30.796086+00:00",
             "certificates": [],
             "warnings": []
           }
         ],
-        "alternatives": [],
-        "proposal": {
-          "action": "add",
-          "items": [
-            {
-              "product_id": 515280,
-              "article": "200300274_",
-              "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
-              "quantity": 2,
-              "price": 26930,
-              "line_total": 53860
-            },
-            {
-              "product_id": 515281,
-              "article": "200300275_",
-              "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
-              "quantity": 1,
-              "price": 33130,
-              "line_total": 33130
-            }
-          ]
-        }
-      }
-    },
-    {
-      "uc": "UC-04 ambiguous reply",
-      "user": "ок",
-      "response": {
-        "text": "Для изменения корзины нужно отдельное «да, добавь» или кнопка подтверждения. Корзина не изменена.",
-        "extracted": [],
-        "products": [],
-        "alternatives": [],
-        "proposal": {
-          "action": "add",
-          "items": [
-            {
-              "product_id": 515280,
-              "article": "200300274_",
-              "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
-              "quantity": 2,
-              "price": 26930,
-              "line_total": 53860
-            },
-            {
-              "product_id": 515281,
-              "article": "200300275_",
-              "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
-              "quantity": 1,
-              "price": 33130,
-              "line_total": 33130
-            }
-          ]
-        }
-      },
-      "cart_count": 0
-    },
-    {
-      "uc": "UC-04 explicit consent",
-      "user": "да, добавь",
-      "response": {
-        "text": "Корзина обновлена по вашему подтверждению.",
-        "extracted": [],
-        "products": [],
-        "alternatives": [],
-        "cart": {
-          "items": [
-            {
-              "product_id": 515280,
-              "article": "200300274_",
-              "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
-              "quantity": 2,
-              "price": 26930,
-              "line_total": 53860
-            },
-            {
-              "product_id": 515281,
-              "article": "200300275_",
-              "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
-              "quantity": 1,
-              "price": 33130,
-              "line_total": 33130
-            }
-          ],
-          "count": 3,
-          "total": 86990,
-          "currency": null,
-          "url": "/cart",
-          "mode": "server"
-        }
-      }
-    },
-    {
-      "uc": "UC-05",
-      "action": "Open /cart in the same session",
-      "http_status": 200,
-      "cart": {
-        "items": [
-          {
-            "product_id": 515280,
-            "article": "200300274_",
-            "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
-            "quantity": 2,
-            "price": 26930,
-            "line_total": 53860
-          },
-          {
-            "product_id": 515281,
-            "article": "200300275_",
-            "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
-            "quantity": 1,
-            "price": 33130,
-            "line_total": 33130
-          }
-        ],
-        "count": 3,
-        "total": 86990,
-        "currency": null,
-        "url": "/cart",
-        "mode": "server"
+        "suggestions": [
+          "Как заказать товар?",
+          "Какие условия оплаты и доставки?"
+        ]
       }
     }
   ],
-  "file_to_cart": {
-    "new_independent_session": true,
-    "checked_at": "2026-09-23T10:55:46.316841+00:00",
-    "input_file": "inputs/specification.xlsx",
-    "user": "Подготовь предложение добавить в корзину все позиции и количества из приложенной спецификации.",
-    "seconds": 2.81,
-    "response_text": "Проверьте выбранные позиции и количество. Для изменения корзины нужно ваше отдельное подтверждение.",
-    "extracted": [
-      "027005 — 2 шт.",
-      "027028 — 1 шт."
-    ],
-    "proposal_items": [
-      {
-        "product_id": 515280,
-        "article": "200300274_",
-        "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
-        "quantity": 2,
-        "price": 26930,
-        "line_total": 53860
-      },
-      {
-        "product_id": 515281,
-        "article": "200300275_",
-        "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
-        "quantity": 1,
-        "price": 33130,
-        "line_total": 33130
+  "conversation": [
+    {
+      "prompt": "Как мне заказать товар",
+      "response": {
+        "text": "Начнём с товара: напишите артикул и количество или прикрепите список.\n\n1. Проверьте карточку: характеристики, наличие и количество.\n2. Нажмите «В корзину», а для файла — «Проверить выбранное».\n3. Проверьте предложение и отдельно нажмите «Да, добавить».\n4. Откройте корзину по ссылке.\n\nЗдесь мы собираем вашу корзину; заказ, оплату и резерв в ekt.kz этот прототип не оформляет. Завершить покупку можно на сайте магазина или с менеджером. Какой товар вам нужен?",
+        "suggestions": [
+          "Покажи мою корзину",
+          "Какие условия оплаты и доставки?",
+          "Связаться с менеджером"
+        ],
+        "website": "https://ekt.kz/"
       }
-    ],
-    "cart_before_confirmation": {
-      "items": [],
-      "count": 0,
-      "total": 0,
-      "currency": null,
-      "url": "/cart",
-      "mode": "server"
     },
-    "confirmation": "да, добавь",
-    "cart_after_confirmation": {
-      "items": [
-        {
-          "product_id": 515280,
-          "article": "200300274_",
-          "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
-          "quantity": 2,
-          "price": 26930,
-          "line_total": 53860
-        },
-        {
-          "product_id": 515281,
-          "article": "200300275_",
-          "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
-          "quantity": 1,
-          "price": 33130,
-          "line_total": 33130
+    {
+      "prompt": "Если я хочу закаазть товарр как это сделать",
+      "response": {
+        "text": "Начнём с товара: напишите артикул и количество или прикрепите список.\n\n1. Проверьте карточку: характеристики, наличие и количество.\n2. Нажмите «В корзину», а для файла — «Проверить выбранное».\n3. Проверьте предложение и отдельно нажмите «Да, добавить».\n4. Откройте корзину по ссылке.\n\nЗдесь мы собираем вашу корзину; заказ, оплату и резерв в ekt.kz этот прототип не оформляет. Завершить покупку можно на сайте магазина или с менеджером. Какой товар вам нужен?",
+        "suggestions": [
+          "Покажи мою корзину",
+          "Какие условия оплаты и доставки?",
+          "Связаться с менеджером"
+        ],
+        "website": "https://ekt.kz/"
+      }
+    },
+    {
+      "prompt": "С чем ты можешь помочь",
+      "response": {
+        "text": "Помогу выбрать электротехнику и собрать корзину:\n• найду товар по артикулу, названию, фото или списку;\n• покажу характеристики, остатки и сертификат, если он есть в источнике;\n• предложу объяснённую замену отсутствующему товару;\n• расскажу об оплате и доставке;\n• подготовлю выбранное количество — добавлю только после вашего отдельного согласия.\n\nМожно начать с файла или написать, что нужно. Если данных не хватит, помогу уточнить вопрос у менеджера.",
+        "suggestions": [
+          "Как заказать товар?",
+          "Какие условия оплаты и доставки?",
+          "Связаться с менеджером"
+        ]
+      }
+    },
+    {
+      "prompt": "Хочу поговорить с менеджером",
+      "response": {
+        "text": "Давайте подключим менеджера к вопросу. Ниже — контакты магазина и черновик: проверьте его и отправьте удобным способом. Автоматически обращение не отправлялось.",
+        "manager": {
+          "reason": "Нужна помощь с подбором или условиями покупки.",
+          "draft": "Здравствуйте! Нужна консультация по электротехнической продукции.\nНужна помощь с подбором или условиями покупки.\nПрошу уточнить необходимые параметры и условия покупки.",
+          "source": "https://ekt.kz/about/contacts/",
+          "phone": "tel:+77273468888",
+          "whatsapp": "https://wa.me/77782768888/",
+          "fetched_at": "2026-09-23T12:32:33.863334+00:00",
+          "sent": false
         }
-      ],
-      "count": 3,
-      "total": 86990,
-      "currency": null,
-      "url": "/cart",
-      "mode": "server"
+      }
     }
-  }
+  ]
 }
