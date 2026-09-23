@@ -152,7 +152,7 @@
   color: var(--muted-foreground);
   opacity: 1;
 }
-.assistant-widget .composer .icon-button {
+.assistant-widget .composer .icon-button:not(.send) {
   color: var(--muted-foreground);
 }
 .assistant-widget .consent {
