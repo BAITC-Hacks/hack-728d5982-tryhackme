@@ -11,10 +11,10 @@
 
 ## Текущий код
 
-- `index.html`: весь работающий интерфейс, одно окно чата, автономный деморежим и серверный режим.
+- `index.html`: исходник проверенного DOM/JS чата и самостоятельный HTML. Next.js извлекает его при сборке; поведение не дублировать.
 - `backend/app/landing.py`: FastAPI, OpenAI, каталог, условия, обработка документов, защищённая сессия и подтверждение корзины.
 - `backend/app/schemas/ekt_catalog.py`: Pydantic-модели внешнего каталога. OpenAPI генерируется в `contracts/`, вручную не правится.
-- `frontend/`: минимальная основа Next.js 16 + React + Tailwind/shadcn по запросу заказчика; полный интерфейс пока остаётся в `index.html`. Здесь же Playwright-проверки.
+- `frontend/`: рабочий React-лендинг Next.js 16 + Tailwind/shadcn; общий чат из `index.html` подключён через `AssistantWidget`. `/api` проксируется в FastAPI с проверкой Origin и сохранением cookie/CSRF. Генерируемые файлы не править.
 - Не возвращать зависимости и подсистемы удалённого SaaS-шаблона без конкретной связи с UC. Хранилище, авторизация, streaming и другие расширения добавляются по потребности сценария.
 
 ## Как работать
@@ -34,12 +34,14 @@
 ```bash
 make install         # uv sync + npm ci
 make dev             # полный ассистент: http://127.0.0.1:8765
-make dev-frontend    # основа Next.js: http://localhost:3000
+make dev-frontend    # рабочий Next.js: http://localhost:3000 (backend отдельно)
 make check           # контракты, Ruff, ty, ESLint, TypeScript
 make test            # офлайн-проверки каталога, файлов и корзины
 make test-ui         # автономный index.html на desktop/mobile
 make test-live       # живые ekt.kz + OpenAI; использует ключ из .env
-make build-frontend  # production build основы Next.js
+make build-frontend  # production build Next.js и синхронизация общего чата
+make test-next-ui    # production Next.js, desktop/mobile, без внешних API
+make test-next-live  # Next.js → FastAPI → настоящие OpenAI / ekt.kz
 make test-files-live # загрузка всех out-входов в реальные OpenAI/ekt.kz
 make examples        # пересоздание входов out/; живой отчёт не обновляет
 make docker          # один контейнер ассистента

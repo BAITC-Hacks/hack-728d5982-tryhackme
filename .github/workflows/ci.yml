@@ -49,4 +49,6 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - name: Desktop and mobile landing journeys
         run: npm run test:landing
+      - name: Next.js desktop and mobile journeys
+        run: npm run test:next
       # Live tests are opt-in locally; CI has no partner or OpenAI secrets.

@@ -1,0 +1,161 @@
+/* Applied after the scoped legacy CSS. Keep functional markup and selectors. */
+.assistant-widget {
+  --ink: #e6edf4;
+  --muted: #9caebd;
+  --brand: #9bebc0;
+  --lime: #9bebc0;
+  --line: #2c3b47;
+  --paper: #101821;
+  --white: #141f2a;
+  color-scheme: dark;
+  background: transparent;
+}
+.assistant-widget .chat {
+  z-index: 50;
+  background: #0e171f;
+  border-color: #3c5361;
+  box-shadow:
+    0 25px 95px #0009,
+    0 0 25px #77cbb00a;
+}
+.assistant-widget .chat-header {
+  background: #14212c;
+  border-bottom: 1px solid #344653;
+}
+.assistant-widget .chat-status {
+  color: #9cafbf;
+}
+.assistant-widget .chat-header .spark,
+.assistant-widget .message.bot .spark {
+  background: #9bebc016;
+  color: #9bebc0;
+}
+.assistant-widget .mode-banner {
+  background: #102521;
+  border-color: #244137;
+  color: #b2d2c3;
+}
+.assistant-widget .message-body {
+  background: #16212c;
+  border-color: #2b3b49;
+}
+.assistant-widget .message.user {
+  background: #263d47;
+  color: #e5f4f9;
+}
+.assistant-widget .button,
+.assistant-widget .composer .send {
+  background: #9bebc0;
+  color: #10281d;
+}
+.assistant-widget .button:hover,
+.assistant-widget .composer .send:hover {
+  background: #b7f6d4;
+}
+.assistant-widget .button.outline,
+.assistant-widget .chip {
+  background: #1b2a35;
+  border-color: #3b5060;
+  color: #d9eaf3;
+}
+.assistant-widget .chip:hover,
+.assistant-widget .button.outline:hover,
+.assistant-widget .composer .icon-button:hover {
+  background: #29404b;
+}
+.assistant-widget .composer {
+  background: #121d27;
+}
+.assistant-widget .composer form,
+.assistant-widget .quantity {
+  border-color: #3c505e;
+  color: #e6edf4;
+  background: #101b24;
+}
+.assistant-widget .composer textarea {
+  color: #e6edf4;
+}
+.assistant-widget .composer-hint,
+.assistant-widget .chat-status {
+  color: #9dafbb;
+}
+.assistant-widget .consent {
+  background: #172d25;
+  border-color: #406d57;
+}
+.assistant-widget .warning {
+  background: #392e1d;
+  border-color: #79613e;
+  color: #f2d99d;
+}
+.assistant-widget .specs dt,
+.assistant-widget .specs dd,
+.assistant-widget .source-note,
+.assistant-widget .purchase-terms section + section {
+  border-color: #2d3e4a;
+}
+.assistant-widget .stock {
+  background: #203a2e;
+  color: #b4ebca;
+}
+.assistant-widget .stock.unknown {
+  background: #3a3327;
+  color: #f0d7a4;
+}
+.assistant-widget .attachment {
+  background: #1f303a;
+  border-color: #405966;
+  color: #d6e7ec;
+}
+.assistant-widget .launcher {
+  z-index: 40;
+  border: 1px solid #adf3cf;
+  border-radius: 99px;
+  box-shadow:
+    0 6px 40px #0006,
+    0 0 18px #9bebc014;
+}
+.assistant-widget .launcher-dot {
+  background: #256e4e;
+  border-color: #9bebc0;
+}
+.assistant-widget .toast {
+  z-index: 60;
+  background: #d9f2e5;
+  color: #122e21;
+}
+.assistant-widget .messages {
+  scrollbar-color: #415869 transparent;
+}
+.assistant-widget .product-glyph {
+  background: #d9e2df;
+}
+.assistant-widget .product-image {
+  background: white;
+  border-radius: 8px;
+}
+.assistant-widget .chat-help {
+  flex-wrap: wrap;
+}
+.assistant-widget .manager-panel textarea {
+  font-size: 13px;
+  line-height: 1.65;
+}
+@media (max-width: 760px) {
+  .assistant-widget .chat {
+    inset: 0;
+    width: 100%;
+    height: 100dvh;
+    max-height: none;
+    border-radius: 0;
+  }
+  .assistant-widget .chat-header {
+    padding-top: max(14px, env(safe-area-inset-top));
+  }
+  .assistant-widget .message {
+    font-size: 13px;
+  }
+  .assistant-widget .composer textarea {
+    font-size: 16px;
+  }
+}

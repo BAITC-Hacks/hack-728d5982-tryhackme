@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AssistantWidget } from "@/components/assistant/widget";
 
 export const metadata: Metadata = {
   title: "ЭКТ — помощник покупателя",
@@ -9,7 +10,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ru">
-      <body>{children}</body>
+      <body>
+        {children}
+        <AssistantWidget />
+      </body>
     </html>
   );
 }

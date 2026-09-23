@@ -1,4 +1,4 @@
-.PHONY: install dev dev-frontend check test test-ui test-live test-files-live contracts examples build-frontend docker
+.PHONY: install dev dev-frontend check test test-ui test-live test-next-ui test-next-live test-files-live contracts examples build-frontend docker
 
 install:
 	uv sync --directory backend
@@ -29,6 +29,12 @@ test-ui:
 
 test-live:
 	npm --prefix frontend run test:landing:live
+
+test-next-ui: build-frontend
+	npm --prefix frontend run test:next
+
+test-next-live: build-frontend
+	npm --prefix frontend run test:next:live
 
 test-files-live:
 	uv run --directory backend python ../out/verify_live.py

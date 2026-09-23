@@ -25,6 +25,8 @@ frontend/playwright-report/
 frontend/blob-report/
 frontend/*.tsbuildinfo
 frontend/next-env.d.ts
+frontend/src/generated/
+frontend/public/assistant/
 
 # Local data and editor artifacts
 *.db
