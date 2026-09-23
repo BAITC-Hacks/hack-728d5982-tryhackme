@@ -1770,20 +1770,22 @@
           <details>
             <summary>Можно оформить заказ в этой версии?</summary>
             <p>
-              Корзина в этой демонстрации локальная: хранится в текущей вкладке
-              и доступна по ссылке в чате. Она не создаёт заказ и не резервирует
-              товар на ekt.kz. Для оформления на сайте нужна интеграция с
-              корзиной партнёра.
+              При запуске через сервер корзина хранится в вашей защищённой
+              сессии и открывается по прямой ссылке из чата. Заказ и резерв на
+              ekt.kz не создаются. Оформление в магазине — следующий этап
+              интеграции. При открытии HTML без сервера доступен только
+              деморежим.
             </p>
           </details>
           <details>
             <summary>Что происходит с моими файлами?</summary>
             <p>
-              Документы читаются в вашем браузере и не сохраняются после
-              закрытия страницы. Для чтения загружаются библиотеки обработки. Не
-              прикладывайте платёжные данные. Старые файлы Word .doc нужно
-              пересохранить в .docx; качество распознавания фото и сканов
-              зависит от изображения.
+              После отправки сообщения сервер проверяет формат и размер файлов,
+              затем OpenAI извлекает позиции и количества из документов, сканов
+              или фотографий. Результат показывается в чате для проверки. Файлы
+              не записываются в базу или на диск приложения; запросы к OpenAI
+              отправляются с отключённым сохранением ответа. Не прикладывайте
+              платёжные данные. Само вложение не даёт согласия изменить корзину.
             </p>
           </details>
         </div>
@@ -1796,8 +1798,8 @@
           ><span class="logo-name">ЭКТ<small>Электрокомплект</small></span></a
         >
         <p>
-          Прототип для HackAlem AI · 2026<br />Данные каталога — ekt.kz.
-          Локальная демонстрационная корзина.
+          Прототип для HackAlem AI · 2026<br />Данные каталога — ekt.kz. Корзина
+          прототипа · оформление заказа в магазине не выполняется.
         </p>
         <div class="footer-links">
           <a href="https://ekt.kz/" target="_blank" rel="noopener"
@@ -1838,7 +1840,7 @@
             id="openCart"
             class="icon-button cart-button"
             aria-label="Показать корзину"
-            title="Локальная корзина"
+            title="Ваша корзина"
           >
             <svg class="icon"><use href="#i-cart" /></svg
             ><span id="cartCount" class="cart-count">0</span></button
@@ -2424,6 +2426,9 @@
           [seed.detail.id, { ...seed.detail, mode: "snapshot" }],
         ]);
         const storageKey = "ekt-landing-session-cart-v2";
+        let server = null,
+          serverState = null,
+          connection = Promise.resolve();
         let cart = {},
           pending = null,
           currentProduct = null,
@@ -2448,6 +2453,218 @@
           }
         } catch {
           /* Storage may be unavailable in a private/file context. */
+        }
+        async function serverRequest(path, payload) {
+          const response = await fetch("/api" + path, {
+            method: payload === undefined ? "GET" : "POST",
+            credentials: "same-origin",
+            headers:
+              payload === undefined
+                ? {}
+                : {
+                    "Content-Type": "application/json",
+                    "X-CSRF-Token": server.csrf,
+                  },
+            body: payload === undefined ? undefined : JSON.stringify(payload),
+            signal: AbortSignal.timeout(75000),
+          });
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok) {
+            clearPending();
+            throw new Error(
+              typeof data.detail === "string"
+                ? data.detail
+                : "Не удалось обработать запрос. Проверьте количество и формат файла.",
+            );
+          }
+          return data;
+        }
+        function acceptCart(state) {
+          serverState = state;
+          cart = {};
+          state.items.forEach((row) => {
+            cart[row.product_id] = { ...row, qty: row.quantity };
+          });
+          updateCart();
+        }
+        function serverCartMarkup() {
+          const state = serverState;
+          return (
+            '<h3>Ваша корзина</h3><p class="muted">Сохранена на сервере в вашей сессии</p>' +
+            (!state?.items.length
+              ? "<p>Пока пусто. Выберите товар и подтвердите добавление.</p>"
+              : state.items
+                  .map(
+                    (row) =>
+                      '<div class="cart-row"><b>' +
+                      esc(row.name) +
+                      "</b><p>Артикул " +
+                      esc(row.article) +
+                      " · <strong>" +
+                      row.quantity +
+                      " шт.</strong> · " +
+                      amount(row.line_total) +
+                      '</p><button class="chip" data-remove="' +
+                      row.product_id +
+                      '">Удалить позицию…</button></div>',
+                  )
+                  .join("") +
+                '<div class="cart-total"><span>Сумма по каталогу</span><span>' +
+                amount(state.total) +
+                '</span></div><p class="muted">Валюта в API не указана. Наличие повторно проверено при добавлении. Резерв и заказ в магазине не создаются.</p>') +
+            '<a class="cart-link" href="/cart" data-server-cart>Прямая ссылка на эту корзину →</a><div class="suggestions"><button class="chip" data-query="Расскажи об оплате и доставке">Условия покупки</button></div>'
+          );
+        }
+        function showServerCart(state) {
+          acceptCart(state);
+          openChat();
+          if (!$("#cartSummary"))
+            message(
+              "bot",
+              '<div id="cartSummary">' + serverCartMarkup() + "</div>",
+            );
+          else $("#cartSummary").innerHTML = serverCartMarkup();
+          $("#cartSummary").scrollIntoView({ block: "nearest" });
+        }
+        function renderProposal(proposal) {
+          clearPending();
+          pending = {
+            token: proposal.id,
+            server: true,
+            action: proposal.action,
+          };
+          const label =
+            proposal.action === "remove" ? "Да, удалить" : "Да, добавить";
+          message(
+            "bot",
+            '<div class="consent" data-pending="' +
+              esc(proposal.id) +
+              '"><b>' +
+              (proposal.action === "remove"
+                ? "Подтвердите удаление"
+                : "Подтвердите добавление") +
+              "</b>" +
+              proposal.items
+                .map(
+                  (row) =>
+                    "<p>" +
+                    esc(row.name) +
+                    "<br>Артикул " +
+                    esc(row.article) +
+                    " · <strong>" +
+                    row.quantity +
+                    " шт.</strong> · " +
+                    amount(row.line_total) +
+                    "</p>",
+                )
+                .join("") +
+              '<p class="muted">Предложение действует 3 минуты. Перед добавлением сервер повторно проверит цену, кратность и остаток.</p><div class="product-actions"><button class="button small" data-confirm="' +
+              esc(proposal.id) +
+              '">' +
+              label +
+              '</button><button class="button outline small" data-cancel="' +
+              esc(proposal.id) +
+              '">Отмена</button></div></div>',
+          );
+        }
+        function renderServerReply(reply) {
+          const sameProposal = reply.proposal?.id === pending?.token;
+          if (!sameProposal) clearPending();
+          if (reply.text)
+            message(
+              "bot",
+              '<p style="white-space:pre-line">' + esc(reply.text) + "</p>",
+            );
+          if (reply.extracted?.length)
+            message(
+              "bot",
+              "<h3>Распознано во вложении</h3><ul>" +
+                reply.extracted
+                  .map((line) => "<li>" + esc(line) + "</li>")
+                  .join("") +
+                '</ul><p class="muted">Проверьте распознанные позиции и количества перед добавлением.</p>',
+            );
+          for (const raw of reply.products || []) {
+            const d = { ...raw, mode: "live", fetchedAt: raw.fetched_at };
+            products.set(d.id, d);
+            details.set(d.id, d);
+            currentProduct = d.id;
+            message("bot", productCard(d, d));
+          }
+          if (reply.alternatives?.length) {
+            message(
+              "bot",
+              "<h3>Доступные аналоги</h3><p>Совпадения и отличия проверены по характеристикам каталога.</p>",
+            );
+            for (const alt of reply.alternatives) {
+              const d = {
+                ...alt.product,
+                mode: "live",
+                fetchedAt: alt.product.fetched_at,
+              };
+              products.set(d.id, d);
+              details.set(d.id, d);
+              message(
+                "bot",
+                "<p>" +
+                  esc(alt.reason) +
+                  "</p><ul>" +
+                  alt.differences
+                    .map((x) => "<li>" + esc(x) + "</li>")
+                    .join("") +
+                  "</ul>" +
+                  productCard(d, d),
+              );
+            }
+          }
+          if (reply.terms) {
+            const t = reply.terms;
+            message(
+              "bot",
+              "<h3>Условия покупки</h3><p><b>Оплата</b><br>" +
+                esc(t.payment) +
+                "</p><p><b>Доставка</b><br>" +
+                esc(t.delivery) +
+                "</p><p><b>Минимальная партия</b><br>" +
+                esc(t.minimum) +
+                '</p><p class="source-note"><a href="' +
+                esc(safeUrl(t.source)) +
+                '" target="_blank" rel="noopener">Опубликованные условия ekt.kz ↗</a> · Проверено ' +
+                new Date(t.fetched_at).toLocaleString("ru-RU") +
+                "</p>",
+            );
+          }
+          if (reply.proposal && !sameProposal) renderProposal(reply.proposal);
+          if (reply.cart) {
+            acceptCart(reply.cart);
+            message(
+              "bot",
+              '<a class="cart-link" href="/cart" data-server-cart>Открыть корзину →</a>',
+            );
+          }
+        }
+        async function attachForServer(list) {
+          if (files.length + list.length > 5) {
+            toast("Не больше 5 файлов за сообщение.");
+            return;
+          }
+          for (const file of list) {
+            if (!file.size || file.size > 8 * 1024 * 1024) {
+              toast(file.name + ": размер должен быть от 1 байта до 8 МБ.");
+              continue;
+            }
+            const data = await new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () =>
+                resolve(String(reader.result).split(",")[1]);
+              reader.onerror = () =>
+                reject(new Error("Не удалось прочитать файл."));
+              reader.readAsDataURL(file);
+            });
+            files.push({ name: file.name, data });
+          }
+          renderFiles();
+          $("#fileInput").value = "";
         }
         function toast(text) {
           $("#toast").textContent = text;
@@ -2490,6 +2707,12 @@
           return el;
         }
         function updateCart() {
+          if (server) {
+            $("#cartCount").textContent = serverState?.count || 0;
+            if ($("#cartSummary"))
+              $("#cartSummary").innerHTML = serverCartMarkup();
+            return;
+          }
           $("#cartCount").textContent = Object.values(cart).reduce(
             (sum, row) => sum + row.qty,
             0,
@@ -2552,6 +2775,19 @@
           NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST: "Отключающая способность",
           TIP_USTANOVKI: "Монтаж",
           KRATNOST_MIN: "Минимальная кратность",
+          MOSHCHNOST_W: "Мощность, Вт",
+          MOSHCHNOST: "Мощность",
+          SVETOVOY_POTOK_LM: "Световой поток, лм",
+          TSVETOVAYA_TEMPERATURA: "Цветовая температура, К",
+          TIP_TSOKOLYA: "Цоколь",
+          TSOKOL: "Цоколь",
+          TIP_LAMPY: "Тип лампы",
+          TIP_SVETILNIKA: "Тип светильника",
+          SPOSOB_MONTAZHA: "Способ монтажа",
+          STEPEN_ZASHCHITY: "Степень защиты",
+          MATERIAL_KORPUSA: "Материал корпуса",
+          TSVET_KORPUSA: "Цвет корпуса",
+          OBLAST_PRIMENENIYA: "Применение",
         };
         function specs(d) {
           return (
@@ -2584,6 +2820,17 @@
             : "";
         }
         function certificate(d) {
+          if (d?.certificates?.length)
+            return d.certificates
+              .map(safeUrl)
+              .filter(Boolean)
+              .map(
+                (url) =>
+                  '<a href="' +
+                  esc(url) +
+                  '" target="_blank" rel="noopener">Открыть сертификат ↗</a>',
+              )
+              .join("<br>");
           const urls = Object.entries(d.properties || {})
             .filter(([key]) => /cert|sert|сертиф/i.test(key))
             .flatMap(([, v]) => (Array.isArray(v) ? v : [v]))
@@ -2635,7 +2882,11 @@
                 discrepancy(d) +
                 '<p class="muted">' +
                 certificate(d) +
-                '</p><details><summary>Описание и остатки по складам</summary><p style="white-space:pre-line;margin-top:9px">' +
+                "</p>" +
+                (d.warnings?.some((w) => w.includes("документ"))
+                  ? '<p class="warning">Не удалось проверить документы на странице товара. Повторите запрос позже.</p>'
+                  : "") +
+                '<details><summary>Описание и остатки по складам</summary><p style="white-space:pre-line;margin-top:9px">' +
                 esc(d.description || "Описание не указано.") +
                 '</p><ul class="stores">' +
                 d.stores
@@ -2752,6 +3003,16 @@
             .sort((a, b) => b.score - a.score);
         }
         async function showProduct(id) {
+          if (server) {
+            clearPending();
+            renderServerReply(
+              await serverRequest("/chat", {
+                text: "Покажи характеристики и наличие товара с ID " + id,
+                attachments: [],
+              }),
+            );
+            return;
+          }
           const p = products.get(Number(id));
           if (!p) return;
           if (currentProduct !== p.id) clearPending();
@@ -2766,6 +3027,16 @@
           else if (d.quantity <= 0) await showAnalogs(p.id);
         }
         async function showAnalogs(id) {
+          if (server) {
+            clearPending();
+            renderServerReply(
+              await serverRequest("/chat", {
+                text: "Подбери доступный аналог для товара с ID " + id,
+                attachments: [],
+              }),
+            );
+            return;
+          }
           const p = products.get(Number(id));
           if (!p) return;
           clearPending();
@@ -2838,6 +3109,18 @@
           return Number.isSafeInteger(value) && value > 0 ? value : 1;
         }
         async function prepare(id, quantity) {
+          if (server) {
+            if (!Number.isSafeInteger(quantity) || quantity < 1) {
+              message("bot", "Укажите положительное целое количество.");
+              return;
+            }
+            renderProposal(
+              await serverRequest("/cart/prepare", {
+                items: [{ product_id: Number(id), quantity }],
+              }),
+            );
+            return;
+          }
           clearPending();
           const p = products.get(Number(id));
           if (!p) return;
@@ -2896,7 +3179,7 @@
               quantity +
               " шт.</strong></p><p>Сумма по каталогу: " +
               amount(d.price * quantity) +
-              ' · валюта не указана</p><p class="muted">Локальная демонстрационная корзина. Товар не резервируется на ekt.kz.</p><div class="product-actions"><button class="button small" data-confirm="' +
+              ' · валюта не указана</p><p class="muted">Корзина прототипа · оформление заказа в магазине не выполняется. Товар не резервируется на ekt.kz.</p><div class="product-actions"><button class="button small" data-confirm="' +
               pending.token +
               '">Да, добавить</button><button class="button outline small" data-cancel="' +
               pending.token +
@@ -2904,6 +3187,22 @@
           );
         }
         async function confirm(token) {
+          if (server) {
+            const approved = pending;
+            if (!approved || approved.token !== token) return;
+            clearPending();
+            const state = await serverRequest("/cart/confirm", {
+              proposal_id: token,
+              confirmation:
+                approved.action === "remove" ? "Да, удалить" : "Да, добавить",
+            });
+            acceptCart(state);
+            message(
+              "bot",
+              'Корзина обновлена по вашему подтверждению.<br><a class="cart-link" href="/cart" data-server-cart>Открыть корзину →</a>',
+            );
+            return;
+          }
           if (!pending || pending.token !== token) {
             message(
               "bot",
@@ -2976,6 +3275,10 @@
           );
         }
         function showCart() {
+          if (server) {
+            run(async () => showServerCart(await serverRequest("/cart")));
+            return;
+          }
           openChat();
           if (!$("#cartSummary"))
             message("bot", '<div id="cartSummary">' + cartMarkup() + "</div>");
@@ -3133,6 +3436,36 @@
           }
         }
         async function submit(value) {
+          await connection;
+          if (server) {
+            const text = value.trim();
+            if ((!text && !files.length) || busy || reading) return;
+            openChat();
+            const attached = files;
+            files = [];
+            renderFiles();
+            $("#prompt").value = "";
+            $("#prompt").style.height = "auto";
+            message(
+              "user",
+              (text || "Посмотри вложения") +
+                (attached.length
+                  ? "\n📎 " + attached.map((f) => f.name).join(", ")
+                  : ""),
+            );
+            await run(async () => {
+              renderServerReply(
+                await serverRequest("/chat", {
+                  text,
+                  attachments: attached.map((f) => ({
+                    name: f.name,
+                    data: f.data,
+                  })),
+                }),
+              );
+            });
+            return;
+          }
           const text = value.trim();
           if ((!text && !files.length) || busy || reading) return;
           openChat();
@@ -3279,6 +3612,25 @@
           );
         }
         async function attach(list) {
+          await connection;
+          if (server) {
+            if (busy || reading) return;
+            reading = true;
+            $("#sendButton").disabled = true;
+            $("#attachmentStatus").hidden = false;
+            $("#attachmentStatus").textContent =
+              "Готовлю вложения. Анализ начнётся после отправки…";
+            try {
+              await attachForServer(list);
+            } catch (error) {
+              toast(error.message);
+            } finally {
+              reading = false;
+              $("#sendButton").disabled = false;
+              $("#attachmentStatus").hidden = true;
+            }
+            return;
+          }
           if (reading || busy) return;
           if (files.length + list.length > 5) {
             toast("Можно приложить не больше 5 файлов.");
@@ -3325,6 +3677,29 @@
         document.addEventListener("click", (event) => {
           const button = event.target.closest("button");
           if (!button) return;
+          if (server && button.dataset.cancel && !busy) {
+            const token = button.dataset.cancel;
+            clearPending();
+            run(async () => {
+              await serverRequest("/cart/cancel", { proposal_id: token });
+              message("bot", "Отменено. Корзина не изменена.");
+            });
+            return;
+          }
+          if (server && button.dataset.remove && !busy) {
+            run(async () =>
+              renderProposal(
+                await serverRequest("/cart/prepare", {
+                  action: "remove",
+                  items: [
+                    { product_id: Number(button.dataset.remove), quantity: 1 },
+                  ],
+                }),
+              ),
+            );
+            return;
+          }
+          if (server && button.dataset.delete) return;
           if (button.hasAttribute("data-open")) openChat();
           if (button.dataset.query) submit(button.dataset.query);
           if (button.dataset.detail)
@@ -3416,6 +3791,10 @@
         };
         document.addEventListener("input", (event) => {
           if (event.target.matches("[data-quantity]") && pending) {
+            if (server)
+              serverRequest("/cart/cancel", {}).catch((error) =>
+                toast(error.message),
+              );
             clearPending();
             toast(
               "Количество изменено. Нажмите «В корзину», чтобы подтвердить новый выбор.",
@@ -3446,7 +3825,12 @@
           if (location.hash === "#cart") showCart();
         });
         document.addEventListener("click", (event) => {
-          if (event.target.closest('a[href="#cart"]')) showCart();
+          const cartLink = event.target.closest("a[data-server-cart]");
+          if (cartLink) {
+            event.preventDefault();
+            history.pushState({}, "", "/cart");
+            showCart();
+          } else if (event.target.closest('a[href="#cart"]')) showCart();
         });
         window.addEventListener("resize", () => {
           $("#chat").setAttribute("aria-modal", String(innerWidth < 761));
@@ -3455,22 +3839,34 @@
         });
         message(
           "bot",
-          '<h3>Здравствуйте! Что подбираем?</h3><p>Помогу найти товар, посмотреть характеристики и наличие или сравнить похожие позиции. Напишите артикул или выберите вопрос.</p><div class="suggestions"><button class="chip" data-query="Есть ли 027228 в наличии?">Проверить наличие ↗</button><button class="chip" data-query="Характеристики 027228">Характеристики и сертификат ↗</button><button class="chip" data-query="Аналог 027228">Подобрать аналог ↗</button><button class="chip" data-query="Какие условия оплаты и доставки?">Оплата и доставка ↗</button></div><p class="source-note">Источник и актуальность указаны под каждой карточкой. Корзина этой демонстрации локальная.</p>',
+          '<h3>Здравствуйте! Что подбираем?</h3><p>Помогу найти товар, посмотреть характеристики и наличие или сравнить похожие позиции. Напишите артикул или выберите вопрос.</p><div class="suggestions"><button class="chip" data-query="Есть ли 027228 в наличии?">Проверить наличие ↗</button><button class="chip" data-query="Характеристики 027228">Характеристики и сертификат ↗</button><button class="chip" data-query="Аналог 027228">Подобрать аналог ↗</button><button class="chip" data-query="Какие условия оплаты и доставки?">Оплата и доставка ↗</button></div><p class="source-note">Источник и актуальность указаны под каждой карточкой. Корзина меняется только после вашего отдельного подтверждения.</p>',
         );
         updateCart();
         if (location.hash === "#cart") showCart();
-        if (location.protocol !== "file:")
-          fetch("/api/catalog/status", { signal: AbortSignal.timeout(2500) })
+        if (location.protocol !== "file:") {
+          connection = fetch("/api/session", {
+            credentials: "same-origin",
+            signal: AbortSignal.timeout(5000),
+          })
             .then((r) => (r.ok ? r.json() : null))
             .then((data) => {
-              if (data?.live) {
-                live = true;
-                details.clear();
-                $("#modeBanner").textContent =
-                  "Каталог ekt.kz через сервер · корзина локальная";
-              }
+              if (!data?.csrf) return;
+              server = data;
+              live = data.live;
+              details.clear();
+              acceptCart(data.cart);
+              $("#modeBanner").textContent =
+                (data.ai ? "ИИ подключён · " : "") +
+                (live ? "каталог ekt.kz · " : "") +
+                "корзина в защищённой сессии";
+              document.querySelector(".composer-hint").textContent =
+                "Текст и вложения анализируются OpenAI · не отправляйте платёжные данные";
+              document.querySelector(".composer-hint").style.fontSize = "10px";
+              if (data.proposal) renderProposal(data.proposal);
+              if (location.pathname === "/cart") showServerCart(data.cart);
             })
             .catch(() => {});
+        }
       })();
     </script>
   </body>

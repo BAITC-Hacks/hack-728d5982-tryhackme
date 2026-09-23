@@ -61,6 +61,7 @@ dependencies = [
     "subagents-pydantic-ai>=0.2.7",
     "summarization-pydantic-ai>=0.1.7",
     "cryptography>=44.0.0",
+    "python-calamine>=0.8.2",
 ]
 
 # PEP 735 dependency group — installed by `uv sync` / `uv sync --dev` and

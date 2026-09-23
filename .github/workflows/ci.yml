@@ -33,6 +33,9 @@ jobs:
       - name: Check catalog OpenAPI contract
         run: uv run --directory backend python generate_ekt_catalog_openapi.py --check
 
+      - name: Check landing OpenAPI contract
+        run: uv run --directory backend python generate_landing_openapi.py --check
+
       - name: Run ty
         run: uv run --directory backend ty check
 
