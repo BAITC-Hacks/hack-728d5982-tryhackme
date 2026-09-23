@@ -658,6 +658,45 @@
         font-size: 9px;
         font-weight: 700;
       }
+      .entry-points {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .entry-card {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 25px;
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+      }
+      .entry-card .eyebrow {
+        margin-bottom: 15px;
+      }
+      .entry-card h3 {
+        font-size: 19px;
+        margin-bottom: 12px;
+      }
+      .entry-card p {
+        flex: 1;
+        font-size: 12px;
+        line-height: 1.8;
+        color: var(--muted);
+        margin-bottom: 22px;
+      }
+      .entry-card .button {
+        max-width: 100%;
+        white-space: normal;
+        text-align: left;
+      }
+      .entry-note {
+        margin-top: 16px;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.7;
+      }
       .faq {
         display: grid;
         grid-template-columns: 0.85fr 1.15fr;
@@ -871,6 +910,46 @@
       }
       .message-body .muted {
         font-size: 10px;
+      }
+      .review-list {
+        list-style: none;
+        padding: 0;
+        margin: 12px 0;
+      }
+      .review-row {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px;
+        margin: 8px 0;
+        overflow-wrap: anywhere;
+      }
+      .review-row label {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        cursor: pointer;
+      }
+      .review-row input {
+        flex: 0 0 auto;
+        width: 18px;
+        height: 18px;
+        margin-top: 3px;
+        accent-color: var(--brand);
+      }
+      .review-row p {
+        margin-top: 6px;
+      }
+      .review-state {
+        font-weight: 600;
+      }
+      .review-summary {
+        margin: 10px 0;
+      }
+      .review-actions {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-top: 8px;
       }
       .purchase-terms section + section {
         margin-top: 18px;
@@ -1252,6 +1331,9 @@
         }
       }
       @media (max-width: 760px) {
+        .entry-points {
+          grid-template-columns: 1fr;
+        }
         .container {
           padding: 0 22px;
         }
@@ -1553,19 +1635,20 @@
     <main class="container">
       <section class="hero" aria-labelledby="heroTitle">
         <div>
-          <div class="eyebrow">Ваш помощник по электротехнике</div>
+          <div class="eyebrow">Для покупателей и закупщиков электротехники</div>
           <h1 id="heroTitle">
-            Точный выбор.<br /><em>С первого<br />вопроса.</em>
+            От вопроса<br /><em>к вашей<br />корзине.</em>
           </h1>
           <p class="hero-copy">
-            Найдите нужный товар, узнайте характеристики и наличие. Помощник
-            проведёт от вопроса до корзины — прямо в чате на сайте.
+            Спросите о наличии или приложите спецификацию. Помощник проверит
+            данные каталога, объяснит замену и подготовит выбранные позиции. Вы
+            проверяете количество и подтверждаете добавление — в одном чате.
           </p>
           <div class="hero-actions">
             <button class="button" data-open>
               Начать разговор
               <svg class="icon"><use href="#i-arrow" /></svg></button
-            ><a class="button outline" href="#catalog">Посмотреть категории</a>
+            ><a class="button outline" href="#start">Попробовать на задаче</a>
           </div>
           <p class="hero-hint">
             <svg class="icon"><use href="#i-shield" /></svg>Добавление в корзину
@@ -1677,7 +1760,7 @@
           <div class="capability">
             <span>01</span>
             <div>
-              <h3>Товар без неизвестных</h3>
+              <h3>Факты с указанием источника</h3>
               <p>
                 Характеристики, остатки по складам и сертификат, если он есть в
                 источнике.
@@ -1762,6 +1845,67 @@
             <span>EXCEL</span><span>WORD</span><span>PDF</span><span>JPEG</span>
           </div>
         </div>
+      </section>
+      <section class="section" id="start" aria-labelledby="startTitle">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Меньше ручного поиска и переноса позиций</div>
+            <h2 id="startTitle">Начните со своей задачи.</h2>
+          </div>
+          <p>
+            Вопрос, документ и подбор замены ведут в один чат. Корзина меняется
+            после вашего согласия.
+          </p>
+        </div>
+        <div class="entry-points">
+          <article class="entry-card">
+            <div class="eyebrow">01 / Артикул</div>
+            <h3>Узнать о товаре</h3>
+            <p>
+              Название, характеристики, остатки по складам и сертификат, если он
+              доступен. Попробуйте запрос по коду 027005 или напишите свой.
+            </p>
+            <button
+              class="button outline small"
+              data-query="Есть ли 027005? Покажи характеристики и сертификат."
+            >
+              Проверить пример 027005 ↗
+            </button>
+          </article>
+          <article class="entry-card">
+            <div class="eyebrow">02 / Файл</div>
+            <h3>Разобрать спецификацию</h3>
+            <p>
+              Приложите Excel, Word, PDF или JPEG. В подключённом чате проверьте
+              каждую распознанную позицию: найденный товар, количество и
+              доступный остаток. Выберите готовые строки и подтвердите состав.
+            </p>
+            <button class="button small" data-attach>
+              Прикрепить спецификацию ↗
+            </button>
+          </article>
+          <article class="entry-card">
+            <div class="eyebrow">03 / Замена</div>
+            <h3>Найти доступный вариант</h3>
+            <p>
+              Если товара нет, помощник ищет аналог и показывает основания
+              подбора и отличия. Пример — артикул ярп4520; ответ зависит от
+              текущего каталога.
+            </p>
+            <button
+              class="button outline small"
+              data-query="Есть ли ярп4520 в наличии? Если нет, предложи аналог."
+            >
+              Проверить товар и замену ↗
+            </button>
+          </article>
+        </div>
+        <p class="entry-note">
+          Результат — проверенные позиции и количества в вашей корзине по прямой
+          ссылке. В прототипе заказ, оплата и резерв в магазине не создаются.
+          Источник и актуальность видны в чате; неизвестные сведения
+          обозначаются.
+        </p>
       </section>
       <section class="section faq" id="faq">
         <div>
@@ -2622,6 +2766,137 @@
               '">Отмена</button></div></div>',
           );
         }
+        function renderReview(rows, catalogue) {
+          const labels = {
+            ready: "Готово к выбору",
+            not_found: "Не найдено",
+            ambiguous: "Нужно уточнение",
+            needs_quantity: "Нужно количество",
+            invalid_quantity: "Проверьте количество",
+            out_of_stock: "Нет в наличии",
+            insufficient_stock: "Не хватает остатка",
+            invalid_multiple: "Проверьте кратность",
+            unavailable: "Нет ответа каталога",
+          };
+          const ready = rows.filter((row) => row.status === "ready").length;
+          const node = message(
+            "bot",
+            '<section class="spec-review"><h3>Проверка спецификации</h3>' +
+              "<p>Распознано позиций: <b>" +
+              rows.length +
+              "</b>. Готово к выбору: <b>" +
+              ready +
+              "</b>. Требуют уточнения: <b>" +
+              (rows.length - ready) +
+              "</b>.</p>" +
+              '<p class="muted">Сверьте разбор с исходным документом: распознавание может ошибаться или пропускать строки. Нумерация ниже относится к результату чтения.</p><ol class="review-list">' +
+              rows
+                .map((row) => {
+                  const product = catalogue.find(
+                    (p) => p.id === row.product_id,
+                  );
+                  const choice = row.status === "ready";
+                  return (
+                    '<li class="review-row" data-review-status="' +
+                    esc(row.status) +
+                    '">' +
+                    (choice
+                      ? '<label><input type="checkbox" data-review-pick data-product-id="' +
+                        row.product_id +
+                        '" data-qty="' +
+                        row.quantity +
+                        '" checked aria-label="Выбрать позицию ' +
+                        row.position +
+                        '"><span>'
+                      : "<div>") +
+                    "<strong>" +
+                    row.position +
+                    ". " +
+                    esc(row.query) +
+                    "</strong>" +
+                    (choice ? "</span></label>" : "</div>") +
+                    "<p>Запрошено: " +
+                    (row.quantity == null
+                      ? "не указано"
+                      : esc(row.quantity) + " шт.") +
+                    (row.available == null
+                      ? ""
+                      : " · Доступно с учётом корзины: " +
+                        row.available +
+                        " шт.") +
+                    "</p>" +
+                    (product
+                      ? "<p>" +
+                        esc(product.name) +
+                        "<br>Артикул " +
+                        esc(product.article) +
+                        "</p>"
+                      : "") +
+                    '<p class="review-state">' +
+                    esc(labels[row.status] || row.status) +
+                    "</p><p>" +
+                    esc(row.message) +
+                    "</p>" +
+                    (product
+                      ? '<p class="source-note"><a href="' +
+                        esc(safeUrl(product.source)) +
+                        '" target="_blank" rel="noopener">Источник: ekt.kz ↗</a> · Получено ' +
+                        esc(
+                          new Date(product.fetched_at).toLocaleString("ru-RU"),
+                        ) +
+                        ". Время обновления склада неизвестно.</p>"
+                      : "") +
+                    (!choice
+                      ? '<div class="review-actions"><button class="chip" data-review-clarify="' +
+                        esc(row.query) +
+                        '">Уточнить позицию ' +
+                        row.position +
+                        "</button></div>"
+                      : "") +
+                    "</li>"
+                  );
+                })
+                .join("") +
+              '</ol><p class="review-summary" aria-live="polite"></p>' +
+              '<button class="button small" data-review-prepare>Проверить выбранное</button>' +
+              '<p class="muted">Будут подготовлены только отмеченные строки. Это ещё не добавление: далее проверьте состав и нажмите «Да, добавить». Аналоги выбираются отдельно.</p></section>',
+          );
+          const panel = node.querySelector(".spec-review");
+          const update = () => {
+            const count = panel.querySelectorAll(
+              "[data-review-pick]:checked",
+            ).length;
+            panel.querySelector(".review-summary").textContent =
+              "Выбрано строк: " +
+              count +
+              " из " +
+              rows.length +
+              ". Не выбрано: " +
+              (rows.length - count) +
+              ".";
+            panel.querySelector("[data-review-prepare]").disabled = count === 0;
+          };
+          panel.addEventListener("change", () => {
+            update();
+            if (pending?.server) {
+              const token = pending.token;
+              clearPending();
+              serverRequest("/cart/cancel", { proposal_id: token }).catch(
+                (error) => toast(error.message),
+              );
+              toast("Выбор изменён. Подготовьте новое предложение.");
+            }
+          });
+          update();
+          panel.tabIndex = -1;
+          panel.setAttribute("aria-label", "Проверка спецификации");
+          panel.focus({ preventScroll: true });
+          const container = $("#messages");
+          container.scrollTop +=
+            panel.getBoundingClientRect().top -
+            container.getBoundingClientRect().top -
+            16;
+        }
         function renderServerReply(reply) {
           const sameProposal = reply.proposal?.id === pending?.token;
           if (!sameProposal) clearPending();
@@ -2693,6 +2968,8 @@
           if (reply.cart) {
             showServerCart(reply.cart);
           }
+          if (reply.review?.length)
+            renderReview(reply.review, reply.products || []);
         }
         async function attachForServer(list) {
           if (files.length + list.length > 5) {
@@ -3733,6 +4010,58 @@
         document.addEventListener("click", (event) => {
           const button = event.target.closest("button");
           if (!button) return;
+          if (button.hasAttribute("data-review-clarify")) {
+            openChat();
+            if (!$("#prompt").value.trim())
+              $("#prompt").value =
+                "Уточнение для " + button.dataset.reviewClarify + ": ";
+            $("#prompt").focus();
+            return;
+          }
+          if (server && button.hasAttribute("data-review-prepare")) {
+            if (busy || reading) return;
+            const rows = button
+              .closest(".spec-review")
+              .querySelectorAll("[data-review-pick]:checked");
+            const grouped = new Map();
+            for (const row of rows) {
+              const id = Number(row.dataset.productId);
+              grouped.set(id, (grouped.get(id) || 0) + Number(row.dataset.qty));
+            }
+            if (!grouped.size) return;
+            run(async () => {
+              const choices = button
+                .closest(".spec-review")
+                .querySelectorAll("[data-review-pick]");
+              choices.forEach((choice) => {
+                choice.disabled = true;
+              });
+              try {
+                clearPending();
+                renderProposal(
+                  await serverRequest("/cart/prepare", {
+                    items: [...grouped].map(([product_id, quantity]) => ({
+                      product_id,
+                      quantity,
+                    })),
+                  }),
+                );
+              } finally {
+                choices.forEach((choice) => {
+                  choice.disabled = false;
+                });
+              }
+            });
+            return;
+          }
+          if (button.hasAttribute("data-attach")) {
+            openChat();
+            if (!$("#prompt").value.trim())
+              $("#prompt").value =
+                "Покажи наличие и характеристики всех позиций из файла.";
+            $("#fileInput").click();
+            return;
+          }
           if (server && button.dataset.cancel && !busy) {
             const token = button.dataset.cancel;
             clearPending();
@@ -3921,7 +4250,7 @@
               acceptCart(data.cart);
               $("#modeBanner").textContent =
                 (data.ai ? "ИИ подключён · " : "") +
-                (live ? "каталог ekt.kz · " : "") +
+                (live ? "каталог ekt.kz · " : "каталог не подключён · ") +
                 "корзина в защищённой сессии";
               document.querySelector(".composer-hint").textContent =
                 "Текст и вложения анализируются OpenAI · не отправляйте платёжные данные";

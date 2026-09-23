@@ -193,6 +193,13 @@
               }
             ]
           },
+          "review": {
+            "items": {
+              "$ref": "#/components/schemas/ReviewRow"
+            },
+            "title": "Review",
+            "type": "array"
+          },
           "terms": {
             "anyOf": [
               {
@@ -563,6 +570,86 @@
           "cart_version"
         ],
         "title": "Proposal",
+        "type": "object"
+      },
+      "ReviewRow": {
+        "properties": {
+          "available": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Available"
+          },
+          "candidates": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Candidates",
+            "type": "array"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "position": {
+            "title": "Position",
+            "type": "integer"
+          },
+          "product_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Id"
+          },
+          "quantity": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Quantity"
+          },
+          "query": {
+            "title": "Query",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ready",
+              "not_found",
+              "ambiguous",
+              "needs_quantity",
+              "invalid_quantity",
+              "out_of_stock",
+              "insufficient_stock",
+              "invalid_multiple",
+              "unavailable"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "position",
+          "query",
+          "quantity",
+          "status",
+          "message"
+        ],
+        "title": "ReviewRow",
         "type": "object"
       },
       "Selection": {

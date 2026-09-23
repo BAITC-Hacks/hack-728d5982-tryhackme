@@ -332,3 +332,119 @@ def test_broken_pdf_is_rejected():
     with pytest.raises(HTTPException) as exc:
         landing.file_content(landing.Attachment(name="broken.pdf", data="bm90IGEgcGRm"))
     assert exc.value.status_code == 422
+
+
+def mock_document_intent(monkeypatch, items):
+    async def interpret(_session, _payload):
+        return landing.Intent(
+            intent="prepare",
+            items=[landing.IntentItem(query=q, product_id=None, quantity=n) for q, n in items],
+            reply="Проверяю спецификацию",
+            extracted=[],
+        )
+
+    monkeypatch.setattr(landing, "interpret", interpret)
+
+
+def document_request(browser):
+    # Extraction is controlled, never represented as a live model result.
+    return browser.post(
+        "/api/chat",
+        json={
+            "text": "Подготовь позиции из файла",
+            "attachments": [{"name": "spec.txt", "data": "eA=="}],
+        },
+    )
+
+
+def test_document_exceptions_stay_visible_and_only_chosen_rows_enter_cart(client, monkeypatch):
+    browser, state = client
+    product = state[515291]
+    mock_document_intent(
+        monkeypatch, [(product.article, 2), ("UNKNOWN", 1), ("лампа", 1), (product.article, None)]
+    )
+
+    async def resolve(item):
+        if item.query == "UNKNOWN":
+            return []
+        return [product]
+
+    monkeypatch.setattr(landing, "resolve", resolve)
+    response = document_request(browser)
+    assert response.status_code == 200
+    reply = response.json()
+    assert [r["status"] for r in reply["review"]] == [
+        "ready",
+        "not_found",
+        "ambiguous",
+        "needs_quantity",
+    ]
+    assert [r["position"] for r in reply["review"]] == [1, 2, 3, 4]
+    assert reply["review"][3]["quantity"] is None
+    assert reply["review"][2]["product_id"] is None
+    assert reply["proposal"] is None
+    assert browser.get("/api/cart").json()["count"] == 0
+    ready = reply["review"][0]
+    proposal = browser.post(
+        "/api/cart/prepare",
+        json={"items": [{"product_id": ready["product_id"], "quantity": ready["quantity"]}]},
+    ).json()
+    assert browser.get("/api/cart").json()["count"] == 0
+    assert confirm(browser, proposal).json()["count"] == 2
+
+
+@pytest.mark.parametrize(
+    "quantities,expected",
+    [
+        ([4, 4], ["insufficient_stock", "insufficient_stock"]),
+        ([2, 3], ["ready", "ready"]),
+        ([0, -1], ["invalid_quantity", "invalid_quantity"]),
+    ],
+)
+def test_document_totals_include_duplicates_and_existing_cart(
+    client, monkeypatch, quantities, expected
+):
+    browser, state = client
+    product = state[515291]
+    product.quantity = 10
+    confirm(browser, prepare(browser, 3).json()).raise_for_status()
+    mock_document_intent(monkeypatch, [(product.article, n) for n in quantities])
+
+    async def resolve(_):
+        return [product]
+
+    monkeypatch.setattr(landing, "resolve", resolve)
+    reply = document_request(browser).json()
+    assert [r["status"] for r in reply["review"]] == expected
+    assert all(r["available"] == 7 for r in reply["review"])
+    assert reply["proposal"] is None
+    assert browser.get("/api/cart").json()["count"] == 3
+
+
+def test_document_zero_stock_multiple_and_failed_lookup_are_not_dropped(client, monkeypatch):
+    browser, state = client
+    product = state[515291]
+    absent = product.model_copy(update={"id": 111, "article": "ABSENT", "quantity": 0})
+    mock_document_intent(monkeypatch, [("ABSENT", 1), (product.article, 3), ("DOWN", 1)])
+
+    async def resolve(item):
+        if item.query == "DOWN":
+            raise HTTPException(503, "Unavailable")
+        return [absent] if item.query == "ABSENT" else [product]
+
+    async def analogs(_):
+        return [landing.Alternative(product=product, reason="Совпадают свойства", differences=[])]
+
+    monkeypatch.setattr(landing, "resolve", resolve)
+    monkeypatch.setattr(landing, "analogs", analogs)
+    monkeypatch.setattr(landing, "multiple", lambda _: 2)
+    reply = document_request(browser).json()
+    assert [r["status"] for r in reply["review"]] == [
+        "out_of_stock",
+        "invalid_multiple",
+        "unavailable",
+    ]
+    assert reply["alternatives"][0]["product"]["id"] == product.id
+    assert reply["review"][0]["product_id"] == absent.id
+    assert reply["proposal"] is None
+    assert browser.get("/api/cart").json()["items"] == []

@@ -126,6 +126,27 @@ class Terms(BaseModel):
     minimum: str
 
 
+class ReviewRow(BaseModel):
+    position: int
+    query: str
+    quantity: int | None
+    product_id: int | None = None
+    candidates: list[int] = Field(default_factory=list)
+    status: Literal[
+        "ready",
+        "not_found",
+        "ambiguous",
+        "needs_quantity",
+        "invalid_quantity",
+        "out_of_stock",
+        "insufficient_stock",
+        "invalid_multiple",
+        "unavailable",
+    ]
+    message: str
+    available: int | None = None
+
+
 class ChatReply(BaseModel):
     text: str
     products: list[ProductFacts] = Field(default_factory=list)
@@ -134,6 +155,7 @@ class ChatReply(BaseModel):
     proposal: Proposal | None = None
     cart: CartState | None = None
     extracted: list[str] = Field(default_factory=list)
+    review: list[ReviewRow] = Field(default_factory=list)
 
 
 class IntentItem(BaseModel):
@@ -434,7 +456,71 @@ async def resolve(item):
         return [await detail(item.product_id)]
     ids = ids or await search_site(item.query or str(item.product_id or ""))
     found = await asyncio.gather(*(detail(pid) for pid in ids[:4]), return_exceptions=True)
+    if found and all(isinstance(p, Exception) for p in found):
+        raise HTTPException(503, "Карточки каталога временно недоступны. Повторите проверку.")
     return [p for p in found if isinstance(p, ProductFacts)]
+
+
+def review_row(position, item, matches, session):
+    """A model's extraction is a query, not proof of identity or cart consent."""
+    row = ReviewRow(
+        position=position,
+        query=item.query or f"ID {item.product_id}",
+        quantity=item.quantity,
+        candidates=[p.id for p in matches],
+        status="not_found",
+        message="Не найдено. Уточните код или артикул.",
+    )
+    if not matches:
+        return row
+    product = matches[0]
+    identities = {
+        norm(product.article),
+        norm(product.id),
+        norm(product.name),
+        norm(product.name.split()[0]),
+    }
+    exact = norm(item.query) in identities or (
+        not item.query.strip() and item.product_id == product.id
+    )
+    if len(matches) != 1 or not exact:
+        row.status = "ambiguous"
+        row.message = "Нужен выбор: проверьте карточки и уточните точный артикул. Замена не выбрана автоматически."
+        return row
+    row.product_id = product.id
+    old = session.cart.get(product.id)
+    row.available = max(0, product.quantity - (old.quantity if old else 0))
+    if product.quantity <= 0:
+        row.status = "out_of_stock"
+        row.message = "Нет в наличии. Доступные аналоги показаны отдельно; замену выбираете вы."
+    elif item.quantity is None:
+        row.status = "needs_quantity"
+        row.message = "Количество не указано. Уточните его; 1 шт. не подставляется."
+    elif not 1 <= item.quantity <= 1_000_000:
+        row.status = "invalid_quantity"
+        row.message = "Нужно целое количество от 1 до 1 000 000."
+    elif item.quantity > row.available:
+        row.status = "insufficient_stock"
+        row.message = f"Недостаточно: доступно {row.available} шт. с учётом корзины. Количество не уменьшено автоматически."
+    elif item.quantity % multiple(product):
+        row.status = "invalid_multiple"
+        row.message = f"Количество должно быть кратно {multiple(product)} шт."
+    else:
+        row.status = "ready"
+        row.message = "Совпадение по коду; запрошенное количество доступно."
+    return row
+
+
+def check_review_totals(rows):
+    """Repeated lines must fit stock together, including existing cart rows."""
+    totals = {}
+    for row in rows:
+        if row.product_id is not None and row.quantity is not None and row.quantity > 0:
+            totals[row.product_id] = totals.get(row.product_id, 0) + row.quantity
+    for row in rows:
+        if row.status == "ready" and totals[row.product_id] > row.available:
+            row.status = "insufficient_stock"
+            row.message = f"Повторяющиеся позиции требуют {totals[row.product_id]} шт.; доступно {row.available} шт. с учётом корзины. Уточните общий объём."
 
 
 PARAMETER_NAMES = {
@@ -1049,8 +1135,25 @@ async def chat(payload: ChatRequest, request: Request, response: Response):
             reply.cart = cart_adapter.state(s)
         elif intent.intent in {"product", "analog", "prepare"}:
             selected = []
-            for item in intent.items[:20]:
-                matches = await resolve(item)
+            reviewing = bool(payload.attachments) or len(intent.items) > 1
+            for position, item in enumerate(intent.items[:20], 1):
+                try:
+                    matches = await resolve(item)
+                except HTTPException:
+                    if not reviewing:
+                        raise
+                    reply.review.append(
+                        ReviewRow(
+                            position=position,
+                            query=item.query or f"ID {item.product_id}",
+                            quantity=item.quantity,
+                            status="unavailable",
+                            message="Каталог не ответил. Повторите проверку; наличие неизвестно.",
+                        )
+                    )
+                    continue
+                if reviewing:
+                    reply.review.append(review_row(position, item, matches, s))
                 if not matches:
                     reply.text += (
                         f"\nНе найден товар: {item.query}. Уточните артикул или параметры."
@@ -1067,15 +1170,25 @@ async def chat(payload: ChatRequest, request: Request, response: Response):
                 if len(matches) == 1:
                     s.last_product = matches[0].id
                     qty = item.quantity if item.quantity is not None else 1
-                    if not 1 <= qty <= 1_000_000:
+                    if not reviewing and not 1 <= qty <= 1_000_000:
                         raise HTTPException(
                             422, "Укажите положительное целое количество, не больше 1 000 000."
                         )
-                    if matches[0].quantity > 0:
+                    if not reviewing and matches[0].quantity > 0:
                         selected.append(Selection(product_id=matches[0].id, quantity=qty))
+            if reviewing:
+                check_review_totals(reply.review)
+                # Preparing a partial document implicitly can hide unresolved rows.
+                # The buyer chooses rows in the review before a separate confirmation.
+                reply.text += "\nПроверьте разбор позиций. Выберите готовые строки для подготовки корзины; уточнения и аналоги не добавляются автоматически."
             if re.search("сертиф|документ|паспорт", payload.text, re.I):
                 reply.products = [await certificate_links(p) for p in reply.products]
-            if intent.intent == "prepare" and selected and len(selected) == len(intent.items):
+            if (
+                not reviewing
+                and intent.intent == "prepare"
+                and selected
+                and len(selected) == len(intent.items)
+            ):
                 reply.proposal = await prepare_cart(s, PrepareRequest(items=selected))
                 reply.text = "Проверьте выбранные позиции и количество. Для изменения корзины нужно ваше отдельное подтверждение."
             elif intent.intent == "prepare":
