@@ -1,0 +1,483 @@
+{
+  "components": {
+    "schemas": {
+      "CatalogProductFacts": {
+        "description": "Minimum facts for UC-01/02, derived from a successful detail response.",
+        "properties": {
+          "article": {
+            "title": "Article",
+            "type": "string"
+          },
+          "category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "No stable top-level category field observed",
+            "title": "Category"
+          },
+          "certificate_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Unknown when absent; no certificate field observed",
+            "title": "Certificate Url"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "fetched_at": {
+            "description": "Time our backend fetched the upstream response",
+            "format": "date-time",
+            "title": "Fetched At",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "image_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image Url"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "price_raw": {
+            "description": "Do not display with a currency until units are confirmed",
+            "title": "Price Raw",
+            "type": "integer"
+          },
+          "product_url": {
+            "title": "Product Url",
+            "type": "string"
+          },
+          "properties": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              ]
+            },
+            "title": "Properties",
+            "type": "object"
+          },
+          "quantity_total": {
+            "title": "Quantity Total",
+            "type": "integer"
+          },
+          "source": {
+            "const": "ekt.kz",
+            "default": "ekt.kz",
+            "title": "Source",
+            "type": "string"
+          },
+          "stores": {
+            "items": {
+              "$ref": "#/components/schemas/EktStore"
+            },
+            "title": "Stores",
+            "type": "array"
+          }
+        },
+        "required": [
+          "fetched_at",
+          "id",
+          "article",
+          "name",
+          "description",
+          "properties",
+          "price_raw",
+          "quantity_total",
+          "stores",
+          "product_url",
+          "image_url"
+        ],
+        "title": "CatalogProductFacts",
+        "type": "object"
+      },
+      "EktDetailProduct": {
+        "properties": {
+          "article": {
+            "title": "Article",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "image": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "offers": {
+            "description": "Observed empty; element structure is unknown",
+            "items": {},
+            "title": "Offers",
+            "type": "array"
+          },
+          "price": {
+            "description": "Raw amount from ekt.kz; currency and units are unconfirmed",
+            "title": "Price",
+            "type": "integer"
+          },
+          "properties": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              ]
+            },
+            "description": "Variable property codes; string and string-array values observed",
+            "title": "Properties",
+            "type": "object"
+          },
+          "quantity": {
+            "title": "Quantity",
+            "type": "integer"
+          },
+          "stores": {
+            "items": {
+              "$ref": "#/components/schemas/EktStore"
+            },
+            "title": "Stores",
+            "type": "array"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "article",
+          "description",
+          "price",
+          "quantity",
+          "stores",
+          "image",
+          "url",
+          "offers",
+          "properties"
+        ],
+        "title": "EktDetailProduct",
+        "type": "object"
+      },
+      "EktError": {
+        "properties": {
+          "error": {
+            "title": "Error",
+            "type": "string"
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "title": "EktError",
+        "type": "object"
+      },
+      "EktListProduct": {
+        "properties": {
+          "article": {
+            "title": "Article",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "image": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Image"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "offers": {
+            "description": "Observed empty; element structure is unknown",
+            "items": {},
+            "title": "Offers",
+            "type": "array"
+          },
+          "price": {
+            "description": "Raw amount from ekt.kz; currency and units are unconfirmed",
+            "title": "Price",
+            "type": "integer"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          },
+          "url_api_detail": {
+            "title": "Url Api Detail",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "article",
+          "price",
+          "image",
+          "url",
+          "url_api_detail",
+          "offers"
+        ],
+        "title": "EktListProduct",
+        "type": "object"
+      },
+      "EktProductPage": {
+        "properties": {
+          "count": {
+            "description": "Number of items on this page, not a verified total",
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/EktListProduct"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "per_page": {
+            "title": "Per Page",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "page",
+          "per_page",
+          "count",
+          "items"
+        ],
+        "title": "EktProductPage",
+        "type": "object"
+      },
+      "EktStore": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "quantity": {
+            "title": "Quantity",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "quantity"
+        ],
+        "title": "EktStore",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "BasicAuth": {
+        "scheme": "basic",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "Read-only partner API observed on 2026-09-23. The paths are documentation only and are not implemented by this project.",
+    "title": "ekt.kz catalog contract (observed)",
+    "version": "2026-09-23"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/products": {
+      "get": {
+        "operationId": "list_products_api_products_get",
+        "parameters": [
+          {
+            "description": "Page number",
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Page number",
+              "title": "Page"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EktProductPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EktError"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          }
+        },
+        "summary": "List Products",
+        "tags": [
+          "partner catalog"
+        ]
+      }
+    },
+    "/api/products/detail": {
+      "get": {
+        "operationId": "product_detail_api_products_detail_get",
+        "parameters": [
+          {
+            "description": "Product ID; not an article",
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "description": "Product ID; not an article",
+              "title": "Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EktDetailProduct"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EktError"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EktError"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EktError"
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "summary": "Product Detail",
+        "tags": [
+          "partner catalog"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "BasicAuth": []
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://ekt.kz"
+    }
+  ]
+}
