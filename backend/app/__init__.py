@@ -1,3 +1,1 @@
-"""Trading"""
-
-__version__ = "0.1.0"
+"""HackAlem EKT assistant: catalogue, documents and confirmed session cart."""

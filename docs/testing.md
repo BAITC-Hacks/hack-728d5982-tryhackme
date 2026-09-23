@@ -1,124 +1,32 @@
-# Testing Guide
+# Проверка сценариев HackAlem
 
-## Running Tests
+Проверки связаны с пятью Must have [Word ТЗ](<source of truth/assets/HackAlem AI_ ИИ-ассистент для чата на сайте ekt.kz.docx>). Выполняйте нужный уровень после изменения; синтетические фикстуры и живые интеграции имеют разные результаты проверки.
 
-```bash
-cd backend
-
-# Run all tests
-pytest
-
-# Run with coverage
-pytest --cov=app --cov-report=term-missing
-
-# Run specific test file
-pytest tests/api/test_health.py -v
-
-# Run specific test
-pytest tests/api/test_health.py::test_health_check -v
-
-# Run only unit tests
-pytest tests/unit/
-
-# Run only integration tests
-pytest tests/integration/
-
-# Run with verbose output
-pytest -v
-
-# Stop on first failure
-pytest -x
-```
-
-## Test Structure
-
-```
-tests/
-├── conftest.py          # Shared fixtures
-├── api/                 # API endpoint tests
-│   ├── test_health.py
-│   └── test_auth.py
-├── unit/                # Unit tests (services, utils)
-│   └── test_services.py
-└── integration/         # Integration tests
-    └── test_db.py
-```
-
-## Key Fixtures (`conftest.py`)
-
-```python
-# Database session for tests
-@pytest.fixture
-async def db_session():
-    async with async_session() as session:
-        yield session
-        await session.rollback()
-
-# Test client
-@pytest.fixture
-def client():
-    return TestClient(app)
-
-# Authenticated client
-@pytest.fixture
-async def auth_client(client, test_user):
-    token = create_access_token(test_user.id)
-    client.headers["Authorization"] = f"Bearer {token}"
-    return client
-```
-
-## Writing Tests
-
-### API Endpoint Test
-```python
-def test_health_check(client):
-    response = client.get("/api/v1/health")
-    assert response.status_code == 200
-    assert response.json()["status"] == "healthy"
-```
-
-### Service Test
-```python
-async def test_create_item(db_session):
-    service = ItemService(db_session)
-    item = await service.create(ItemCreate(name="Test"))
-    assert item.name == "Test"
-```
-
-### Test with Authentication
-```python
-def test_protected_endpoint(auth_client):
-    response = auth_client.get("/api/v1/users/me")
-    assert response.status_code == 200
-```
-
-## Frontend Tests
+## Офлайн, без ключей и внешних запросов
 
 ```bash
-cd frontend
-
-# Run unit tests
-bun test
-
-# Run with watch mode
-bun test --watch
-
-# Run E2E tests
-bun test:e2e
-
-# Run E2E in headed mode (see browser)
-bun test:e2e --headed
+make check
+make test
+make test-ui
+make build-frontend
 ```
 
-## Test Database
+- `backend/tests/test_landing.py`: предоставленные JSON соответствуют контракту; количество, отдельное согласие, повтор, отмена, срок предложения, смена цены/остатка, атомарность набора, удаление и изоляция сессий. Детальные карточки здесь подменены управляемыми фикстурами; OpenAI и ekt.kz не вызываются.
+- Те же тесты проверяют семь существующих входов из `out/manifest.json`, контрольные суммы и сохранение кодов офисных файлов. Они не дублируют учебные документы.
+- `frontend/e2e/landing.spec.ts`: 10 проверок автономного HTML на desktop/mobile. Запускается временный статический сервер; данные явно обозначены как снимок.
+- Генераторы `backend/generate_*_openapi.py --check`: соответствие JSON-контрактов моделям Pydantic. Это не доказательство поведения.
+- ESLint/TypeScript и `next build`: минимальная основа Next.js 16. Полный интерфейс пока в `index.html`.
 
-Tests don't hit a real database. The `client` fixture in `tests/conftest.py` overrides
-`get_db_session` with a mocked async session (`AsyncMock`) via FastAPI's
-`app.dependency_overrides`, so the suite runs fast and needs no Postgres container:
+Для браузерных проверок установите Chromium и системные библиотеки: из `frontend/` выполните `npx playwright install --with-deps chromium`. `make install` использует `backend/uv.lock` и `frontend/package-lock.json`.
 
-- `mock_db_session` — an `AsyncMock` standing in for `AsyncSession` (`execute`, `commit`, `rollback`, `close`)
-- Overrides are registered before each test and cleared afterwards
-- Assert against the mock's calls, or stub `execute(...)` return values for the path under test
+## Живой прогон
 
-For tests that need to exercise real SQL, instantiate your own async engine/session
-inside the test rather than relying on a shared fixture.
+```bash
+make test-live
+```
+
+В локальном `backend/.env` должны быть ключ OpenAI и доступ к ekt.kz. Набор из четырёх проверок открывает настоящий `app.landing` на порту 8766, сверяет карточку с API, проходит нулевой остаток/аналог, условия покупки, явное согласие, `/cart` и вложение на desktop/mobile. Вызовы модели расходуют API-бюджет. Остатки меняются: при изменении контрольной позиции сначала проверьте источник, не подгоняйте ожидания под ошибку.
+
+CI выполняет только проверки без внешних секретов и сборку контейнера. Живые прогоны запускаются явно. Общий статус — [ROADMAP](../ROADMAP.md); [out/verification.json](../out/verification.json) — датированная проверка файлов, а не автоматически обновляемый отчёт CI.
+
+Для ручного показа: [out/use-cases.md](../out/use-cases.md). Положительный живой пример сертификата и старый DOC пока не подтверждены. Нельзя объявлять их проверенными только по успешному HTTP-коду или наличию ссылки в шаблоне ответа.

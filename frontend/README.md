@@ -1,85 +1,35 @@
-# hackalem_ai_project_tryhackme — Frontend
+# Frontend HackAlem
 
-Next.js 15 (App Router) + React 19 + TypeScript + Tailwind CSS, with the AI chat
-interface, auth, and dashboard for **hackalem_ai_project_tryhackme**.
+Здесь оставлена минимальная основа **Next.js 16 + React + Tailwind CSS 4 + shadcn/ui** по запросу заказчика. Полный интерфейс работает в корневом [index.html](../index.html), обслуживается `app.landing` и покрывает UC-01…05. При запуске основы Next.js видна короткая входная страница с кнопкой перехода к этому ассистенту.
 
-## Prerequisites
-
-- [Bun](https://bun.sh) (recommended) or Node.js 18+
-- The backend running at `http://localhost:8000` (see the project root `README.md` — `make dev`)
-
-## Getting Started
+## Запуск
 
 ```bash
-bun install        # install dependencies
-bun dev            # start the dev server on http://localhost:3000
+npm ci
+npm run dev
 ```
 
-Or run it in Docker from the project root: `make dev-frontend`.
+Адрес основы: <http://localhost:3000/>. `ASSISTANT_URL` в `.env.local` задаёт доступный браузеру URL работающего ассистента; по умолчанию <http://127.0.0.1:8765/>. Запустите его отдельно командой `make dev` из корня. Next.js пока не проксирует API и не хранит корзину.
 
-## Environment
+## Что оставлено
 
-Copy `.env.example` to `.env.local` and adjust as needed:
+- `src/app/layout.tsx`, `page.tsx`, `globals.css`: App Router, входная страница, минимальные цвета Tailwind/shadcn.
+- `src/components/ui/button.tsx` и `src/lib/utils.ts`: один используемый компонент shadcn и объединение классов.
+- `components.json`: конфигурация добавления компонентов shadcn по мере переноса UI.
+- TypeScript, ESLint, Prettier, npm lockfile и Playwright для текущего лендинга.
 
-| Variable | Read by | Description |
-|----------|---------|-------------|
-| `BACKEND_URL` | server | Backend HTTP base URL used by the route handlers in `src/app/api/*` |
-| `COOKIE_SECURE` | server | `Secure` flag on the auth cookies. Unset follows `NODE_ENV`; set `false` only for an `http://` deployment on a trusted network |
-| `NEXT_PUBLIC_WS_URL` | browser | Backend WebSocket origin for the chat stream (e.g. `wss://api.example.com`) |
-| `NEXT_PUBLIC_API_URL` | browser | Public API URL (OAuth redirects, links to the API docs) |
-| `NEXT_PUBLIC_SITE_URL` | browser | Canonical site origin for SEO metadata, OG tags, `sitemap.xml` |
-| `NEXT_PUBLIC_RAG_ENABLED` | browser | Show knowledge-base / RAG UI |
+Новые компоненты и зависимости добавляйте под конкретный UC. Перенос чата в React должен сохранить единое окно, серверную проверку данных и отдельное согласие на корзину; контракт — [landing.openapi.json](../contracts/landing.openapi.json).
 
-Two rules that cause most of the deployment confusion:
-
-- **`NEXT_PUBLIC_*` is inlined into the browser bundle at build time.** Setting one
-  at runtime does nothing — you have to set it before `bun run build`, which in
-  Docker means a `build:` arg (see `docker-compose.frontend.yml`) followed by a
-  rebuild. Everything else in the table is read at runtime.
-- **`NEXT_PUBLIC_*` values must be reachable from the browser**, so never a Docker
-  service name. `BACKEND_URL` is the opposite: it is resolved inside the
-  container, so a service name is exactly right there.
-
-## Scripts
+## Проверки
 
 ```bash
-bun dev              # dev server (hot reload)
-bun run build        # production build
-bun run start        # serve the production build
-bun run lint         # ESLint
-bun run lint:fix     # ESLint with autofix
-bun run format       # Prettier
-bun run type-check   # tsc --noEmit
-bun run test:e2e     # Playwright end-to-end tests
+npm run lint
+npm run build
+npm run type-check
+npm run test:landing
+npm run test:landing:live
 ```
 
-## Project Structure
+Последняя команда использует настоящие ekt.kz/OpenAI и `.env` backend. Подробности — [docs/testing.md](../docs/testing.md).
 
-```
-src/
-├── app/            # Next.js App Router — locale-prefixed routes ([locale]/…)
-├── components/     # React components (chat, auth, dashboard, marketing, ui, …)
-├── hooks/          # useChat, useWebSocket, and friends
-├── lib/            # API clients, query keys, helpers
-├── stores/         # Zustand state
-├── types/          # Shared TypeScript types
-├── i18n.ts         # next-intl configuration
-└── middleware.ts   # locale routing + auth guards
-```
-
-## Internationalization
-
-Routes are locale-prefixed (`/{locale}/…`) via [next-intl](https://next-intl-docs.vercel.app/).
-Add a locale by extending `i18n.ts` and providing its message catalog.
-
-## Deployment (Vercel)
-
-```bash
-npx vercel --prod
-```
-
-In the Vercel dashboard set `BACKEND_URL=https://api.your-domain.com`,
-`NEXT_PUBLIC_API_URL=https://api.your-domain.com`, `NEXT_PUBLIC_WS_URL=wss://api.your-domain.com`
-and `NEXT_PUBLIC_SITE_URL=https://your-domain.com`, then redeploy — the
-`NEXT_PUBLIC_*` ones only take effect on a fresh build. See the project root
-`docs/deploy.md` for details.
+Основа подготовлена по официальным инструкциям [Next.js 16](https://nextjs.org/docs/app/guides/upgrading/version-16) и [shadcn для Next.js](https://ui.shadcn.com/docs/installation/next). Здесь используется поддерживаемый вариант Button с Radix Slot; остальные компоненты пока не нужны.
