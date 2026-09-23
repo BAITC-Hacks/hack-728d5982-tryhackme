@@ -1,0 +1,337 @@
+{
+  "kind": "observed_response_projection_not_reference_answers",
+  "checked_at": "2026-09-23T10:53:59.065838+00:00",
+  "note": "Historical observations; prices and stock may change. Secrets, consent tokens and raw files omitted. Terms payment/delivery text omitted; source URL retained.",
+  "steps": [
+    {
+      "uc": "UC-01, file input from section 5",
+      "input_file": "inputs/specification.docx",
+      "user": "Покажи наличие и характеристики всех позиций из вложения.",
+      "response": {
+        "text": "Запрос на наличие и характеристики товаров принят.",
+        "extracted": [
+          "027005",
+          "027028"
+        ],
+        "products": [
+          {
+            "id": 515280,
+            "article": "200300274_",
+            "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+            "quantity": 33,
+            "price": 26930,
+            "fetched_at": "2026-09-23T10:54:02.004291+00:00",
+            "certificates": [],
+            "warnings": []
+          },
+          {
+            "id": 515281,
+            "article": "200300275_",
+            "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+            "quantity": 17,
+            "price": 33130,
+            "fetched_at": "2026-09-23T10:54:02.089382+00:00",
+            "certificates": [],
+            "warnings": []
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "uc": "UC-01",
+      "user": "Есть ли 027005? Покажи технические характеристики и сертификат.",
+      "seconds": 2.135,
+      "response": {
+        "text": "Мы проверяем наличие и характеристики по коду 027005.",
+        "extracted": [],
+        "products": [
+          {
+            "id": 515280,
+            "article": "200300274_",
+            "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+            "quantity": 33,
+            "price": 26930,
+            "fetched_at": "2026-09-23T10:54:02.004291+00:00",
+            "certificates": [],
+            "warnings": []
+          }
+        ],
+        "alternatives": []
+      }
+    },
+    {
+      "uc": "UC-02",
+      "user": "Есть ли ярп4520? Если нет, предложи аналог.",
+      "seconds": 3.687,
+      "response": {
+        "text": "Проверяю наличие по коду ярп4520.",
+        "extracted": [],
+        "products": [
+          {
+            "id": 45357,
+            "article": "ярп4520",
+            "name": "***LED STARK 30W 2400Lm d98x180 4000K IP20 MEGALIGHT (20)",
+            "quantity": 0,
+            "price": 1810,
+            "fetched_at": "2026-09-23T10:54:14.479560+00:00",
+            "certificates": [],
+            "warnings": []
+          }
+        ],
+        "alternatives": [
+          {
+            "id": 18284,
+            "article": "150200474_",
+            "quantity": 341,
+            "reason": "Совпадают полное обозначение модели и параметры в названии: LED STARK 30W 2400Lm d98x180 4000K IP20 MEGALIGHT (20). Торговая марка также совпадает; наличие проверено по API.",
+            "differences": [
+              "Другой артикул каталога: ярп4520 → 150200474_. Проверьте исполнение и комплектность перед заменой."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "uc": "UC-03",
+      "user": "Как оплатить покупку, получить доставку и какая минимальная партия?",
+      "seconds": 1.279,
+      "response": {
+        "text": "Я понял ваш запрос о способах оплаты, доставке и минимальной партии.",
+        "extracted": [],
+        "products": [
+          {
+            "id": 45357,
+            "article": "ярп4520",
+            "name": "***LED STARK 30W 2400Lm d98x180 4000K IP20 MEGALIGHT (20)",
+            "quantity": 0,
+            "price": 1810,
+            "fetched_at": "2026-09-23T10:54:14.479560+00:00",
+            "certificates": [],
+            "warnings": []
+          }
+        ],
+        "alternatives": [],
+        "terms": {
+          "source": "https://ekt.kz/checkout-delivery/",
+          "fetched_at": "2026-09-23T10:54:18.121419+00:00",
+          "minimum": "Общая минимальная сумма или партия на странице не опубликована. Для товара используйте минимальную кратность в его карточке; это не минимальная сумма заказа."
+        }
+      }
+    },
+    {
+      "uc": "UC-04",
+      "user": "Подготовь добавление 2 шт 027005 и 1 шт 027028 в корзину.",
+      "seconds": 1.562,
+      "response": {
+        "text": "Проверьте выбранные позиции и количество. Для изменения корзины нужно ваше отдельное подтверждение.",
+        "extracted": [],
+        "products": [
+          {
+            "id": 515280,
+            "article": "200300274_",
+            "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+            "quantity": 33,
+            "price": 26930,
+            "fetched_at": "2026-09-23T10:54:02.004291+00:00",
+            "certificates": [],
+            "warnings": []
+          },
+          {
+            "id": 515281,
+            "article": "200300275_",
+            "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+            "quantity": 17,
+            "price": 33130,
+            "fetched_at": "2026-09-23T10:54:02.089382+00:00",
+            "certificates": [],
+            "warnings": []
+          }
+        ],
+        "alternatives": [],
+        "proposal": {
+          "action": "add",
+          "items": [
+            {
+              "product_id": 515280,
+              "article": "200300274_",
+              "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+              "quantity": 2,
+              "price": 26930,
+              "line_total": 53860
+            },
+            {
+              "product_id": 515281,
+              "article": "200300275_",
+              "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+              "quantity": 1,
+              "price": 33130,
+              "line_total": 33130
+            }
+          ]
+        }
+      }
+    },
+    {
+      "uc": "UC-04 ambiguous reply",
+      "user": "ок",
+      "response": {
+        "text": "Для изменения корзины нужно отдельное «да, добавь» или кнопка подтверждения. Корзина не изменена.",
+        "extracted": [],
+        "products": [],
+        "alternatives": [],
+        "proposal": {
+          "action": "add",
+          "items": [
+            {
+              "product_id": 515280,
+              "article": "200300274_",
+              "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+              "quantity": 2,
+              "price": 26930,
+              "line_total": 53860
+            },
+            {
+              "product_id": 515281,
+              "article": "200300275_",
+              "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+              "quantity": 1,
+              "price": 33130,
+              "line_total": 33130
+            }
+          ]
+        }
+      },
+      "cart_count": 0
+    },
+    {
+      "uc": "UC-04 explicit consent",
+      "user": "да, добавь",
+      "response": {
+        "text": "Корзина обновлена по вашему подтверждению.",
+        "extracted": [],
+        "products": [],
+        "alternatives": [],
+        "cart": {
+          "items": [
+            {
+              "product_id": 515280,
+              "article": "200300274_",
+              "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+              "quantity": 2,
+              "price": 26930,
+              "line_total": 53860
+            },
+            {
+              "product_id": 515281,
+              "article": "200300275_",
+              "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+              "quantity": 1,
+              "price": 33130,
+              "line_total": 33130
+            }
+          ],
+          "count": 3,
+          "total": 86990,
+          "currency": null,
+          "url": "/cart",
+          "mode": "server"
+        }
+      }
+    },
+    {
+      "uc": "UC-05",
+      "action": "Open /cart in the same session",
+      "http_status": 200,
+      "cart": {
+        "items": [
+          {
+            "product_id": 515280,
+            "article": "200300274_",
+            "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+            "quantity": 2,
+            "price": 26930,
+            "line_total": 53860
+          },
+          {
+            "product_id": 515281,
+            "article": "200300275_",
+            "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+            "quantity": 1,
+            "price": 33130,
+            "line_total": 33130
+          }
+        ],
+        "count": 3,
+        "total": 86990,
+        "currency": null,
+        "url": "/cart",
+        "mode": "server"
+      }
+    }
+  ],
+  "file_to_cart": {
+    "new_independent_session": true,
+    "checked_at": "2026-09-23T10:55:46.316841+00:00",
+    "input_file": "inputs/specification.xlsx",
+    "user": "Подготовь предложение добавить в корзину все позиции и количества из приложенной спецификации.",
+    "seconds": 2.81,
+    "response_text": "Проверьте выбранные позиции и количество. Для изменения корзины нужно ваше отдельное подтверждение.",
+    "extracted": [
+      "027005 — 2 шт.",
+      "027028 — 1 шт."
+    ],
+    "proposal_items": [
+      {
+        "product_id": 515280,
+        "article": "200300274_",
+        "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+        "quantity": 2,
+        "price": 26930,
+        "line_total": 53860
+      },
+      {
+        "product_id": 515281,
+        "article": "200300275_",
+        "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+        "quantity": 1,
+        "price": 33130,
+        "line_total": 33130
+      }
+    ],
+    "cart_before_confirmation": {
+      "items": [],
+      "count": 0,
+      "total": 0,
+      "currency": null,
+      "url": "/cart",
+      "mode": "server"
+    },
+    "confirmation": "да, добавь",
+    "cart_after_confirmation": {
+      "items": [
+        {
+          "product_id": 515280,
+          "article": "200300274_",
+          "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+          "quantity": 2,
+          "price": 26930,
+          "line_total": 53860
+        },
+        {
+          "product_id": 515281,
+          "article": "200300275_",
+          "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+          "quantity": 1,
+          "price": 33130,
+          "line_total": 33130
+        }
+      ],
+      "count": 3,
+      "total": 86990,
+      "currency": null,
+      "url": "/cart",
+      "mode": "server"
+    }
+  }
+}

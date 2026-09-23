@@ -1,0 +1,140 @@
+{
+  "kind": "live_verification_of_generated_samples",
+  "checked_at": "2026-09-23T10:53:59.065838+00:00",
+  "local_validation": "passed",
+  "files": [
+    {
+      "file": "inputs/specification-scan.pdf",
+      "model": "gpt-4o-mini",
+      "seconds": 2.913,
+      "product_ids": [
+        515280,
+        515281
+      ],
+      "extracted": [
+        "027005 — 2 шт.",
+        "027028 — 1 шт."
+      ],
+      "cart_count": 0,
+      "passed": true,
+      "sha256": "bf5331a89f317efa3e1a2a6d7551a13c8967ce9f9caaebfef5460423185e0dcf"
+    },
+    {
+      "file": "inputs/specification.csv",
+      "model": "gpt-4o-mini",
+      "seconds": 1.22,
+      "product_ids": [
+        515280,
+        515281
+      ],
+      "extracted": [
+        "027005 — 2 шт.",
+        "027028 — 1 шт."
+      ],
+      "cart_count": 0,
+      "passed": true,
+      "sha256": "69eaf8f52a144828a4d062b2bfbb65f54a9937c4d3fc41e2b89a3bbe9409689b"
+    },
+    {
+      "file": "inputs/specification.docx",
+      "model": "gpt-4o-mini",
+      "seconds": 1.176,
+      "product_ids": [
+        515280,
+        515281
+      ],
+      "extracted": [
+        "027005",
+        "027028"
+      ],
+      "cart_count": 0,
+      "passed": true,
+      "sha256": "13289c20c9549709ff65970d26be63d9eaebdf751b1c345856deec6de1479f68"
+    },
+    {
+      "file": "inputs/specification.jpeg",
+      "model": "gpt-4o-mini",
+      "seconds": 2.145,
+      "product_ids": [
+        515280,
+        515281
+      ],
+      "extracted": [
+        "027005",
+        "027028"
+      ],
+      "cart_count": 0,
+      "passed": true,
+      "sha256": "10bbc2089edc91a994d425a418095e0bfcaa6ef843ab546a4106b2fbdcbdab24"
+    },
+    {
+      "file": "inputs/specification.pdf",
+      "model": "gpt-4o-mini",
+      "seconds": 1.678,
+      "product_ids": [
+        515280,
+        515281
+      ],
+      "extracted": [
+        "027005 — 2 шт.",
+        "027028 — 1 шт."
+      ],
+      "cart_count": 0,
+      "passed": true,
+      "sha256": "1ee8539d95d8399ab85c491dc18e3afab927d207d5363cf3d8392cbad39782bd"
+    },
+    {
+      "file": "inputs/specification.txt",
+      "model": "gpt-4o-mini",
+      "seconds": 1.264,
+      "product_ids": [
+        515280,
+        515281
+      ],
+      "extracted": [
+        "027005 — 2 шт.",
+        "027028 — 1 шт."
+      ],
+      "cart_count": 0,
+      "passed": true,
+      "sha256": "276dc42aedb0e4e34deb4e70f5fcdd52a554a76ada31b7acbbafd2e1e7bd4155"
+    },
+    {
+      "file": "inputs/specification.xlsx",
+      "model": "gpt-4o-mini",
+      "seconds": 1.435,
+      "product_ids": [
+        515280,
+        515281
+      ],
+      "extracted": [
+        "027005",
+        "027028"
+      ],
+      "cart_count": 0,
+      "passed": true,
+      "sha256": "c900482fb0d906fea89ae34b327ec20cd792a61eafc22853a9aa92bc3824f52e"
+    }
+  ],
+  "all_passed": true,
+  "session_file": "observed-session.json",
+  "file_to_cart": {
+    "file": "inputs/specification.xlsx",
+    "passed": true,
+    "model": "gpt-4o-mini",
+    "seconds": 2.81,
+    "quantities_from_file": {
+      "027005": 2,
+      "027028": 1
+    },
+    "before_confirmation_count": 0,
+    "after_confirmation_count": 3
+  },
+  "uc_checks": {
+    "UC-01": "passed",
+    "UC-02": "passed",
+    "UC-03": "passed: payment/delivery/minimum present; unknown general minimum disclosed",
+    "UC-04": "passed: proposal, ambiguous reply, explicit consent, two quantities",
+    "UC-05": "passed: /cart HTTP 200 and actual session cart"
+  }
+}
