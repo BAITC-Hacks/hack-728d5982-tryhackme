@@ -24,7 +24,8 @@ The goal is to have working scenarios from the PRD: user input → actual proces
 
 ### Sources of truth
 
-- `PRD.md`: product goal, MVP boundaries, and three key use cases with identifiers UC-01…03. For each: input, expected outcome, acceptance criteria, and necessary exceptions, including human confirmation.
+- `docs/source of truth/assets/HackAlem AI_ ИИ-ассистент для чата на сайте ekt.kz.docx`: primary, final product requirements for this case. See `docs/source of truth/source of truth.md` for the document hierarchy. Do not change the Word specification to match the implementation or observed API fields.
+- `PRD.md`: derived product goal, MVP boundaries, and five Must have use cases with identifiers UC-01…05, following the five points of the HackAlem Word specification. UC-01 is the first end-to-end priority. For each: input, expected outcome, acceptance criteria, and necessary exceptions, including human confirmation.
 - `plan.md`: human decisions regarding the stack, architecture, and constraints. Do not modify without an explicit request. If a decision conflicts with the requirements, explain the conflict.
 - Golden dataset: input examples and result benchmarks related to the UC. Use the existing `output/` and `evals/`; do not duplicate data. The benchmark illustrates the requirements but does not cover all valid inputs.
 - `ROADMAP.md`: current implementation steps linked to the UC and the verifiable result of each step.
@@ -56,7 +57,7 @@ Start with a thin end‑to‑end scenario: minimal UI → API → real processin
 - pytest with async/httpx, if necessary, checks the API, data processing, and state transitions, not just the HTTP code and JSON format.
 - Numbers, required fields, thresholds, and human confirmation conditions are checked programmatically. The LLM judge is used for semantic evaluation based on explicit criteria; its verdict is not the sole evidence.
 - Compare the result with the requirements and essential facts of the benchmark. Literal or byte‑by‑byte matching is required only if such a requirement exists. Add input variations and edge cases where they test a specific risk.
-- Choose checks based on changes: don’t run all levels for every edit. Before declaring the MVP ready, perform real end‑to‑end runs of all three UCs and check their acceptance criteria.
+- Choose checks based on changes: don’t run all levels for every edit. Before declaring the MVP ready, perform real end‑to‑end runs of all five UCs and check their acceptance criteria.
 - Mocks are acceptable for UI and isolated tests; they must be clearly marked. It is forbidden to substitute reference answers into the working business logic or to pass off a mock run as a live one. If integration is not available, indicate what remains unchecked.
 
 ### How to develop these instructions
