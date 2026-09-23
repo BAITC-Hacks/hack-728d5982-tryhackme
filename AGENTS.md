@@ -6,6 +6,22 @@ This file provides guidance for AI coding agents (Codex, Copilot, Cursor, Zed, O
 
 The goal is to have working scenarios from the PRD: user input → actual processing → verifiable outcome. Any change should help the scenario or eliminate a specific obstacle to it.
 
+### Mindset
+- PRD.md задаёт наблюдаемое поведение. Не подгонять его под то, что случайно получилось (ИЛИ! желательно вообще сделать марку например в ROADMAP текущий стадию прописать что нужно исключить НО уведомить юзера добавить или нет то что надо выпилить!) .
+
+- Первый приоритет — один полный UC. Остальные сценарии расширяют уже работающую цепочку.
+
+- Фичи features (в приоритете) должны быть следствием Use cases (E2E) реализуя "кирпичики" к достижению UC результата PRD.md.
+
+- Тесты проверяют результат. Сумма, статус, ограничение, сохранённая запись — сильнее теста «функция была вызвана».
+
+- Моки помогают разработке; живой прогон подтверждает интеграцию.
+
+- Контракты, зависимости и миграции имеют одного владельца.
+
+- Каждая новая фича должна улучшать критерий оценки или демонстрацию и должна быть связана линковку или пометку для E2E - Use cases к какому. (желательно.) 
+    
+
 ### Sources of truth
 
 - `PRD.md`: product goal, MVP boundaries, and three key use cases with identifiers UC-01…03. For each: input, expected outcome, acceptance criteria, and necessary exceptions, including human confirmation.
