@@ -1,10 +1,3477 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f7f4"><title>ЭКТ · Помощник по подбору электротоваров</title><meta name="description" content="Узнайте наличие, характеристики и документы на электротовары ЭКТ в одном диалоге."><script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap');:root{font-family:Manrope,sans-serif;color:#18312e}body{background:#f7f8f5}.font-display{font-family:'DM Sans',Manrope,sans-serif}.glass{box-shadow:0 18px 60px rgba(17,50,43,.08)}.dot-grid{background-image:radial-gradient(#cddcd2 1px,transparent 1px);background-size:21px 21px}.scrollbar::-webkit-scrollbar{width:6px}.scrollbar::-webkit-scrollbar-thumb{background:#d8e3dc;border-radius:8px}.msg{animation:appear .25s ease-out}@keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #82c8a9;outline-offset:2px}</style></head>
-<body class="min-h-screen"><div class="mx-auto max-w-[1440px] px-5 md:px-10"><header class="flex h-20 items-center justify-between border-b border-[#e4ebe5]"><a href="#" class="flex items-center gap-3" aria-label="ЭКТ — главная"><span class="grid size-10 place-items-center rounded-xl bg-[#164c3d] text-xl font-extrabold text-white">Э</span><span class="font-display text-xl font-extrabold tracking-tight">ЭКТ<span class="text-[#79b69a]">.</span></span><span class="ml-2 hidden border-l border-[#d8e1db] pl-4 text-xs font-medium text-[#83918b] sm:block">Электрика без сложных поисков</span></a><div class="flex items-center gap-4"><span id="mode-pill" class="hidden rounded-full bg-[#e7eee7] px-3 py-1.5 text-xs font-bold text-[#47745a] sm:inline">● Образец каталога</span><a href="https://ekt.kz/" target="_blank" rel="noopener" class="hidden text-sm font-bold text-[#33594b] hover:underline md:block">Перейти в магазин ↗</a></div></header>
-<main><section class="grid gap-9 pb-14 pt-11 lg:grid-cols-[.82fr_1.18fr] lg:gap-14 lg:pt-19"><div class="flex flex-col justify-center"><div class="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-[#cbe1d2] bg-[#e9f4eb] px-3 py-1.5 text-xs font-bold text-[#267353]"><span class="size-2 rounded-full bg-[#48aa77]"></span> ПОМОЩНИК ПО КАТАЛОГУ ЭКТ</div><h1 class="font-display max-w-[570px] text-[clamp(40px,4.7vw,72px)] leading-[1.04] font-extrabold tracking-[-.055em]">Нужный товар.<br><span class="text-[#3b9970]">Точный ответ.</span></h1><p class="mt-6 max-w-[530px] text-base leading-8 text-[#64766f] md:text-lg">Спросите об артикуле обычными словами. Помощник проверит наличие, покажет характеристики и подскажет, где посмотреть документы.</p><div class="mt-9 grid max-w-[520px] grid-cols-3 gap-3"><div class="rounded-2xl border border-[#e0e9e1] bg-white p-4"><span class="text-xl">◉</span><p class="mt-2 text-xs font-bold leading-5">Остатки<br>по складам</p></div><div class="rounded-2xl border border-[#e0e9e1] bg-white p-4"><span class="text-xl">▤</span><p class="mt-2 text-xs font-bold leading-5">Проверенные<br>характеристики</p></div><div class="rounded-2xl border border-[#e0e9e1] bg-white p-4"><span class="text-xl">↗</span><p class="mt-2 text-xs font-bold leading-5">Ссылка<br>на товар</p></div></div><div class="mt-9 text-xs leading-6 text-[#85938b]">Ответы основаны на данных каталога. Актуальность зависит от подключения к API.</div></div>
-<div class="relative"><div class="dot-grid absolute -inset-5 -z-10 rounded-[34px] opacity-60"></div><div class="glass overflow-hidden rounded-[28px] border border-[#e0e9e3] bg-white"><div class="flex items-center justify-between border-b border-[#edf0ec] px-5 py-4 md:px-7"><div class="flex items-center gap-3"><span class="grid size-10 place-items-center rounded-xl bg-[#e4f3e9] font-extrabold text-[#187750]">✳</span><div><div class="text-sm font-extrabold">Помощник ЭКТ</div><div class="text-xs text-[#879890]">Поиск и консультация по товарам</div></div></div><button id="settings" class="rounded-xl border border-[#dfe9e1] px-3 py-2 text-xs font-bold text-[#3a6d52] hover:bg-[#eef5ef]">⚙ Подключить API</button></div><div id="chat" role="log" aria-live="polite" class="scrollbar flex h-[460px] flex-col gap-4 overflow-y-auto bg-[#fbfcfa] px-5 py-6 md:px-7"></div><div class="border-t border-[#edf0ec] bg-white p-4 md:px-6"><div class="mb-3 flex flex-wrap gap-2"><button class="prompt rounded-full border border-[#dce8de] px-3 py-1.5 text-xs font-semibold text-[#3c7054] hover:bg-[#eef7ef]" data-query="Есть ли 200300285_?">Проверить 200300285_</button><button class="prompt rounded-full border border-[#dce8de] px-3 py-1.5 text-xs font-semibold text-[#3c7054] hover:bg-[#eef7ef]" data-query="Характеристики 027228">Характеристики 027228</button><button class="prompt rounded-full border border-[#dce8de] px-3 py-1.5 text-xs font-semibold text-[#3c7054] hover:bg-[#eef7ef]" data-query="Сертификат на 027228">Сертификат на 027228</button></div><form id="ask-form" class="flex items-center gap-2 rounded-2xl border border-[#d9e4da] bg-[#fafcf9] p-2 focus-within:border-[#79b99a]"><input id="query" class="min-w-0 flex-1 bg-transparent px-3 py-2 text-sm outline-none placeholder:text-[#9ba9a0]" placeholder="Введите артикул или вопрос о товаре…" autocomplete="off" aria-label="Ваш вопрос"><button type="submit" class="grid size-10 shrink-0 place-items-center rounded-xl bg-[#176343] text-lg text-white hover:bg-[#0c5035]" aria-label="Отправить">↗</button></form><div class="mt-2 text-[11px] text-[#9ba8a1]">Для точного ответа укажите артикул или модель товара.</div></div></div></div></section>
-<section class="border-t border-[#e0e8e1] py-12"><div class="mb-7 flex flex-wrap items-end justify-between gap-4"><div><div class="mb-2 text-xs font-extrabold tracking-[.16em] text-[#3d9870]">ПРОВЕРКА НА ПРИМЕРЕ</div><h2 class="font-display text-3xl font-extrabold tracking-tight md:text-4xl">От вопроса к решению</h2></div><span class="text-sm text-[#83948a]">Каталог → карточка → остатки → ответ</span></div><div class="grid gap-4 md:grid-cols-3"><div class="rounded-2xl border border-[#e1e9e2] bg-white p-6"><span class="text-2xl text-[#4d9d72]">01</span><h3 class="mt-5 font-extrabold">Назовите товар</h3><p class="mt-2 text-sm leading-6 text-[#77877e]">Введите артикул, код производителя или часть названия.</p></div><div class="rounded-2xl border border-[#e1e9e2] bg-white p-6"><span class="text-2xl text-[#4d9d72]">02</span><h3 class="mt-5 font-extrabold">Проверьте данные</h3><p class="mt-2 text-sm leading-6 text-[#77877e]">Посмотрите количество, склады и параметры из карточки товара.</p></div><div class="rounded-2xl border border-[#e1e9e2] bg-white p-6"><span class="text-2xl text-[#4d9d72]">03</span><h3 class="mt-5 font-extrabold">Откройте карточку</h3><p class="mt-2 text-sm leading-6 text-[#77877e]">Сверьте данные и уточните покупку на сайте ЭКТ.</p></div></div></section></main><footer class="flex flex-wrap justify-between gap-4 border-t border-[#e0e8e1] py-7 text-xs text-[#87958b]"><span>ЭКТ · демонстрация помощника по каталогу</span><span>Цены и наличие сверяйте на ekt.kz перед заказом</span></footer></div>
-<dialog id="api-dialog" class="m-auto w-[min(92vw,440px)] rounded-[24px] border border-[#dce8df] p-0 text-[#18312e] shadow-2xl backdrop:bg-[#09271a]/45"><form method="dialog" class="p-7"><div class="flex items-start justify-between"><div><h2 class="text-xl font-extrabold">Подключение к API</h2><p class="mt-2 text-sm leading-6 text-[#6e8074]">Введите доступ к ekt.kz. Данные хранятся только в памяти текущей вкладки.</p></div><button class="text-xl" aria-label="Закрыть">×</button></div><label class="mt-6 block text-xs font-bold">Логин<input id="api-user" autocomplete="username" class="mt-2 w-full rounded-xl border border-[#dce8df] p-3 text-sm" value="apiuser"></label><label class="mt-4 block text-xs font-bold">Пароль<input id="api-pass" type="password" autocomplete="off" class="mt-2 w-full rounded-xl border border-[#dce8df] p-3 text-sm" placeholder="Пароль Basic Auth"></label><p class="mt-4 text-xs leading-5 text-[#819088]">Если сервер запрещает запросы из браузера (CORS), нужен серверный прокси. Образец каталога останется доступен для демонстрации.</p><div class="mt-6 flex gap-2"><button id="connect" type="button" class="flex-1 rounded-xl bg-[#176343] px-4 py-3 text-sm font-bold text-white">Проверить подключение</button><button type="submit" class="rounded-xl border border-[#dce8df] px-4 py-3 text-sm font-bold">Закрыть</button></div><div id="connection-status" role="status" class="mt-3 text-xs"></div></form></dialog>
-<script>const SNAP_ITEMS=[{"id": 45357, "name": "***LED STARK 30W 2400Lm d98x180 4000K IP20 MEGALIGHT (20)", "article": "ярп4520", "price": 1810, "image": "https://ekt.kz/upload/iblock/c39/u58k0kbv7koy4uikpznyywf0i5h1my7e/led_stark_30w_2400lm_d98x180_4000k_ip20_megalight_20.jpg", "url": "https://ekt.kz/catalog/spets_predlozhenie/aktsiya_megalight_polnyy_sklad_polnyy_bak/_led_stark_30w_2400lm_d98x180_4000k_ip20_megalight_20/", "url_api_detail": "https://ekt.kz/api/products/detail?id=45357", "offers": []}, {"id": 25397, "name": "007886 Диф.авт. 1p+N 16А (30мА) 411002 Legrand (1)!!!", "article": "310100080_", "price": 9430, "image": null, "url": "https://ekt.kz/catalog/spets_predlozhenie/differentsialnye_ustroystva_uzo_avdt_vd/007886_dif_avt_1p_n_16a_30ma_411002_legrand_1_/", "url_api_detail": "https://ekt.kz/api/products/detail?id=25397", "offers": []}, {"id": 58379, "name": "010-002 УПп 60/40.1.1 со стыковочными узлами и винтами", "article": "030300435_", "price": 53, "image": "https://ekt.kz/upload/iblock/df5/j2h6n71ed0v5lrn9e0tko32p70s9i9mp/010_002_upp_60_40_1_1_so_stykovochnymi_uzlami_i_vintami.jpg", "url": "https://ekt.kz/catalog/avtomatizatsiya/ustroystva_plavnogo_puska_iek_/010_002_upp_60_40_1_1_so_stykovochnymi_uzlami_i_vintami/", "url_api_detail": "https://ekt.kz/api/products/detail?id=58379", "offers": []}, {"id": 58380, "name": "010-005 УПрк 97/50.1.1", "article": "030300438_", "price": 199, "image": "https://ekt.kz/upload/iblock/452/p7c0wmkvp2orswbiqrr7x7i3oj9g91te/010_005_uprk_97_50_1_1.jpg", "url": "https://ekt.kz/catalog/rozetki_vyklyuchateli_korobki/korobki/raspredelitelnye_1/010_005_uprk_97_50_1_1/", "url_api_detail": "https://ekt.kz/api/products/detail?id=58380", "offers": []}, {"id": 58412, "name": "020-007 Коробка для полых стен с мет. лапками и крышкой УПрк 97/50.1.2. (КМ-206)", "article": "030300329_", "price": 293, "image": "https://ekt.kz/upload/iblock/e6c/xvr6h6018pvtevvtawo09e3nxrynwkcu/020_007_korobka_dlya_polykh_sten_s_met_lapkami_i_kryshkoy_uprk_97_50_1_2_km_206.jpg", "url": "https://ekt.kz/catalog/rozetki_vyklyuchateli_korobki/korobki/ustanovochnye_podrozetniki/020_007_korobka_dlya_polykh_sten_s_met_lapkami_i_kryshkoy_uprk_97_50_1_2_km_206/", "url_api_detail": "https://ekt.kz/api/products/detail?id=58412", "offers": []}, {"id": 58368, "name": "020-008 Коробка разв.107х107х53 г/к УПрк 110/45.2.2. (72 шт)", "article": "030300044_", "price": 414, "image": "https://ekt.kz/upload/iblock/c41/rqm4qng5ho5yn5b9upprkr9mm3o5b17r/020_008_korobka_razv_107kh107kh53_g_k_uprk_110_45_2_2_72_sht.jpg", "url": "https://ekt.kz/catalog/rozetki_vyklyuchateli_korobki/korobki/raspredelitelnye_1/020_008_korobka_razv_107kh107kh53_g_k_uprk_110_45_2_2_72_sht/", "url_api_detail": "https://ekt.kz/api/products/detail?id=58368", "offers": []}, {"id": 58378, "name": "020-108 Коробка распаячная для полых стен с пласт. Лапками и крышкой 110/50.2.2", "article": "030300426_", "price": 350, "image": "https://ekt.kz/upload/iblock/f59/ibj4vzbol2318jo1ukilbozywunlsnal/020_108_korobka_raspayachnaya_dlya_polykh_sten_s_plast_lapkami_i_kryshkoy_110_50_2_2.jpg", "url": "https://ekt.kz/catalog/rozetki_vyklyuchateli_korobki/korobki/raspredelitelnye_1/020_108_korobka_raspayachnaya_dlya_polykh_sten_s_plast_lapkami_i_kryshkoy_110_50_2_2/", "url_api_detail": "https://ekt.kz/api/products/detail?id=58378", "offers": []}, {"id": 515279, "name": "027004 АВ DRX125 MT 3ф 40А 10ka Legrand (1)", "article": "200300273_", "price": 26930, "image": "https://ekt.kz/upload/iblock/592/ecrd69l3r236hyuttkj4lmnz1euly1a7/027004_av_drx125_mt_3f_40a_10ka_legrand_1.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027004_av_drx125_mt_3f_40a_10ka_legrand_1/", "url_api_detail": "https://ekt.kz/api/products/detail?id=515279", "offers": []}, {"id": 515280, "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)", "article": "200300274_", "price": 26930, "image": "https://ekt.kz/upload/iblock/e99/yqvedowbaop1fju39ky9pau7rmv6qj63/027005_av_drx125_mt_3f_50a_10ka_legrand_1.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027005_av_drx125_mt_3f_50a_10ka_legrand_1/", "url_api_detail": "https://ekt.kz/api/products/detail?id=515280", "offers": []}, {"id": 515278, "name": "027008 АВ DRX125 MT 3ф 100А 10ka Legrand (1)", "article": "200300272_", "price": 29190, "image": "https://ekt.kz/upload/iblock/dd5/m7bhmskgees6tmeh613tz5k3q10oldar/027008_av_drx125_mt_3f_100a_10ka_legrand_1.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027008_av_drx125_mt_3f_100a_10ka_legrand_1/", "url_api_detail": "https://ekt.kz/api/products/detail?id=515278", "offers": []}, {"id": 515282, "name": "027022 АВ DRX125 MT 3ф 25А 20ka Legrand (1)", "article": "200300276_", "price": 29810, "image": "https://ekt.kz/upload/iblock/076/0k32d23w57a0leyiunq6o8yltqfoynmw/027022_av_drx125_mt_3f_25a_20ka_legrand_1.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027022_av_drx125_mt_3f_25a_20ka_legrand_1/", "url_api_detail": "https://ekt.kz/api/products/detail?id=515282", "offers": []}, {"id": 515283, "name": "027024 АВ DRX125 MT 3ф 40А 20ka Legrand (1)", "article": "200300277_", "price": 29810, "image": "https://ekt.kz/upload/iblock/4ec/vurn6p0w0a2y95fktv0n66mrgjig0s08/027024_av_drx125_mt_3f_40a_20ka_legrand_1.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027024_av_drx125_mt_3f_40a_20ka_legrand_1/", "url_api_detail": "https://ekt.kz/api/products/detail?id=515283", "offers": []}, {"id": 515281, "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)", "article": "200300275_", "price": 33130, "image": "https://ekt.kz/upload/iblock/569/ys2rqxp1g7tpg7hxtuht2747ni73l53a/027028_av_drx125_mt_3f_10a_20ka_legrand_1.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027028_av_drx125_mt_3f_10a_20ka_legrand_1/", "url_api_detail": "https://ekt.kz/api/products/detail?id=515281", "offers": []}, {"id": 515290, "name": "027100 АВ DRX250 MT 3ф 125А 18ka Legrand (1)", "article": "200300284_", "price": 64780, "image": "https://ekt.kz/upload/iblock/053/vgn63u873t0vhpsub4zuzd6met8zgb91/027100_av_drx250_mt_3f_125a_18ka_legrand_1.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027100_av_drx250_mt_3f_125a_18ka_legrand_1/", "url_api_detail": "https://ekt.kz/api/products/detail?id=515290", "offers": []}, {"id": 515292, "name": "027103 АВ DRX250 MT 3ф 200А 18ka Legrand (1)", "article": "200300286_", "price": 69880, "image": "https://ekt.kz/upload/iblock/be3/e0ed5wa8ni54hge5z0fmtauhuzudpgx6/027103_av_drx250_mt_3f_200a_18ka_legrand_1.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027103_av_drx250_mt_3f_200a_18ka_legrand_1/", "url_api_detail": "https://ekt.kz/api/products/detail?id=515292", "offers": []}, {"id": 515286, "name": "027105 АВ DRX250 MT 3ф 250А 18ka Legrand (1)", "article": "200300280_", "price": 69910, "image": "https://ekt.kz/upload/iblock/75b/0w9qn9kumrcv9hqb7s6iegdf2g4b6cpw/027105_av_drx250_mt_3f_250a_18ka_legrand_1.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027105_av_drx250_mt_3f_250a_18ka_legrand_1/", "url_api_detail": "https://ekt.kz/api/products/detail?id=515286", "offers": []}, {"id": 515287, "name": "027112 АВ DRX250 MT 3ф 125А 25ka Legrand (1)", "article": "200300281_", "price": 65450, "image": "https://ekt.kz/upload/iblock/828/jx7tloq0z13y4ipsiqs83wuqry8t7xj3/027112_av_drx250_mt_3f_125a_25ka_legrand_1.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027112_av_drx250_mt_3f_125a_25ka_legrand_1/", "url_api_detail": "https://ekt.kz/api/products/detail?id=515287", "offers": []}, {"id": 515289, "name": "027115 АВ DRX250 MT 3ф 200А 25ka Legrand (1)", "article": "200300283_", "price": 71160, "image": "https://ekt.kz/upload/iblock/42d/gn2fvf89vn2tgkwzuiurcw99s9mgjbda/027115_av_drx250_mt_3f_200a_25ka_legrand_1.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027115_av_drx250_mt_3f_200a_25ka_legrand_1/", "url_api_detail": "https://ekt.kz/api/products/detail?id=515289", "offers": []}, {"id": 515293, "name": "027117 АВ DRX250 MT 3ф 250А 25ka Legrand (1)", "article": "200300287_", "price": 76940, "image": "https://ekt.kz/upload/iblock/9cd/utqxpur1mensee2kealvq68ta9kenbep/027117_av_drx250_mt_3f_250a_25ka_legrand_1.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027117_av_drx250_mt_3f_250a_25ka_legrand_1/", "url_api_detail": "https://ekt.kz/api/products/detail?id=515293", "offers": []}, {"id": 515285, "name": "027220 АВ DRX125 MT 3ф 63А 20ka Legrand (1)", "article": "200300279_", "price": 31620, "image": "https://ekt.kz/upload/iblock/ef5/utqen57lj3c7fjwfifxooatqtxcz3e2g/027220_av_drx125_mt_3f_63a_20ka_legrand_1.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027220_av_drx125_mt_3f_63a_20ka_legrand_1/", "url_api_detail": "https://ekt.kz/api/products/detail?id=515285", "offers": []}, {"id": 515291, "name": "027228 АВ DRX250 MT 3ф 160А 18ka Legrand (1)", "article": "200300285_", "price": 64920, "image": "https://ekt.kz/upload/iblock/47e/yow62nu665xqw3kk1es94ktbpl2z8pkt/027228_av_drx250_mt_3f_160a_18ka_legrand_1.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027228_av_drx250_mt_3f_160a_18ka_legrand_1/", "url_api_detail": "https://ekt.kz/api/products/detail?id=515291", "offers": []}, {"id": 515288, "name": "027230 АВ DRX250 MT 3ф 160А 25ka Legrand (1)", "article": "200300282_", "price": 65920, "image": "https://ekt.kz/upload/iblock/a00/hy7g1xnr71tgeqz7m9b0olycroxt6oi2/027230_av_drx250_mt_3f_160a_25ka_legrand_1.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027230_av_drx250_mt_3f_160a_25ka_legrand_1/", "url_api_detail": "https://ekt.kz/api/products/detail?id=515288", "offers": []}, {"id": 515277, "name": "027255 АВ DRX125 MT 3ф 80А 10ka Legrand (1)", "article": "200300271_", "price": 29190, "image": "https://ekt.kz/upload/iblock/2f4/k8wwlsiaafhwpa9m7f3ild2o7kulf9ff/027255_av_drx125_mt_3f_80a_10ka_legrand_1.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027255_av_drx125_mt_3f_80a_10ka_legrand_1/", "url_api_detail": "https://ekt.kz/api/products/detail?id=515277", "offers": []}, {"id": 515284, "name": "027257 АВ DRX125 MT 3ф 80А 20ka Legrand (1)", "article": "200300278_", "price": 33130, "image": "https://ekt.kz/upload/iblock/203/e0iyjeljujgg0gn79ljzddvpvzdqxiy4/027257_av_drx125_mt_3f_80a_20ka_legrand_1.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027257_av_drx125_mt_3f_80a_20ka_legrand_1/", "url_api_detail": "https://ekt.kz/api/products/detail?id=515284", "offers": []}, {"id": 19988, "name": "09805 IL MX 250F 2D 21W 6500K OPPLE (1) !!!", "article": "151000197_", "price": 2710, "image": "https://ekt.kz/upload/iblock/1cb/09805_il_mx_250f_2d_21w_6500k_opple_1_.png", "url": "https://ekt.kz/catalog/svetilniki_lampy/svetilniki_dlya_vnutrennego_osveshcheniya/nakladnye_lyuministsentnye_lbo_lpo_obn/09805_il_mx_250f_2d_21w_6500k_opple_1_/", "url_api_detail": "https://ekt.kz/api/products/detail?id=19988", "offers": []}, {"id": 25010, "name": "09806 IL MX 305F 2D 38W 6500K OPPLE (1) !!!", "article": "151000198_", "price": 3595, "image": "https://ekt.kz/upload/iblock/01a/09806_il_mx_305f_2d_38w_6500k_opple_1_.png", "url": "https://ekt.kz/catalog/svetilniki_lampy/svetilniki_dlya_vnutrennego_osveshcheniya/nakladnye_lyuministsentnye_lbo_lpo_obn/09806_il_mx_305f_2d_38w_6500k_opple_1_/", "url_api_detail": "https://ekt.kz/api/products/detail?id=25010", "offers": []}, {"id": 35604, "name": "1 и 3 фазное реле контроля для насоса, 5А, 1 CO, 208...480VAC RM35BA10", "article": "RM35BA10", "price": 85380, "image": "https://ekt.kz/upload/iblock/cfe/109gr81zevdvezq0re0ujxuwltjzof4e/1_i_3_faznoe_rele_kontrolya_dlya_nasosa_5a_1_co_208_480vac_rm35ba10.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_i_3_faznoe_rele_kontrolya_dlya_nasosa_5a_1_co_208_480vac_rm35ba10/", "url_api_detail": "https://ekt.kz/api/products/detail?id=35604", "offers": []}, {"id": 35819, "name": "1-фазное реле контроля напряж, 5А, 1 CO, 20…80 V AC/DC RM17UAS16", "article": "RM17UAS16", "price": 49490, "image": "https://ekt.kz/upload/iblock/367/b6ssh3wv4pk3rot4j9sz6fv1i0og0lym/1_faznoe_rele_kontrolya_napryazh_5a_1_co_20_80_v_ac_dc_rm17uas16.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_5a_1_co_20_80_v_ac_dc_rm17uas16/", "url_api_detail": "https://ekt.kz/api/products/detail?id=35819", "offers": []}, {"id": 35587, "name": "1-фазное реле контроля напряж, 5А, 1 CO, 20…80 V AC/DC RM17UBE16", "article": "RM17UBE16", "price": 67320, "image": "https://ekt.kz/upload/iblock/35a/vilhxjq0z38swthf8rr8g1k2m0w3ay6f/1_faznoe_rele_kontrolya_napryazh_5a_1_co_20_80_v_ac_dc_rm17ube16.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_5a_1_co_20_80_v_ac_dc_rm17ube16/", "url_api_detail": "https://ekt.kz/api/products/detail?id=35587", "offers": []}, {"id": 35563, "name": "1-фазное реле контроля напряж, 5А, 1 CO, 65…260 V AC/DC RM17UAS15", "article": "RM17UAS15", "price": 43250, "image": "https://ekt.kz/upload/iblock/4a6/a67mn9zqbyak4pvxxf2hk5wmd20kv4mu/1_faznoe_rele_kontrolya_napryazh_5a_1_co_65_260_v_ac_dc_rm17uas15.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_5a_1_co_65_260_v_ac_dc_rm17uas15/", "url_api_detail": "https://ekt.kz/api/products/detail?id=35563", "offers": []}, {"id": 35574, "name": "1-фазное реле контроля напряж, 5А, 1 CO, 65…260 V AC/DC RM17UBE15", "article": "RM17UBE15", "price": 58830, "image": "https://ekt.kz/upload/iblock/c9f/393y4qbwntmep37yxuas6pqdhkkiav1t/1_faznoe_rele_kontrolya_napryazh_5a_1_co_65_260_v_ac_dc_rm17ube15.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_5a_1_co_65_260_v_ac_dc_rm17ube15/", "url_api_detail": "https://ekt.kz/api/products/detail?id=35574", "offers": []}, {"id": 35585, "name": "1-фазное реле контроля напряж, 5А, 1 CO, 9…15VDC RM17UAS14", "article": "RM17UAS14", "price": 47760, "image": "https://ekt.kz/upload/iblock/e4a/exhtiqt3zev812fxlzjatvro6v1b78y8/1_faznoe_rele_kontrolya_napryazh_5a_1_co_9_15vdc_rm17uas14.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_5a_1_co_9_15vdc_rm17uas14/", "url_api_detail": "https://ekt.kz/api/products/detail?id=35585", "offers": []}, {"id": 35609, "name": "1-фазное реле контроля напряж, 5А, 2 CO, диапазон изм 1-100 В, питание 24-240 V AC/DC RM35UA12MW", "article": "RM35UA12MW", "price": 69680, "image": "https://ekt.kz/upload/iblock/e8c/4fv9te3pyx6ldp44b2skwvm4zia7kgpg/1_faznoe_rele_kontrolya_napryazh_5a_2_co_diapazon_izm_1_100_v_pitanie_24_240_v_ac_dc_rm35ua12mw.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_5a_2_co_diapazon_izm_1_100_v_pitanie_24_240_v_ac_dc_rm35ua12mw/", "url_api_detail": "https://ekt.kz/api/products/detail?id=35609", "offers": []}, {"id": 35608, "name": "1-фазное реле контроля напряж, 5А, 2 CO, диапазон измер 0.05-5 В, питание 24-240 V AC/DC RM35UA11MW", "article": "RM35UA11MW", "price": 60490, "image": "https://ekt.kz/upload/iblock/70a/mm19yer904nu8vo6thvz0knzd199knu3/1_faznoe_rele_kontrolya_napryazh_5a_2_co_diapazon_izmer_0_05_5_v_pitanie_24_240_v_ac_dc_rm35ua11mw.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_5a_2_co_diapazon_izmer_0_05_5_v_pitanie_24_240_v_ac_dc_rm35ua11mw/", "url_api_detail": "https://ekt.kz/api/products/detail?id=35608", "offers": []}, {"id": 35610, "name": "1-фазное реле контроля напряж, 5А, 2 CO, диапазон измер 15-600 В, питание 24-240 V AC/DC RM35UA13MW", "article": "RM35UA13MW", "price": 67270, "image": "https://ekt.kz/upload/iblock/ced/hv0kuaubpnl1xqu1n9o9h6nuq8p1vlg0/1_faznoe_rele_kontrolya_napryazh_5a_2_co_diapazon_izmer_15_600_v_pitanie_24_240_v_ac_dc_rm35ua13mw.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_5a_2_co_diapazon_izmer_15_600_v_pitanie_24_240_v_ac_dc_rm35ua13mw/", "url_api_detail": "https://ekt.kz/api/products/detail?id=35610", "offers": []}, {"id": 35599, "name": "1-фазное реле контроля напряж, 8 A, 2 CO, 0.05…5 V AC/DC, 24…240 V AC/DC RM22UA31MR", "article": "RM22UA31MR", "price": 94060, "image": "https://ekt.kz/upload/iblock/196/2a0n40ypc5u0279ezm13ok4ow451nhdf/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_0_05_5_v_ac_dc_24_240_v_ac_dc_rm22ua31mr.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_0_05_5_v_ac_dc_24_240_v_ac_dc_rm22ua31mr/", "url_api_detail": "https://ekt.kz/api/products/detail?id=35599", "offers": []}, {"id": 35600, "name": "1-фазное реле контроля напряж, 8 A, 2 CO, 1…100 V AC/DC, 24…240 V AC/DC RM22UA32MR", "article": "RM22UA32MR", "price": 39360, "image": "https://ekt.kz/upload/iblock/fe5/3m9imlm19l1aqxox018i3psdsvyz19rg/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_1_100_v_ac_dc_24_240_v_ac_dc_rm22ua32mr.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_1_100_v_ac_dc_24_240_v_ac_dc_rm22ua32mr/", "url_api_detail": "https://ekt.kz/api/products/detail?id=35600", "offers": []}, {"id": 35573, "name": "1-фазное реле контроля напряж, 8 A, 2 CO, 15…500 V AC/DC, 24…240 V AC/DC RM22UA33MR", "article": "RM22UA33MR", "price": 38370, "image": "https://ekt.kz/upload/iblock/7b7/sth84evq2zriuf282g2bxv2aejgoccn5/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_15_500_v_ac_dc_24_240_v_ac_dc_rm22ua33mr.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_15_500_v_ac_dc_24_240_v_ac_dc_rm22ua33mr/", "url_api_detail": "https://ekt.kz/api/products/detail?id=35573", "offers": []}, {"id": 35601, "name": "1-фазное реле контроля напряж, 8 A, 2 CO, 15…500VAC, 380…415VAC RM22UA33MT", "article": "RM22UA33MT", "price": 86540, "image": "https://ekt.kz/upload/iblock/b37/evdxf193s8gpihd7b4b68dckbm53wcmw/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_15_500vac_380_415vac_rm22ua33mt.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_15_500vac_380_415vac_rm22ua33mt/", "url_api_detail": "https://ekt.kz/api/products/detail?id=35601", "offers": []}, {"id": 35581, "name": "1-фазное реле контроля напряж, 8 A, 2 CO, 80…300 V AC/DC, 110…240 V AC/DC RM22UB34", "article": "RM22UB34", "price": 35730, "image": "https://ekt.kz/upload/iblock/775/vqp79ajor0l5xitkj8roltd9d45r6kkf/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_80_300_v_ac_dc_110_240_v_ac_dc_rm22ub34.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_80_300_v_ac_dc_110_240_v_ac_dc_rm22ub34/", "url_api_detail": "https://ekt.kz/api/products/detail?id=35581", "offers": []}];const SNAP_DETAIL={"id": 515291, "name": "027228 АВ DRX250 MT 3ф 160А 18ka Legrand (1)", "article": "200300285_", "description": "Автоматический выключатель DRX250 MT 3P 160А 18kA (арт. 027228) Legrand – мощное защитное устройство для предотвращения перегрузок и коротких замыканий в электрических сетях.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX250 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 160А\r\n\tОтключающая способность: 18kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Этот автоматический выключатель применяется в промышленных, коммерческих и распределительных системах, обеспечивая надежную защиту электрооборудования. Отличается долговечностью, высокой износостойкостью и простотой монтажа.", "price": 64920, "quantity": 23, "stores": [{"id": 2, "name": "Брак MEGALIGHT", "quantity": 0}, {"id": 3, "name": "Шымкент (ул.Байдукова)", "quantity": 2}, {"id": 4, "name": "Маркетинг MEGALIGHT", "quantity": 0}, {"id": 5, "name": "Никонов", "quantity": 0}, {"id": 6, "name": "РЦ MEGALIGHT", "quantity": 0}, {"id": 7, "name": "Талдыкорган", "quantity": 0}, {"id": 8, "name": "Тастак", "quantity": 0}, {"id": 9, "name": "Торговый зал", "quantity": 0}, {"id": 10, "name": "Востановленный продукт", "quantity": 0}, {"id": 11, "name": "перемещение", "quantity": 0}, {"id": 12, "name": "Основной склад", "quantity": 0}, {"id": 13, "name": "Алматы", "quantity": 5}, {"id": 14, "name": "ЩИТОВОЕ", "quantity": 0}, {"id": 15, "name": "РЦ UNIT", "quantity": 0}, {"id": 16, "name": "Образцы Отдел Закупа", "quantity": 0}, {"id": 17, "name": "Витрина ТЗ", "quantity": 0}, {"id": 18, "name": "Усть-Каменогорск", "quantity": 0}, {"id": 19, "name": "Тараз", "quantity": 2}, {"id": 20, "name": "Атырау", "quantity": 3}, {"id": 21, "name": "Караганда", "quantity": 2}, {"id": 22, "name": "Новосибирск", "quantity": 0}, {"id": 23, "name": "Актау", "quantity": 0}, {"id": 24, "name": "Нур-Султан", "quantity": 8}, {"id": 25, "name": "Шымкент (Тассай)", "quantity": 1}], "image": "https://ekt.kz/upload/iblock/1ca/8mdfx6517jvalt5da1n9865q2fzpj6jp/027228_av_drx250_mt_3f_160a_18ka_legrand_1.jpg", "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027228_av_drx250_mt_3f_160a_18ka_legrand_1/", "offers": [], "properties": {"BRAND_PRIORITY": "1", "CML2_ARTICLE": "200300285_", "NOVINKA": "Да", "SPETSPREDLOZHENIE": "Нет", "RECOMMEND": ["48783", "23466", "28727"], "CML2_BAR_CODE": "3414970344526", "CML2_TRAITS": ["Готовая продукция", "Товар", "200300285_", "Да", "Нет", "027228 АВ DRX250 MT 3ф 160А 18ka Legrand (1)", "0,00212", "1,467", "0", "0", "0"], "CML2_TAXES": "16", "KRATNOST_MIN": "1", "IMYAKARTINKI": "Legrand.jpg", "ARTIKULPOSTAVSHCHIKA": "027228", "OBYEM": "Автоматический выключатель", "KOLICHESTVO_POLYUSOV": "3", "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "18кА", "NOMINALNOE_NAPRYAZHENIE": "400В", "NOMINALNYY_TOK": "250 А", "TIP_USTANOVKI": "Винтовое", "TORGOVAYA_MARKA": "Legrand"}};const chat=document.getElementById('chat'),input=document.getElementById('query'),dialog=document.getElementById('api-dialog');let auth=null,catalog=[...SNAP_ITEMS],detailCache=new Map([[SNAP_DETAIL.id,SNAP_DETAIL]]),mode='sample';const labels={OBYEM:'Тип',KOLICHESTVO_POLYUSOV:'Количество полюсов',NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST:'Отключающая способность',NOMINALNOE_NAPRYAZHENIE:'Напряжение',NOMINALNYY_TOK:'Номинальный ток',TIP_USTANOVKI:'Монтаж',TORGOVAYA_MARKA:'Бренд'};const money=n=>new Intl.NumberFormat('ru-KZ').format(n)+' ₸';function elt(t,c='',txt=''){const e=document.createElement(t);e.className=c;e.textContent=txt;return e}function line(parent,t,c='',text=''){let e=elt(t,c,text);parent.append(e);return e}function link(parent,text,url){try{const u=new URL(url);if(u.protocol!=='https:'||u.hostname!=='ekt.kz')return;let a=elt('a','font-bold text-[#147a51] underline underline-offset-4 hover:text-[#105637]',text+' ↗');a.href=u.href;a.target='_blank';a.rel='noopener noreferrer';parent.append(a)}catch{}}function bubble(who){let row=elt('div','msg flex '+(who==='user'?'justify-end':'justify-start'));let b=elt('div',who==='user'?'max-w-[86%] rounded-2xl rounded-br-md bg-[#176343] px-4 py-3 text-sm leading-6 text-white':'max-w-[94%] rounded-2xl rounded-bl-md border border-[#e2e9e1] bg-white px-4 py-4 text-sm leading-6 shadow-sm');row.append(b);chat.append(row);chat.scrollTop=chat.scrollHeight;return b}function say(s,who='bot'){return line(bubble(who),'p','',s)}function normalized(s){return String(s||'').toLocaleLowerCase('ru').replaceAll('ё','е').trim()}function tokens(s){return normalized(s).match(/[\p{L}\p{N}_-]{3,}/gu)||[]}function score(item,q){let n=normalized(item.name),a=normalized(item.article),terms=tokens(q);let best=0;for(let t of terms){if(t===a||t===normalized(item.id))best+=120;else if(t.length>=4&&a.includes(t))best+=75;else if(t.length>=4&&n.includes(t))best+=Math.min(t.length,12)*3}if(normalized(q).includes(a)&&a.length>=4)best+=100;return best}function findItem(q){let id=q.match(/\b\d{5,7}\b/g)||[];let direct=catalog.find(x=>id.some(v=>String(x.id)===v));if(direct)return direct;return catalog.map(x=>({x,s:score(x,q)})).sort((a,b)=>b.s-a.s)[0]?.s>=9?catalog.map(x=>({x,s:score(x,q)})).sort((a,b)=>b.s-a.s)[0].x:null}async function api(path){if(!auth)throw Error('Нет подключения');let r=await fetch('https://ekt.kz/api/'+path,{headers:{Authorization:'Basic '+auth},cache:'no-store'});if(!r.ok)throw Error('API: '+r.status);return r.json()}async function findLive(q){let found=findItem(q);if(found)return found;for(let page=3;page<=8;page++){let data=await api('products?page='+page);let arr=Array.isArray(data.items)?data.items:[];catalog.push(...arr);found=findItem(q);if(found||arr.length===0)return found}return null}async function getDetail(item){if(auth){try{let d=await api('products/detail?id='+encodeURIComponent(item.id));detailCache.set(item.id,d);return {data:d,live:true}}catch(e){return {error:e}}}if(detailCache.has(item.id))return {data:detailCache.get(item.id),live:false};return {data:item,live:false}}
-function certs(d){let result=[];function walk(obj,path='',depth=0){if(!obj||typeof obj!=='object'||depth>3)return;for(let [k,v] of Object.entries(obj)){if(/certif|sertif|сертиф|деклараци/i.test(k)){let values=Array.isArray(v)?v:[v];for(let x of values){let u=typeof x==='string'?x:(x&&typeof x==='object'?(x.url||x.link||x.file):null);if(typeof u==='string'&&/^https:\/\//.test(u))result.push(u)}}else if(!['stores','offers','CML2_TRAITS'].includes(k))walk(v,path+'.'+k,depth+1)}}walk(d);return [...new Set(result)]}function renderDetail(item,d,live){let b=bubble('bot');line(b,'div','mb-2 text-[11px] font-extrabold uppercase tracking-widest text-[#3d9971]',live?'● Данные API ЭКТ':'○ Данные образца');line(b,'h3','font-extrabold text-[#183a2c]',d.name||item.name);line(b,'p','mt-1 text-xs text-[#87968b]','Артикул: '+(d.article||item.article)+' · ID '+d.id);let qty=Number(d.quantity);if(Number.isFinite(qty)){line(b,'p','mt-4 font-bold '+(qty>0?'text-[#187c50]':'text-[#a64d35]'),qty>0?'В наличии: '+qty+' шт.':'По данным карточки: 0 шт.');let stores=(d.stores||[]).filter(s=>Number(s.quantity)>0);if(stores.length)line(b,'p','mt-1 text-xs leading-5 text-[#71847a]','Склады: '+stores.map(s=>s.name+' — '+s.quantity+' шт.').join('; ')+'.');}else line(b,'p','mt-4 text-xs text-[#9a7256]','Остаток не указан в списке товаров. Для проверки наличия нужна детальная карточка через API.');if(typeof d.price==='number')line(b,'p','mt-2 text-xs font-bold text-[#5d7566]','Цена в '+(live?'API':'образце')+': '+money(d.price));let p=d.properties||{},features=Object.entries(labels).filter(([k])=>p[k]!=null&&p[k]!=='');if(features.length){let box=line(b,'div','mt-4 rounded-xl bg-[#f1f7f1] p-3');line(box,'p','mb-2 font-bold','Характеристики');for(let [k,name] of features)line(box,'p','text-xs leading-5 text-[#566d5c]',name+': '+p[k]);}else if(d.description){line(b,'p','mt-4 text-xs font-bold','Описание и характеристики');line(b,'p','mt-1 whitespace-pre-line text-xs leading-5 text-[#586d5e]',d.description.slice(0,800));}else line(b,'p','mt-3 text-xs text-[#927251]','Характеристики недоступны в списке товаров; подключите API для детальной карточки.');let urls=certs(d);let docs=line(b,'div','mt-4 border-t border-[#e5ece5] pt-3 text-xs leading-5');if(urls.length){line(docs,'span','','Сертификаты: ');urls.forEach((u,i)=>{if(i)docs.append(' · ');link(docs,'Документ '+(i+1),u)})}else line(docs,'span','text-[#927251]','Сертификат не представлен в полученных данных. Запросите документ у менеджера или проверьте карточку товара.');let actions=line(b,'div','mt-3 flex flex-wrap gap-3 text-xs');link(actions,'Открыть товар',d.url||item.url);}
-async function submit(q){q=q.trim();if(!q)return;say(q,'user');input.value='';if(/оплат|достав|минимальн|корзин|заказ|добав|аналог/i.test(q)&&!/[\d]{5,}|DRX|RM\w+/i.test(q)){say('Условия покупки и действия с корзиной не представлены в доступном API каталога. Проверьте актуальные условия на ekt.kz или уточните у менеджера. Я могу помочь с артикулом, характеристиками и наличием.');return}let item;try{item=auth?await findLive(q):findItem(q)}catch(e){say('Не удалось получить каталог через API ('+e.message+'). Проверьте подключение и попробуйте снова.');return}if(!item){say('Не нашёл точного совпадения в '+(auth?'загруженных страницах каталога':'образце из 40 товаров')+'. Укажите артикул, ID или модель. Пример: 200300285_.');return}let result=await getDetail(item);if(result.error){say('Не удалось проверить детальную карточку в API ('+result.error.message+'). Поэтому не буду утверждать наличие или характеристики. Откройте карточку товара на сайте.');let b=bubble('bot');link(b,'Карточка товара',item.url);return}renderDetail(item,result.data,result.live);if(/аналог/i.test(q))say('Чтобы предложить аналог, нужно проверить совместимость ключевых параметров и наличие через детальные карточки. Без этой проверки не буду выдавать похожее название за совместимый товар.')}document.getElementById('ask-form').addEventListener('submit',e=>{e.preventDefault();submit(input.value)});document.querySelectorAll('.prompt').forEach(b=>b.addEventListener('click',()=>submit(b.dataset.query)));document.getElementById('settings').onclick=()=>dialog.showModal();document.getElementById('connect').onclick=async()=>{let user=document.getElementById('api-user').value.trim(),pass=document.getElementById('api-pass').value,status=document.getElementById('connection-status');if(!user||!pass){status.textContent='Введите логин и пароль.';return}auth=btoa(unescape(encodeURIComponent(user+':'+pass)));status.textContent='Проверяем доступ…';try{let first=await api('products');let second=await api('products?page=2');catalog=[...(first.items||[]),...(second.items||[])];if(!catalog.length)throw Error('Пустой каталог');mode='live';document.getElementById('mode-pill').textContent='● Подключён API';status.textContent='Подключено. Загружено '+catalog.length+' товаров, следующие страницы подгружаются при поиске.';document.getElementById('api-pass').value='';say('API подключён. Задайте вопрос об артикуле — запрошу детальную карточку и актуальный остаток.')}catch(e){auth=null;catalog=[...SNAP_ITEMS];status.textContent='Подключение не удалось: '+e.message+'. Возможны CORS или ограничение доступа. Образец доступен.'}};say('Здравствуйте! Назовите артикул или модель — покажу сведения из каталога. Попробуйте «Есть ли 200300285_?»');</script></body></html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#103c36" />
+    <meta
+      name="description"
+      content="Помощник Электрокомплект: подбор электротехники, характеристики, наличие и аналоги в одном окне чата."
+    />
+    <title>ЭКТ — ваш помощник в мире электротехники</title>
+    <style>
+      :root {
+        --ink: #172f2a;
+        --muted: #68756f;
+        --brand: #17634f;
+        --lime: #ddf58f;
+        --line: #e1e6de;
+        --paper: #f7f8f2;
+        --white: #fff;
+        --radius: 22px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 90px;
+      }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family: Inter, Arial, sans-serif;
+        font-size: 15px;
+        line-height: 1.6;
+      }
+      button,
+      input,
+      textarea {
+        font: inherit;
+      }
+      button,
+      a {
+        -webkit-tap-highlight-color: transparent;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
+      }
+      a {
+        color: inherit;
+      }
+      button:focus-visible,
+      a:focus-visible,
+      input:focus-visible,
+      textarea:focus-visible,
+      summary:focus-visible {
+        outline: 3px solid #5eab79;
+        outline-offset: 4px;
+      }
+      button {
+        color: inherit;
+      }
+      img {
+        max-width: 100%;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 0 32px;
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        font-weight: 750;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .eyebrow:before {
+        content: "";
+        height: 7px;
+        width: 7px;
+        background: var(--brand);
+        border-radius: 50%;
+      }
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+      h1,
+      h2 {
+        font-weight: 550;
+        letter-spacing: -0.055em;
+        line-height: 1.07;
+      }
+      h2 {
+        font-size: clamp(32px, 4vw, 48px);
+      }
+      h3 {
+        font-size: 18px;
+        font-weight: 650;
+        line-height: 1.3;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .button {
+        border: 1px solid transparent;
+        border-radius: 12px;
+        padding: 13px 20px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 650;
+        line-height: 1.5;
+        background: var(--brand);
+        color: white;
+        transition:
+          background 0.2s,
+          transform 0.2s;
+      }
+      .button:hover {
+        background: #104e3e;
+        transform: translateY(-1px);
+      }
+      .button.light {
+        background: var(--lime);
+        color: var(--ink);
+      }
+      .button.light:hover {
+        background: #d0eb79;
+      }
+      .button.outline {
+        border-color: var(--line);
+        background: transparent;
+        color: var(--ink);
+      }
+      .button.outline:hover {
+        background: #eaf0e4;
+      }
+      .button.small {
+        padding: 9px 12px;
+        font-size: 12px;
+      }
+      .arrow {
+        font-size: 20px;
+        line-height: 1;
+      }
+      .icon {
+        width: 21px;
+        height: 21px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.7;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        flex-shrink: 0;
+      }
+      .icon-button {
+        border: 0;
+        background: transparent;
+        border-radius: 10px;
+        padding: 9px;
+        display: inline-grid;
+        place-items: center;
+        color: inherit;
+      }
+      .icon-button:hover {
+        background: #ffffff1c;
+      }
+      .topbar {
+        background: var(--ink);
+        color: #d6e6dc;
+        font-size: 10px;
+        letter-spacing: 0.035em;
+      }
+      .topbar .container {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 7px;
+        padding-bottom: 7px;
+      }
+      .topbar a {
+        text-decoration: none;
+      }
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: #f7f8f2f5;
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(12px);
+      }
+      .header-inner {
+        height: 80px;
+        display: flex;
+        align-items: center;
+        gap: 40px;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        text-decoration: none;
+        flex-shrink: 0;
+      }
+      .logo-mark {
+        background: var(--brand);
+        color: var(--lime);
+        width: 38px;
+        height: 40px;
+        display: grid;
+        place-items: center;
+        border-radius: 9px;
+        font-size: 27px;
+        font-weight: 850;
+        line-height: 1;
+      }
+      .logo-name {
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: -0.06em;
+        line-height: 1;
+      }
+      .logo-name small {
+        display: block;
+        font-size: 8px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 6px;
+      }
+      .nav {
+        display: flex;
+        gap: 27px;
+        margin: auto;
+        font-size: 12px;
+      }
+      .nav a {
+        text-decoration: none;
+        color: #53665c;
+      }
+      .nav a:hover {
+        color: var(--brand);
+      }
+      .header-note {
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .header .button {
+        font-size: 12px;
+        padding: 10px 16px;
+      }
+      .hero {
+        padding: 68px 0 60px;
+        display: grid;
+        grid-template-columns: 1.06fr 1fr;
+        gap: 68px;
+        align-items: center;
+      }
+      .hero h1 {
+        font-size: clamp(44px, 5.1vw, 67px);
+        margin: 25px 0 24px;
+      }
+      .hero h1 em {
+        font-style: normal;
+        color: var(--brand);
+      }
+      .hero-copy {
+        color: var(--muted);
+        max-width: 410px;
+        font-size: 15px;
+        line-height: 1.8;
+      }
+      .hero-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin: 30px 0 20px;
+      }
+      .hero-hint {
+        display: flex;
+        gap: 7px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+      .hero-hint .icon {
+        width: 14px;
+        height: 16px;
+      }
+      .hero-scene {
+        position: relative;
+        min-height: 424px;
+        border: 1px solid #d9e4ce;
+        border-radius: 28px;
+        padding: 27px;
+        background: radial-gradient(
+          ellipse at 80% 15%,
+          #f2f8d4 0%,
+          #e9efdf 55%,
+          #dce7d4 100%
+        );
+        overflow: hidden;
+      }
+      .scene-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(#b4c5a52b 1px, transparent 1px),
+          linear-gradient(90deg, #b4c5a52b 1px, transparent 1px);
+        background-size: 32px 32px;
+        mask-image: linear-gradient(transparent, #000);
+      }
+      .scene-caption {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+      .scene-caption span:last-child {
+        background: #ffffff9c;
+        border: 1px solid #cbd8bc;
+        border-radius: 20px;
+        padding: 3px 8px;
+        letter-spacing: 0;
+        text-transform: none;
+      }
+      .scene-question {
+        position: relative;
+        background: var(--brand);
+        color: white;
+        max-width: 275px;
+        border-radius: 15px 15px 3px 15px;
+        margin: 25px 0 16px auto;
+        padding: 13px 16px;
+        font-size: 12px;
+        box-shadow: 0 8px 18px #294a2610;
+      }
+      .scene-answer {
+        position: relative;
+        background: white;
+        border: 1px solid #d8e3d1;
+        border-radius: 17px;
+        padding: 19px;
+        box-shadow: 0 16px 32px #2c492019;
+        max-width: 355px;
+      }
+      .assistant-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 11px;
+        font-weight: 700;
+        margin-bottom: 13px;
+      }
+      .spark {
+        width: 26px;
+        height: 26px;
+        border-radius: 8px;
+        background: var(--lime);
+        color: var(--brand);
+        display: grid;
+        place-items: center;
+        font-size: 19px;
+      }
+      .scene-answer p {
+        font-size: 12px;
+        line-height: 1.7;
+      }
+      .sample-product {
+        border-top: 1px solid var(--line);
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-top: 14px;
+        padding-top: 14px;
+      }
+      .product-glyph {
+        width: 48px;
+        height: 59px;
+        border-radius: 6px;
+        background: #e6e9e3;
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+      }
+      .breaker {
+        width: 29px;
+        height: 43px;
+        border: 1px solid #bbbfb8;
+        border-radius: 3px;
+        background: repeating-linear-gradient(
+          90deg,
+          #f5f5ef 0px,
+          #f5f5ef 8px,
+          #c9cdc5 9px,
+          #c9cdc5 10px
+        );
+        position: relative;
+        box-shadow: 2px 3px 0 #a3aca0;
+      }
+      .breaker:after {
+        content: "";
+        position: absolute;
+        top: 12px;
+        left: 3px;
+        right: 3px;
+        height: 12px;
+        border-radius: 2px;
+        background: #303e36;
+        border-bottom: 3px solid #14241b;
+      }
+      .sample-product b {
+        display: block;
+        font-size: 11px;
+      }
+      .sample-product small {
+        font-size: 10px;
+        color: var(--muted);
+      }
+      .scene-foot {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 17px;
+        font-size: 10px;
+        color: #507148;
+      }
+      .scene-foot .icon {
+        width: 16px;
+      }
+      .benefits {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        padding: 25px 0;
+        gap: 30px;
+      }
+      .benefit {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+      }
+      .benefit > .icon {
+        width: 25px;
+        height: 25px;
+        color: var(--brand);
+      }
+      .benefit b {
+        font-size: 12px;
+        display: block;
+        margin-bottom: 2px;
+      }
+      .benefit span {
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .section {
+        padding: 78px 0;
+      }
+      .section-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 32px;
+      }
+      .section-heading .eyebrow {
+        margin-bottom: 16px;
+      }
+      .section-heading p {
+        font-size: 12px;
+        color: var(--muted);
+        max-width: 270px;
+        line-height: 1.8;
+      }
+      .category-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+      }
+      .category {
+        position: relative;
+        min-height: 182px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: #fff;
+        padding: 23px;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        transition: 0.2s;
+      }
+      .category:hover {
+        border-color: #94b291;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px #1c3e2910;
+      }
+      .category .icon {
+        width: 37px;
+        height: 37px;
+        color: var(--brand);
+        margin-bottom: 26px;
+        stroke-width: 1.3;
+      }
+      .category b {
+        font-size: 13px;
+      }
+      .category small {
+        color: var(--muted);
+        font-size: 10px;
+        margin-top: 4px;
+      }
+      .category .arrow {
+        position: absolute;
+        right: 20px;
+        top: 22px;
+        color: #88977f;
+      }
+      .assistant-section {
+        background: var(--ink);
+        border-radius: 26px;
+        padding: 46px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+        color: white;
+      }
+      .assistant-section .eyebrow {
+        color: #b9d4c1;
+        margin-bottom: 22px;
+      }
+      .assistant-section .eyebrow:before {
+        background: var(--lime);
+      }
+      .assistant-section h2 {
+        font-size: 42px;
+      }
+      .assistant-section p {
+        font-size: 13px;
+        color: #b9cbc1;
+        margin: 20px 0 27px;
+        max-width: 350px;
+        line-height: 1.8;
+      }
+      .capabilities {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .capability {
+        display: flex;
+        gap: 17px;
+        padding: 18px 0;
+        border-bottom: 1px solid #385048;
+      }
+      .capability:first-child {
+        padding-top: 0;
+      }
+      .capability:last-child {
+        border: 0;
+        padding-bottom: 0;
+      }
+      .capability > span {
+        font-size: 10px;
+        font-weight: 700;
+        color: #afcf96;
+        padding-top: 3px;
+      }
+      .capability h3 {
+        font-size: 14px;
+      }
+      .capability p {
+        margin: 5px 0 0;
+        font-size: 11px;
+        max-width: 100%;
+        color: #a9bfb1;
+      }
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 36px;
+      }
+      .step {
+        border-top: 1px solid #becbb6;
+        padding-top: 19px;
+      }
+      .step span {
+        display: block;
+        font-size: 12px;
+        color: #64844a;
+        font-weight: 650;
+        margin-bottom: 24px;
+      }
+      .step h3 {
+        font-size: 17px;
+        margin-bottom: 10px;
+      }
+      .step p {
+        font-size: 12px;
+        line-height: 1.8;
+        color: var(--muted);
+      }
+      .files-band {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        background: #eaf0df;
+        border: 1px solid #dae3ca;
+        border-radius: 18px;
+        padding: 23px 28px;
+        margin-top: 36px;
+      }
+      .files-band .icon {
+        width: 28px;
+        height: 28px;
+        color: var(--brand);
+      }
+      .files-band b {
+        font-size: 13px;
+      }
+      .files-band p {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+      .file-types {
+        margin-left: auto;
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .file-types span {
+        border: 1px solid #d0dcc2;
+        background: #f6f8ee;
+        border-radius: 6px;
+        padding: 4px 8px;
+        font-size: 9px;
+        font-weight: 700;
+      }
+      .faq {
+        display: grid;
+        grid-template-columns: 0.85fr 1.15fr;
+        gap: 70px;
+        padding-top: 0;
+      }
+      .faq .eyebrow {
+        margin-bottom: 16px;
+      }
+      .faq p {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 18px;
+        max-width: 290px;
+      }
+      .faq details {
+        border-bottom: 1px solid var(--line);
+        padding: 19px 0;
+      }
+      .faq details:first-child {
+        padding-top: 4px;
+      }
+      .faq summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        font-weight: 600;
+        gap: 16px;
+      }
+      .faq summary::-webkit-details-marker {
+        display: none;
+      }
+      .faq summary:after {
+        content: "+";
+        color: var(--brand);
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 1;
+      }
+      .faq details[open] summary:after {
+        content: "−";
+      }
+      .faq details p {
+        max-width: none;
+        margin-top: 12px;
+        line-height: 1.8;
+      }
+      .footer {
+        border-top: 1px solid var(--line);
+        padding: 30px 0 40px;
+      }
+      .footer .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 26px;
+      }
+      .footer p {
+        font-size: 10px;
+        color: var(--muted);
+      }
+      .footer-links {
+        display: flex;
+        gap: 20px;
+        font-size: 11px;
+      }
+      .footer a {
+        text-decoration: none;
+      }
+      .launcher {
+        position: fixed;
+        right: 28px;
+        bottom: 24px;
+        z-index: 20;
+        box-shadow: 0 6px 28px #183d3633;
+        padding: 14px 20px;
+        border-radius: 18px;
+      }
+      .launcher .icon {
+        width: 22px;
+      }
+      .launcher-dot {
+        position: absolute;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--lime);
+        right: 12px;
+        top: 10px;
+        border: 2px solid var(--brand);
+      }
+      /* A single chat surface: product details, consent and cart remain in its stream. */
+      .chat {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 30;
+        width: min(530px, calc(100vw - 48px));
+        height: min(780px, calc(100dvh - 48px));
+        display: flex;
+        flex-direction: column;
+        background: #f5f7f1;
+        border: 1px solid #cedacd;
+        border-radius: 22px;
+        box-shadow: 0 24px 90px #0b291c36;
+        overflow: hidden;
+      }
+      .chat-header {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        background: var(--ink);
+        color: white;
+        padding: 16px 18px;
+        flex-shrink: 0;
+      }
+      .chat-header .spark {
+        width: 37px;
+        height: 37px;
+        font-size: 25px;
+      }
+      .chat-title {
+        font-size: 14px;
+        font-weight: 650;
+        line-height: 1.4;
+      }
+      .chat-status {
+        font-size: 10px;
+        color: #b9d1c0;
+        font-weight: 400;
+        margin-top: 2px;
+      }
+      .chat-actions {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        gap: 2px;
+      }
+      .cart-button {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+      }
+      .cart-count {
+        min-width: 16px;
+        font-size: 10px;
+        color: var(--lime);
+        font-weight: 700;
+      }
+      .mode-banner {
+        background: #edf2e4;
+        color: #5b6e4c;
+        font-size: 10px;
+        padding: 8px 17px;
+        border-bottom: 1px solid #dfe7d5;
+        flex-shrink: 0;
+        line-height: 1.5;
+      }
+      .messages {
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding: 20px 16px;
+        flex: 1;
+        min-height: 0;
+        scrollbar-width: thin;
+        scrollbar-color: #c6d3bc transparent;
+      }
+      .message {
+        font-size: 12px;
+        line-height: 1.7;
+        margin-bottom: 19px;
+        overflow-wrap: anywhere;
+      }
+      .message.bot {
+        max-width: 100%;
+      }
+      .message.bot > .assistant-label {
+        font-size: 10px;
+        margin-bottom: 8px;
+        gap: 6px;
+      }
+      .message.bot .spark {
+        width: 21px;
+        height: 21px;
+        font-size: 15px;
+      }
+      .message-body {
+        background: #fff;
+        border: 1px solid #e0e7d9;
+        border-radius: 3px 15px 15px;
+        padding: 15px;
+      }
+      .message.user {
+        background: var(--brand);
+        color: white;
+        border-radius: 15px 15px 3px 15px;
+        margin-left: auto;
+        max-width: 85%;
+        width: fit-content;
+        padding: 10px 15px;
+        white-space: pre-wrap;
+      }
+      .message-body > p + p {
+        margin-top: 9px;
+      }
+      .message-body h3 {
+        font-size: 14px;
+        margin-bottom: 9px;
+      }
+      .message-body .muted {
+        font-size: 10px;
+      }
+      .suggestions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-top: 13px;
+      }
+      .chip {
+        border: 1px solid #d8e2d0;
+        background: #f9fbf4;
+        border-radius: 9px;
+        padding: 8px 10px;
+        font-size: 10px;
+        line-height: 1.4;
+        text-align: left;
+      }
+      .chip:hover {
+        border-color: #82a670;
+        background: #f0f5e7;
+      }
+      .product-card {
+        margin-top: 12px;
+        border: 1px solid #dbe4d4;
+        border-radius: 12px;
+        background: white;
+        padding: 13px;
+        overflow: hidden;
+      }
+      .product-top {
+        display: flex;
+        gap: 12px;
+      }
+      .product-image {
+        width: 58px;
+        height: 66px;
+        object-fit: contain;
+        border-radius: 7px;
+        background: #f7f8f2;
+        flex-shrink: 0;
+      }
+      .product-top .product-glyph {
+        width: 58px;
+        height: 66px;
+      }
+      .product-meta {
+        min-width: 0;
+      }
+      .product-meta small {
+        font-size: 9px;
+        color: var(--muted);
+      }
+      .product-meta h3 {
+        font-size: 12px;
+        line-height: 1.5;
+        margin: 3px 0;
+      }
+      .stock {
+        font-size: 11px;
+        color: var(--brand);
+        font-weight: 650;
+      }
+      .stock.unknown {
+        color: #8b6c2f;
+      }
+      .product-price {
+        font-weight: 700;
+        font-size: 15px;
+        margin: 12px 0 3px;
+      }
+      .specs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin: 12px 0;
+        font-size: 10px;
+        gap: 0 10px;
+      }
+      .specs dt,
+      .specs dd {
+        padding: 5px 0;
+        margin: 0;
+        border-bottom: 1px solid #eef1e9;
+      }
+      .specs dt {
+        color: var(--muted);
+      }
+      .specs dd {
+        text-align: right;
+        font-weight: 600;
+      }
+      .source-note {
+        font-size: 9px;
+        color: var(--muted);
+        margin-top: 12px;
+        border-top: 1px solid #eef1e9;
+        padding-top: 8px;
+      }
+      .source-note a {
+        color: var(--brand);
+      }
+      .warning {
+        font-size: 10px;
+        background: #fff6df;
+        border: 1px solid #f0dfb2;
+        color: #82602c;
+        border-radius: 8px;
+        padding: 8px 10px;
+        margin: 10px 0;
+      }
+      .product-card details {
+        font-size: 10px;
+        margin-top: 12px;
+      }
+      .product-card summary {
+        cursor: pointer;
+        font-weight: 650;
+        color: var(--brand);
+      }
+      .stores {
+        list-style: none;
+        margin: 7px 0 0;
+        padding: 0;
+      }
+      .stores li {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--line);
+        padding: 5px 0;
+        gap: 12px;
+      }
+      .product-actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-top: 13px;
+        flex-wrap: wrap;
+      }
+      .qty-label {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 10px;
+      }
+      .quantity {
+        width: 65px;
+        min-width: 0;
+        border: 1px solid #d3ddc9;
+        border-radius: 8px;
+        padding: 7px 5px;
+        background: white;
+        text-align: center;
+      }
+      .consent {
+        background: #f1f6e6;
+        border: 1px solid #cdddb8;
+        padding: 13px;
+        border-radius: 11px;
+        margin-top: 10px;
+      }
+      .consent b {
+        display: block;
+        font-size: 12px;
+      }
+      .consent .product-actions {
+        margin-top: 10px;
+      }
+      .cart-row {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .cart-row b {
+        display: block;
+        font-size: 11px;
+        line-height: 1.5;
+      }
+      .cart-row p {
+        font-size: 10px;
+        margin-top: 3px;
+      }
+      .cart-total {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 700;
+        margin: 13px 0;
+      }
+      .cart-link {
+        display: inline-block;
+        color: var(--brand);
+        font-weight: 650;
+        margin-top: 8px;
+      }
+      .composer {
+        background: white;
+        border-top: 1px solid var(--line);
+        padding: 11px 14px 12px;
+        flex-shrink: 0;
+      }
+      .composer form {
+        display: flex;
+        align-items: end;
+        border: 1px solid #d4ddce;
+        border-radius: 13px;
+        padding: 5px;
+        gap: 4px;
+      }
+      .composer form:focus-within {
+        border-color: var(--brand);
+      }
+      .composer textarea {
+        resize: none;
+        border: 0;
+        outline: 0;
+        flex: 1;
+        min-width: 0;
+        max-height: 100px;
+        padding: 9px 4px;
+        font-size: 12px;
+        line-height: 1.5;
+        background: transparent;
+      }
+      .composer .icon-button {
+        color: var(--muted);
+        margin-bottom: 2px;
+      }
+      .composer .icon-button:hover {
+        background: #edf3e5;
+      }
+      .composer .send {
+        color: white;
+        background: var(--brand);
+      }
+      .composer .send:hover {
+        background: #114c3d;
+      }
+      .composer-hint {
+        font-size: 9px;
+        color: #82907e;
+        text-align: center;
+        margin-top: 7px;
+      }
+      .attachments {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .attachments:not(:empty) {
+        padding-bottom: 9px;
+      }
+      .attachment {
+        font-size: 10px;
+        border: 1px solid #d2e0c4;
+        border-radius: 8px;
+        background: #f1f6e9;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 5px 8px;
+        max-width: 100%;
+      }
+      .attachment span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 330px;
+      }
+      .attachment button {
+        border: 0;
+        background: none;
+        padding: 2px 4px;
+      }
+      .attachment-status {
+        font-size: 10px;
+        color: var(--muted);
+        padding: 0 0 6px;
+      }
+      .toast {
+        position: fixed;
+        z-index: 50;
+        left: 50%;
+        bottom: 28px;
+        transform: translateX(-50%);
+        max-width: 90vw;
+        background: #213c2f;
+        color: white;
+        font-size: 12px;
+        padding: 13px 20px;
+        border-radius: 12px;
+        box-shadow: 0 6px 30px #132f2933;
+      }
+      .loading {
+        display: inline-flex;
+        gap: 4px;
+        align-items: center;
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .loading i {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--brand);
+        animation: pulse 1s infinite;
+      }
+      .loading i:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .loading i:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      @keyframes pulse {
+        50% {
+          opacity: 0.2;
+        }
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      @media (min-width: 1500px) {
+        .hero {
+          padding-top: 85px;
+          padding-bottom: 80px;
+        }
+      }
+      @media (max-width: 1000px) {
+        .nav {
+          gap: 16px;
+        }
+        .header-note {
+          display: none;
+        }
+        .header-inner {
+          gap: 24px;
+        }
+        .hero {
+          gap: 30px;
+        }
+        .hero h1 {
+          font-size: 51px;
+        }
+        .hero-scene {
+          padding: 22px;
+        }
+        .assistant-section {
+          gap: 36px;
+          padding: 35px;
+        }
+        .category {
+          padding: 18px;
+        }
+        .faq {
+          gap: 35px;
+        }
+      }
+      @media (max-width: 760px) {
+        .container {
+          padding: 0 22px;
+        }
+        .header-inner {
+          height: 68px;
+          justify-content: space-between;
+        }
+        .nav {
+          display: none;
+        }
+        .topbar .container > span:last-child {
+          display: none;
+        }
+        .hero {
+          padding: 43px 0 35px;
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+        .hero h1 {
+          font-size: 48px;
+          margin: 20px 0;
+        }
+        .hero-copy {
+          font-size: 14px;
+          max-width: 460px;
+        }
+        .hero-actions {
+          margin-top: 24px;
+        }
+        .hero-scene {
+          min-height: auto;
+          padding: 22px;
+          max-width: 500px;
+          width: 100%;
+          justify-self: center;
+        }
+        .scene-question {
+          margin-top: 18px;
+        }
+        .scene-answer {
+          max-width: 100%;
+        }
+        .benefits {
+          grid-template-columns: 1fr;
+          gap: 19px;
+          padding: 24px 0;
+        }
+        .section {
+          padding: 47px 0;
+        }
+        .section-heading {
+          display: block;
+          margin-bottom: 25px;
+        }
+        .section-heading p {
+          margin-top: 15px;
+          max-width: 100%;
+        }
+        .category-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+        }
+        .category {
+          min-height: 163px;
+        }
+        .category .icon {
+          margin-bottom: 20px;
+        }
+        .category b {
+          font-size: 12px;
+        }
+        .assistant-section {
+          grid-template-columns: 1fr;
+          gap: 32px;
+          padding: 27px 24px;
+          border-radius: 21px;
+        }
+        .assistant-section h2 {
+          font-size: 35px;
+        }
+        .assistant-section p {
+          margin: 16px 0 22px;
+        }
+        .capability p {
+          margin: 5px 0 0;
+        }
+        .steps {
+          grid-template-columns: 1fr;
+          gap: 25px;
+        }
+        .step {
+          display: grid;
+          grid-template-columns: 35px 1fr;
+          gap: 0 10px;
+          padding-top: 16px;
+        }
+        .step span {
+          grid-row: span 2;
+          margin: 0;
+        }
+        .step h3 {
+          font-size: 16px;
+        }
+        .files-band {
+          padding: 20px;
+          gap: 14px;
+          flex-wrap: wrap;
+          margin-top: 28px;
+        }
+        .files-band > div:nth-child(2) {
+          flex: 1;
+        }
+        .file-types {
+          width: 100%;
+          margin-left: 42px;
+        }
+        .faq {
+          grid-template-columns: 1fr;
+          gap: 26px;
+          padding-top: 0;
+        }
+        .faq p {
+          max-width: 100%;
+        }
+        .footer {
+          padding-bottom: 110px;
+        }
+        .footer .container {
+          flex-wrap: wrap;
+          justify-content: start;
+          gap: 20px;
+        }
+        .footer p {
+          width: 100%;
+        }
+        .footer-links {
+          font-size: 10px;
+        }
+        .launcher {
+          bottom: 18px;
+          right: 18px;
+          padding: 13px 17px;
+          font-size: 12px;
+        }
+        .chat {
+          right: 12px;
+          bottom: 12px;
+          width: calc(100vw - 24px);
+          height: calc(100dvh - 24px);
+          max-height: 850px;
+          border-radius: 17px;
+        }
+        .chat-header {
+          padding: 13px 14px;
+        }
+        .chat-title {
+          font-size: 13px;
+        }
+        .messages {
+          padding: 16px 12px;
+        }
+        .composer {
+          padding-bottom: max(10px, env(safe-area-inset-bottom));
+        }
+        .message-body {
+          padding: 13px;
+        }
+        .hero-actions .button {
+          padding: 12px 15px;
+          font-size: 12px;
+        }
+      }
+      @media (max-width: 390px) {
+        .container {
+          padding: 0 17px;
+        }
+        .hero h1 {
+          font-size: 42px;
+        }
+        .hero-actions {
+          gap: 8px;
+        }
+        .hero-actions .button {
+          font-size: 11px;
+          padding: 12px;
+        }
+        .chat {
+          inset: 0;
+          width: 100%;
+          height: 100dvh;
+          border: 0;
+          border-radius: 0;
+        }
+        .chat-status {
+          font-size: 9px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *:before,
+        *:after {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg hidden aria-hidden="true">
+      <defs>
+        <symbol id="i-chat" viewBox="0 0 24 24">
+          <path
+            d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l-2 2V11.5a9.5 9.5 0 0 1 19 0Z"
+          />
+          <path d="M7 9h9M7 13h6" />
+        </symbol>
+        <symbol id="i-check" viewBox="0 0 24 24">
+          <path d="m5 12 4 4L19 6" />
+        </symbol>
+        <symbol id="i-shield" viewBox="0 0 24 24">
+          <path d="m12 3 8 3v6c0 4-4 7-8 9-4-2-8-5-8-9V6l8-3Z" />
+          <path d="m8 12 3 3 5-6" />
+        </symbol>
+        <symbol id="i-box" viewBox="0 0 24 24">
+          <path d="m12 2 9 5v10l-9 5-9-5V7l9-5Z" />
+          <path d="m3 7 9 5 9-5M12 12v10M7 4.8l9 5v4" />
+        </symbol>
+        <symbol id="i-arrow" viewBox="0 0 24 24">
+          <path d="M4 12h16m-6-6 6 6-6 6" />
+        </symbol>
+        <symbol id="i-bolt" viewBox="0 0 24 24">
+          <path d="m13 2-9 12h7l-1 8 10-13h-8l1-7Z" />
+        </symbol>
+        <symbol id="i-lamp" viewBox="0 0 24 24">
+          <path d="M9 18h6m-6 3h6M8 14a7 7 0 1 1 8 0l-1 2H9l-1-2Z" />
+          <path d="M10 8h4m-2 0v8" />
+        </symbol>
+        <symbol id="i-cable" viewBox="0 0 24 24">
+          <path
+            d="M7 2v4m5-4v4M5 6h9v3a4.5 4.5 0 0 1-9 0V6Zm4.5 7.5V17a4 4 0 0 0 8 0v-4M16 13h3v-3h-3Z"
+          />
+        </symbol>
+        <symbol id="i-socket" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="18" height="18" rx="3" />
+          <circle cx="12" cy="12" r="6" />
+          <path d="M9 11v2m6-2v2M12 6v2m0 8v2" />
+        </symbol>
+        <symbol id="i-file" viewBox="0 0 24 24">
+          <path d="M14 2H5v20h14V7l-5-5Z" />
+          <path d="M14 2v6h5M8 12h8m-8 4h6" />
+        </symbol>
+        <symbol id="i-clip" viewBox="0 0 24 24">
+          <path
+            d="m20 11-8 8a5 5 0 0 1-7-7l9-9a3.5 3.5 0 0 1 5 5l-9 9a2 2 0 0 1-3-3l8-8"
+          />
+        </symbol>
+        <symbol id="i-cart" viewBox="0 0 24 24">
+          <path d="M5 7h14l1 14H4L5 7Zm4 0V5a3 3 0 0 1 6 0v2" />
+        </symbol>
+        <symbol id="i-send" viewBox="0 0 24 24">
+          <path d="m12 4 8 15-8-4-8 4L12 4Zm0 0v11" />
+        </symbol>
+        <symbol id="i-close" viewBox="0 0 24 24">
+          <path d="m6 6 12 12M18 6 6 18" />
+        </symbol>
+      </defs>
+    </svg>
+    <div class="topbar">
+      <div class="container">
+        <span>Электротехника для дома и бизнеса</span
+        ><span
+          >ТОО «Электрокомплект» ·
+          <a href="https://ekt.kz/" target="_blank" rel="noopener"
+            >ekt.kz ↗</a
+          ></span
+        >
+      </div>
+    </div>
+    <header class="header">
+      <div class="container header-inner">
+        <a class="logo" href="#" aria-label="ЭКТ — главная"
+          ><span class="logo-mark">Э</span
+          ><span class="logo-name">ЭКТ<small>Электрокомплект</small></span></a
+        >
+        <nav class="nav" aria-label="Главная навигация">
+          <a href="#catalog">Каталог</a
+          ><a href="#assistant">Возможности помощника</a
+          ><a href="#how">Как это работает</a>
+        </nav>
+        <span class="header-note">Нужна помощь с выбором?</span
+        ><button class="button outline" data-open>
+          Спросить помощника <span class="arrow">↗</span>
+        </button>
+      </div>
+    </header>
+    <main class="container">
+      <section class="hero" aria-labelledby="heroTitle">
+        <div>
+          <div class="eyebrow">Ваш помощник по электротехнике</div>
+          <h1 id="heroTitle">
+            Точный выбор.<br /><em>С первого<br />вопроса.</em>
+          </h1>
+          <p class="hero-copy">
+            Найдите нужный товар, узнайте характеристики и наличие. Помощник
+            проведёт от вопроса до корзины — прямо в чате на сайте.
+          </p>
+          <div class="hero-actions">
+            <button class="button" data-open>
+              Начать разговор
+              <svg class="icon"><use href="#i-arrow" /></svg></button
+            ><a class="button outline" href="#catalog">Посмотреть категории</a>
+          </div>
+          <p class="hero-hint">
+            <svg class="icon"><use href="#i-shield" /></svg>Добавление в корзину
+            — только с вашего подтверждения
+          </p>
+        </div>
+        <div class="hero-scene" aria-label="Пример консультации в чате">
+          <div class="scene-grid"></div>
+          <div class="scene-caption">
+            <span>Меньше поисков. Больше ясности.</span
+            ><span>Пример диалога</span>
+          </div>
+          <div class="scene-question">
+            Нужен автомат Legrand 027228.<br />Какие у него характеристики?
+          </div>
+          <div class="scene-answer">
+            <div class="assistant-label">
+              <span class="spark">✧</span>ЭКТ помощник
+            </div>
+            <p>
+              Нашёл DRX250 MT. Покажу параметры из каталога, остатки по складам
+              и доступные документы.
+            </p>
+            <div class="sample-product">
+              <div class="product-glyph"><div class="breaker"></div></div>
+              <div>
+                <b>Legrand DRX250 MT</b><small>Код производителя 027228</small
+                ><br /><small>Карточка товара прямо в чате</small>
+              </div>
+            </div>
+          </div>
+          <div class="scene-foot">
+            <svg class="icon"><use href="#i-check" /></svg>Товар, объяснение и
+            следующий шаг — в одном окне
+          </div>
+        </div>
+      </section>
+      <div class="benefits">
+        <div class="benefit">
+          <svg class="icon"><use href="#i-box" /></svg>
+          <div>
+            <b>Сведения из каталога</b
+            ><span>Характеристики, наличие и документы</span>
+          </div>
+        </div>
+        <div class="benefit">
+          <svg class="icon"><use href="#i-chat" /></svg>
+          <div>
+            <b>Спросите своими словами</b
+            ><span>По артикулу, названию или спецификации</span>
+          </div>
+        </div>
+        <div class="benefit">
+          <svg class="icon"><use href="#i-shield" /></svg>
+          <div>
+            <b>Решение остаётся за вами</b
+            ><span>Проверка количества перед добавлением</span>
+          </div>
+        </div>
+      </div>
+      <section class="section" id="catalog">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Начните с вашей задачи</div>
+            <h2>Что подбираем сегодня?</h2>
+          </div>
+          <p>
+            Выберите категорию — продолжим подбор в чате. Или просто напишите
+            артикул.
+          </p>
+        </div>
+        <div class="category-grid">
+          <button class="category" data-query="Найди автомат Legrand">
+            <span class="arrow">↗</span
+            ><svg class="icon"><use href="#i-bolt" /></svg
+            ><b>Автоматы и защита</b><small>Выключатели, УЗО, реле</small>
+          </button>
+          <button class="category" data-query="Найди светильник">
+            <span class="arrow">↗</span
+            ><svg class="icon"><use href="#i-lamp" /></svg
+            ><b>Свет и освещение</b><small>Лампы и светильники</small>
+          </button>
+          <button class="category" data-query="Найди кабель">
+            <span class="arrow">↗</span
+            ><svg class="icon"><use href="#i-cable" /></svg
+            ><b>Кабель и провод</b><small>Подбор по задаче и параметрам</small>
+          </button>
+          <button class="category" data-query="Найди коробку">
+            <span class="arrow">↗</span
+            ><svg class="icon"><use href="#i-socket" /></svg
+            ><b>Монтаж и подключение</b
+            ><small>Коробки и электроустановка</small>
+          </button>
+        </div>
+      </section>
+      <section class="assistant-section" id="assistant">
+        <div>
+          <div class="eyebrow">Одно окно. Весь путь к покупке.</div>
+          <h2>Помощник,<br />который рядом<br />с вашим выбором.</h2>
+          <p>
+            Не нужно переключаться между страницами. Уточняйте детали,
+            сравнивайте варианты и собирайте корзину в одном разговоре.
+          </p>
+          <button class="button light" data-open>
+            Задать свой вопрос <span class="arrow">↗</span>
+          </button>
+        </div>
+        <div class="capabilities">
+          <div class="capability">
+            <span>01</span>
+            <div>
+              <h3>Товар без неизвестных</h3>
+              <p>
+                Характеристики, остатки по складам и сертификат, если он есть в
+                источнике.
+              </p>
+            </div>
+          </div>
+          <div class="capability">
+            <span>02</span>
+            <div>
+              <h3>Подбор альтернативы</h3>
+              <p>
+                Похожие позиции с объяснением совпадений и отличий. Доступность
+                проверяется отдельно.
+              </p>
+            </div>
+          </div>
+          <div class="capability">
+            <span>03</span>
+            <div>
+              <h3>Понятные условия покупки</h3>
+              <p>
+                Оплата, доставка, минимальная партия. Неподтверждённые условия
+                обозначаются явно.
+              </p>
+            </div>
+          </div>
+          <div class="capability">
+            <span>04</span>
+            <div>
+              <h3>Корзина под вашим контролем</h3>
+              <p>
+                Выбираете количество, подтверждаете добавление и получаете
+                ссылку на корзину.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section" id="how">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Просто, как обычный разговор</div>
+            <h2>От вопроса к решению.</h2>
+          </div>
+        </div>
+        <div class="steps">
+          <article class="step">
+            <span>01 /</span>
+            <h3>Расскажите, что нужно</h3>
+            <p>
+              Введите артикул, название или параметры. Спецификацию можно
+              приложить к сообщению.
+            </p>
+          </article>
+          <article class="step">
+            <span>02 /</span>
+            <h3>Уточните детали</h3>
+            <p>
+              Посмотрите карточку и наличие. Задайте следующий вопрос —
+              выбранный товар останется в контексте.
+            </p>
+          </article>
+          <article class="step">
+            <span>03 /</span>
+            <h3>Подтвердите свой выбор</h3>
+            <p>
+              Проверьте позицию и количество. Только ваше явное согласие изменит
+              корзину.
+            </p>
+          </article>
+        </div>
+        <div class="files-band">
+          <svg class="icon"><use href="#i-file" /></svg>
+          <div>
+            <b>Уже есть спецификация или фото?</b>
+            <p>
+              Прикрепите файл в чате. Помощник покажет результат чтения или
+              объяснит, что не удалось распознать.
+            </p>
+          </div>
+          <div class="file-types">
+            <span>EXCEL</span><span>WORD</span><span>PDF</span><span>JPEG</span>
+          </div>
+        </div>
+      </section>
+      <section class="section faq" id="faq">
+        <div>
+          <div class="eyebrow">Вопросы и ответы</div>
+          <h2>Всё под<br />вашим контролем.</h2>
+          <p>О данных, подтверждении и возможностях этой демонстрации.</p>
+        </div>
+        <div>
+          <details>
+            <summary>Откуда помощник берёт информацию?</summary>
+            <p>
+              По умолчанию эта страница использует приложенные примеры каталога
+              ekt.kz. Это снимок, а не актуальный склад. При настроенном
+              серверном подключении карточки запрашиваются у ekt.kz; режим и
+              время получения видны в чате.
+            </p>
+          </details>
+          <details>
+            <summary>Товар добавится без моего согласия?</summary>
+            <p>
+              Нет. Сначала помощник покажет артикул и количество. Для добавления
+              нажмите «Да, добавить» или напишите «да, добавь». «Ок» и другие
+              двусмысленные ответы не меняют корзину.
+            </p>
+          </details>
+          <details>
+            <summary>Можно оформить заказ в этой версии?</summary>
+            <p>
+              Корзина в этой демонстрации локальная: хранится в текущей вкладке
+              и доступна по ссылке в чате. Она не создаёт заказ и не резервирует
+              товар на ekt.kz. Для оформления на сайте нужна интеграция с
+              корзиной партнёра.
+            </p>
+          </details>
+          <details>
+            <summary>Что происходит с моими файлами?</summary>
+            <p>
+              Документы читаются в вашем браузере и не сохраняются после
+              закрытия страницы. Для чтения загружаются библиотеки обработки. Не
+              прикладывайте платёжные данные. Старые файлы Word .doc нужно
+              пересохранить в .docx; качество распознавания фото и сканов
+              зависит от изображения.
+            </p>
+          </details>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <div class="container">
+        <a class="logo" href="#" aria-label="ЭКТ — наверх"
+          ><span class="logo-mark">Э</span
+          ><span class="logo-name">ЭКТ<small>Электрокомплект</small></span></a
+        >
+        <p>
+          Прототип для HackAlem AI · 2026<br />Данные каталога — ekt.kz.
+          Локальная демонстрационная корзина.
+        </p>
+        <div class="footer-links">
+          <a href="https://ekt.kz/" target="_blank" rel="noopener"
+            >Сайт магазина ↗</a
+          ><a href="#faq">О демонстрации</a>
+        </div>
+      </div>
+    </footer>
+    <button
+      id="launcher"
+      class="button launcher"
+      aria-label="Открыть чат"
+      aria-haspopup="dialog"
+      aria-expanded="false"
+      aria-controls="chat"
+      data-open
+    >
+      <svg class="icon"><use href="#i-chat" /></svg>Помочь с выбором?<span
+        class="launcher-dot"
+      ></span>
+    </button>
+    <section
+      id="chat"
+      class="chat"
+      role="dialog"
+      aria-modal="false"
+      aria-labelledby="chatTitle"
+      hidden
+    >
+      <header class="chat-header">
+        <span class="spark" aria-hidden="true">✧</span>
+        <div>
+          <h2 id="chatTitle" class="chat-title">ЭКТ помощник</h2>
+          <p class="chat-status">Подбор и консультация в одном окне</p>
+        </div>
+        <div class="chat-actions">
+          <button
+            id="openCart"
+            class="icon-button cart-button"
+            aria-label="Показать корзину"
+            title="Локальная корзина"
+          >
+            <svg class="icon"><use href="#i-cart" /></svg
+            ><span id="cartCount" class="cart-count">0</span></button
+          ><button id="closeChat" class="icon-button" aria-label="Свернуть чат">
+            <svg class="icon"><use href="#i-close" /></svg>
+          </button>
+        </div>
+      </header>
+      <div id="modeBanner" class="mode-banner">
+        Демо: примеры каталога ekt.kz · корзина в этой вкладке
+      </div>
+      <div
+        id="messages"
+        class="messages"
+        role="log"
+        aria-label="Диалог с помощником"
+        aria-live="polite"
+        aria-relevant="additions"
+      ></div>
+      <div class="composer">
+        <div id="attachments" class="attachments"></div>
+        <p
+          id="attachmentStatus"
+          class="attachment-status"
+          role="status"
+          hidden
+        ></p>
+        <form id="chatForm">
+          <input
+            type="file"
+            id="fileInput"
+            accept=".txt,.csv,.xls,.xlsx,.doc,.docx,.pdf,.jpg,.jpeg,.png"
+            multiple
+            hidden
+          /><button
+            id="attachButton"
+            type="button"
+            class="icon-button"
+            aria-label="Прикрепить файл"
+            title="Excel, Word, PDF или фото"
+          >
+            <svg class="icon"><use href="#i-clip" /></svg></button
+          ><textarea
+            id="prompt"
+            aria-label="Сообщение"
+            placeholder="Артикул, товар или ваш вопрос…"
+            rows="1"
+            maxlength="4000"
+          ></textarea
+          ><button
+            id="sendButton"
+            type="submit"
+            class="icon-button send"
+            aria-label="Отправить"
+          >
+            <svg class="icon"><use href="#i-send" /></svg>
+          </button>
+        </form>
+        <p class="composer-hint">
+          Excel, Word, PDF, JPEG · до 8 МБ · Enter — отправить
+        </p>
+      </div>
+    </section>
+    <div id="toast" class="toast" role="status" hidden></div>
+    <noscript
+      ><p class="container">
+        Для работы помощника включите JavaScript. Каталог доступен на
+        <a href="https://ekt.kz/">ekt.kz</a>.
+      </p></noscript
+    >
+    <script id="seedData" type="application/json">
+      {
+        "items": [
+          {
+            "id": 45357,
+            "name": "***LED STARK 30W 2400Lm d98x180 4000K IP20 MEGALIGHT (20)",
+            "article": "ярп4520",
+            "price": 1810,
+            "image": "https://ekt.kz/upload/iblock/c39/u58k0kbv7koy4uikpznyywf0i5h1my7e/led_stark_30w_2400lm_d98x180_4000k_ip20_megalight_20.jpg",
+            "url": "https://ekt.kz/catalog/spets_predlozhenie/aktsiya_megalight_polnyy_sklad_polnyy_bak/_led_stark_30w_2400lm_d98x180_4000k_ip20_megalight_20/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=45357",
+            "offers": []
+          },
+          {
+            "id": 25397,
+            "name": "007886 Диф.авт. 1p+N 16А (30мА) 411002 Legrand (1)!!!",
+            "article": "310100080_",
+            "price": 9430,
+            "image": null,
+            "url": "https://ekt.kz/catalog/spets_predlozhenie/differentsialnye_ustroystva_uzo_avdt_vd/007886_dif_avt_1p_n_16a_30ma_411002_legrand_1_/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=25397",
+            "offers": []
+          },
+          {
+            "id": 58379,
+            "name": "010-002 УПп 60/40.1.1 со стыковочными узлами и винтами",
+            "article": "030300435_",
+            "price": 53,
+            "image": "https://ekt.kz/upload/iblock/df5/j2h6n71ed0v5lrn9e0tko32p70s9i9mp/010_002_upp_60_40_1_1_so_stykovochnymi_uzlami_i_vintami.jpg",
+            "url": "https://ekt.kz/catalog/avtomatizatsiya/ustroystva_plavnogo_puska_iek_/010_002_upp_60_40_1_1_so_stykovochnymi_uzlami_i_vintami/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=58379",
+            "offers": []
+          },
+          {
+            "id": 58380,
+            "name": "010-005 УПрк 97/50.1.1",
+            "article": "030300438_",
+            "price": 199,
+            "image": "https://ekt.kz/upload/iblock/452/p7c0wmkvp2orswbiqrr7x7i3oj9g91te/010_005_uprk_97_50_1_1.jpg",
+            "url": "https://ekt.kz/catalog/rozetki_vyklyuchateli_korobki/korobki/raspredelitelnye_1/010_005_uprk_97_50_1_1/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=58380",
+            "offers": []
+          },
+          {
+            "id": 58412,
+            "name": "020-007 Коробка для полых стен с мет. лапками и крышкой УПрк 97/50.1.2. (КМ-206)",
+            "article": "030300329_",
+            "price": 293,
+            "image": "https://ekt.kz/upload/iblock/e6c/xvr6h6018pvtevvtawo09e3nxrynwkcu/020_007_korobka_dlya_polykh_sten_s_met_lapkami_i_kryshkoy_uprk_97_50_1_2_km_206.jpg",
+            "url": "https://ekt.kz/catalog/rozetki_vyklyuchateli_korobki/korobki/ustanovochnye_podrozetniki/020_007_korobka_dlya_polykh_sten_s_met_lapkami_i_kryshkoy_uprk_97_50_1_2_km_206/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=58412",
+            "offers": []
+          },
+          {
+            "id": 58368,
+            "name": "020-008 Коробка разв.107х107х53 г/к УПрк 110/45.2.2. (72 шт)",
+            "article": "030300044_",
+            "price": 414,
+            "image": "https://ekt.kz/upload/iblock/c41/rqm4qng5ho5yn5b9upprkr9mm3o5b17r/020_008_korobka_razv_107kh107kh53_g_k_uprk_110_45_2_2_72_sht.jpg",
+            "url": "https://ekt.kz/catalog/rozetki_vyklyuchateli_korobki/korobki/raspredelitelnye_1/020_008_korobka_razv_107kh107kh53_g_k_uprk_110_45_2_2_72_sht/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=58368",
+            "offers": []
+          },
+          {
+            "id": 58378,
+            "name": "020-108 Коробка распаячная для полых стен с пласт. Лапками и крышкой 110/50.2.2",
+            "article": "030300426_",
+            "price": 350,
+            "image": "https://ekt.kz/upload/iblock/f59/ibj4vzbol2318jo1ukilbozywunlsnal/020_108_korobka_raspayachnaya_dlya_polykh_sten_s_plast_lapkami_i_kryshkoy_110_50_2_2.jpg",
+            "url": "https://ekt.kz/catalog/rozetki_vyklyuchateli_korobki/korobki/raspredelitelnye_1/020_108_korobka_raspayachnaya_dlya_polykh_sten_s_plast_lapkami_i_kryshkoy_110_50_2_2/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=58378",
+            "offers": []
+          },
+          {
+            "id": 515279,
+            "name": "027004 АВ DRX125 MT 3ф 40А 10ka Legrand (1)",
+            "article": "200300273_",
+            "price": 26930,
+            "image": "https://ekt.kz/upload/iblock/592/ecrd69l3r236hyuttkj4lmnz1euly1a7/027004_av_drx125_mt_3f_40a_10ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027004_av_drx125_mt_3f_40a_10ka_legrand_1/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=515279",
+            "offers": []
+          },
+          {
+            "id": 515280,
+            "name": "027005 АВ DRX125 MT 3ф 50А 10ka Legrand (1)",
+            "article": "200300274_",
+            "price": 26930,
+            "image": "https://ekt.kz/upload/iblock/e99/yqvedowbaop1fju39ky9pau7rmv6qj63/027005_av_drx125_mt_3f_50a_10ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027005_av_drx125_mt_3f_50a_10ka_legrand_1/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=515280",
+            "offers": []
+          },
+          {
+            "id": 515278,
+            "name": "027008 АВ DRX125 MT 3ф 100А 10ka Legrand (1)",
+            "article": "200300272_",
+            "price": 29190,
+            "image": "https://ekt.kz/upload/iblock/dd5/m7bhmskgees6tmeh613tz5k3q10oldar/027008_av_drx125_mt_3f_100a_10ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027008_av_drx125_mt_3f_100a_10ka_legrand_1/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=515278",
+            "offers": []
+          },
+          {
+            "id": 515282,
+            "name": "027022 АВ DRX125 MT 3ф 25А 20ka Legrand (1)",
+            "article": "200300276_",
+            "price": 29810,
+            "image": "https://ekt.kz/upload/iblock/076/0k32d23w57a0leyiunq6o8yltqfoynmw/027022_av_drx125_mt_3f_25a_20ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027022_av_drx125_mt_3f_25a_20ka_legrand_1/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=515282",
+            "offers": []
+          },
+          {
+            "id": 515283,
+            "name": "027024 АВ DRX125 MT 3ф 40А 20ka Legrand (1)",
+            "article": "200300277_",
+            "price": 29810,
+            "image": "https://ekt.kz/upload/iblock/4ec/vurn6p0w0a2y95fktv0n66mrgjig0s08/027024_av_drx125_mt_3f_40a_20ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027024_av_drx125_mt_3f_40a_20ka_legrand_1/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=515283",
+            "offers": []
+          },
+          {
+            "id": 515281,
+            "name": "027028 АВ DRX125 MT 3ф 100А 20ka Legrand (1)",
+            "article": "200300275_",
+            "price": 33130,
+            "image": "https://ekt.kz/upload/iblock/569/ys2rqxp1g7tpg7hxtuht2747ni73l53a/027028_av_drx125_mt_3f_10a_20ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027028_av_drx125_mt_3f_10a_20ka_legrand_1/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=515281",
+            "offers": []
+          },
+          {
+            "id": 515290,
+            "name": "027100 АВ DRX250 MT 3ф 125А 18ka Legrand (1)",
+            "article": "200300284_",
+            "price": 64780,
+            "image": "https://ekt.kz/upload/iblock/053/vgn63u873t0vhpsub4zuzd6met8zgb91/027100_av_drx250_mt_3f_125a_18ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027100_av_drx250_mt_3f_125a_18ka_legrand_1/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=515290",
+            "offers": []
+          },
+          {
+            "id": 515292,
+            "name": "027103 АВ DRX250 MT 3ф 200А 18ka Legrand (1)",
+            "article": "200300286_",
+            "price": 69880,
+            "image": "https://ekt.kz/upload/iblock/be3/e0ed5wa8ni54hge5z0fmtauhuzudpgx6/027103_av_drx250_mt_3f_200a_18ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027103_av_drx250_mt_3f_200a_18ka_legrand_1/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=515292",
+            "offers": []
+          },
+          {
+            "id": 515286,
+            "name": "027105 АВ DRX250 MT 3ф 250А 18ka Legrand (1)",
+            "article": "200300280_",
+            "price": 69910,
+            "image": "https://ekt.kz/upload/iblock/75b/0w9qn9kumrcv9hqb7s6iegdf2g4b6cpw/027105_av_drx250_mt_3f_250a_18ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027105_av_drx250_mt_3f_250a_18ka_legrand_1/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=515286",
+            "offers": []
+          },
+          {
+            "id": 515287,
+            "name": "027112 АВ DRX250 MT 3ф 125А 25ka Legrand (1)",
+            "article": "200300281_",
+            "price": 65450,
+            "image": "https://ekt.kz/upload/iblock/828/jx7tloq0z13y4ipsiqs83wuqry8t7xj3/027112_av_drx250_mt_3f_125a_25ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027112_av_drx250_mt_3f_125a_25ka_legrand_1/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=515287",
+            "offers": []
+          },
+          {
+            "id": 515289,
+            "name": "027115 АВ DRX250 MT 3ф 200А 25ka Legrand (1)",
+            "article": "200300283_",
+            "price": 71160,
+            "image": "https://ekt.kz/upload/iblock/42d/gn2fvf89vn2tgkwzuiurcw99s9mgjbda/027115_av_drx250_mt_3f_200a_25ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027115_av_drx250_mt_3f_200a_25ka_legrand_1/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=515289",
+            "offers": []
+          },
+          {
+            "id": 515293,
+            "name": "027117 АВ DRX250 MT 3ф 250А 25ka Legrand (1)",
+            "article": "200300287_",
+            "price": 76940,
+            "image": "https://ekt.kz/upload/iblock/9cd/utqxpur1mensee2kealvq68ta9kenbep/027117_av_drx250_mt_3f_250a_25ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027117_av_drx250_mt_3f_250a_25ka_legrand_1/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=515293",
+            "offers": []
+          },
+          {
+            "id": 515285,
+            "name": "027220 АВ DRX125 MT 3ф 63А 20ka Legrand (1)",
+            "article": "200300279_",
+            "price": 31620,
+            "image": "https://ekt.kz/upload/iblock/ef5/utqen57lj3c7fjwfifxooatqtxcz3e2g/027220_av_drx125_mt_3f_63a_20ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027220_av_drx125_mt_3f_63a_20ka_legrand_1/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=515285",
+            "offers": []
+          },
+          {
+            "id": 515291,
+            "name": "027228 АВ DRX250 MT 3ф 160А 18ka Legrand (1)",
+            "article": "200300285_",
+            "price": 64920,
+            "image": "https://ekt.kz/upload/iblock/47e/yow62nu665xqw3kk1es94ktbpl2z8pkt/027228_av_drx250_mt_3f_160a_18ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027228_av_drx250_mt_3f_160a_18ka_legrand_1/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=515291",
+            "offers": []
+          },
+          {
+            "id": 515288,
+            "name": "027230 АВ DRX250 MT 3ф 160А 25ka Legrand (1)",
+            "article": "200300282_",
+            "price": 65920,
+            "image": "https://ekt.kz/upload/iblock/a00/hy7g1xnr71tgeqz7m9b0olycroxt6oi2/027230_av_drx250_mt_3f_160a_25ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027230_av_drx250_mt_3f_160a_25ka_legrand_1/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=515288",
+            "offers": []
+          },
+          {
+            "id": 515277,
+            "name": "027255 АВ DRX125 MT 3ф 80А 10ka Legrand (1)",
+            "article": "200300271_",
+            "price": 29190,
+            "image": "https://ekt.kz/upload/iblock/2f4/k8wwlsiaafhwpa9m7f3ild2o7kulf9ff/027255_av_drx125_mt_3f_80a_10ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027255_av_drx125_mt_3f_80a_10ka_legrand_1/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=515277",
+            "offers": []
+          },
+          {
+            "id": 515284,
+            "name": "027257 АВ DRX125 MT 3ф 80А 20ka Legrand (1)",
+            "article": "200300278_",
+            "price": 33130,
+            "image": "https://ekt.kz/upload/iblock/203/e0iyjeljujgg0gn79ljzddvpvzdqxiy4/027257_av_drx125_mt_3f_80a_20ka_legrand_1.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx125_mt_10_250_a_legrand/027257_av_drx125_mt_3f_80a_20ka_legrand_1/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=515284",
+            "offers": []
+          },
+          {
+            "id": 19988,
+            "name": "09805 IL MX 250F 2D 21W 6500K OPPLE (1) !!!",
+            "article": "151000197_",
+            "price": 2710,
+            "image": "https://ekt.kz/upload/iblock/1cb/09805_il_mx_250f_2d_21w_6500k_opple_1_.png",
+            "url": "https://ekt.kz/catalog/svetilniki_lampy/svetilniki_dlya_vnutrennego_osveshcheniya/nakladnye_lyuministsentnye_lbo_lpo_obn/09805_il_mx_250f_2d_21w_6500k_opple_1_/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=19988",
+            "offers": []
+          },
+          {
+            "id": 25010,
+            "name": "09806 IL MX 305F 2D 38W 6500K OPPLE (1) !!!",
+            "article": "151000198_",
+            "price": 3595,
+            "image": "https://ekt.kz/upload/iblock/01a/09806_il_mx_305f_2d_38w_6500k_opple_1_.png",
+            "url": "https://ekt.kz/catalog/svetilniki_lampy/svetilniki_dlya_vnutrennego_osveshcheniya/nakladnye_lyuministsentnye_lbo_lpo_obn/09806_il_mx_305f_2d_38w_6500k_opple_1_/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=25010",
+            "offers": []
+          },
+          {
+            "id": 35604,
+            "name": "1 и 3 фазное реле контроля для насоса, 5А, 1 CO, 208...480VAC RM35BA10",
+            "article": "RM35BA10",
+            "price": 85380,
+            "image": "https://ekt.kz/upload/iblock/cfe/109gr81zevdvezq0re0ujxuwltjzof4e/1_i_3_faznoe_rele_kontrolya_dlya_nasosa_5a_1_co_208_480vac_rm35ba10.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_i_3_faznoe_rele_kontrolya_dlya_nasosa_5a_1_co_208_480vac_rm35ba10/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=35604",
+            "offers": []
+          },
+          {
+            "id": 35819,
+            "name": "1-фазное реле контроля напряж, 5А, 1 CO, 20…80 V AC/DC RM17UAS16",
+            "article": "RM17UAS16",
+            "price": 49490,
+            "image": "https://ekt.kz/upload/iblock/367/b6ssh3wv4pk3rot4j9sz6fv1i0og0lym/1_faznoe_rele_kontrolya_napryazh_5a_1_co_20_80_v_ac_dc_rm17uas16.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_5a_1_co_20_80_v_ac_dc_rm17uas16/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=35819",
+            "offers": []
+          },
+          {
+            "id": 35587,
+            "name": "1-фазное реле контроля напряж, 5А, 1 CO, 20…80 V AC/DC RM17UBE16",
+            "article": "RM17UBE16",
+            "price": 67320,
+            "image": "https://ekt.kz/upload/iblock/35a/vilhxjq0z38swthf8rr8g1k2m0w3ay6f/1_faznoe_rele_kontrolya_napryazh_5a_1_co_20_80_v_ac_dc_rm17ube16.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_5a_1_co_20_80_v_ac_dc_rm17ube16/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=35587",
+            "offers": []
+          },
+          {
+            "id": 35563,
+            "name": "1-фазное реле контроля напряж, 5А, 1 CO, 65…260 V AC/DC RM17UAS15",
+            "article": "RM17UAS15",
+            "price": 43250,
+            "image": "https://ekt.kz/upload/iblock/4a6/a67mn9zqbyak4pvxxf2hk5wmd20kv4mu/1_faznoe_rele_kontrolya_napryazh_5a_1_co_65_260_v_ac_dc_rm17uas15.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_5a_1_co_65_260_v_ac_dc_rm17uas15/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=35563",
+            "offers": []
+          },
+          {
+            "id": 35574,
+            "name": "1-фазное реле контроля напряж, 5А, 1 CO, 65…260 V AC/DC RM17UBE15",
+            "article": "RM17UBE15",
+            "price": 58830,
+            "image": "https://ekt.kz/upload/iblock/c9f/393y4qbwntmep37yxuas6pqdhkkiav1t/1_faznoe_rele_kontrolya_napryazh_5a_1_co_65_260_v_ac_dc_rm17ube15.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_5a_1_co_65_260_v_ac_dc_rm17ube15/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=35574",
+            "offers": []
+          },
+          {
+            "id": 35585,
+            "name": "1-фазное реле контроля напряж, 5А, 1 CO, 9…15VDC RM17UAS14",
+            "article": "RM17UAS14",
+            "price": 47760,
+            "image": "https://ekt.kz/upload/iblock/e4a/exhtiqt3zev812fxlzjatvro6v1b78y8/1_faznoe_rele_kontrolya_napryazh_5a_1_co_9_15vdc_rm17uas14.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_5a_1_co_9_15vdc_rm17uas14/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=35585",
+            "offers": []
+          },
+          {
+            "id": 35609,
+            "name": "1-фазное реле контроля напряж, 5А, 2 CO, диапазон изм 1-100 В, питание 24-240 V AC/DC RM35UA12MW",
+            "article": "RM35UA12MW",
+            "price": 69680,
+            "image": "https://ekt.kz/upload/iblock/e8c/4fv9te3pyx6ldp44b2skwvm4zia7kgpg/1_faznoe_rele_kontrolya_napryazh_5a_2_co_diapazon_izm_1_100_v_pitanie_24_240_v_ac_dc_rm35ua12mw.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_5a_2_co_diapazon_izm_1_100_v_pitanie_24_240_v_ac_dc_rm35ua12mw/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=35609",
+            "offers": []
+          },
+          {
+            "id": 35608,
+            "name": "1-фазное реле контроля напряж, 5А, 2 CO, диапазон измер 0.05-5 В, питание 24-240 V AC/DC RM35UA11MW",
+            "article": "RM35UA11MW",
+            "price": 60490,
+            "image": "https://ekt.kz/upload/iblock/70a/mm19yer904nu8vo6thvz0knzd199knu3/1_faznoe_rele_kontrolya_napryazh_5a_2_co_diapazon_izmer_0_05_5_v_pitanie_24_240_v_ac_dc_rm35ua11mw.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_5a_2_co_diapazon_izmer_0_05_5_v_pitanie_24_240_v_ac_dc_rm35ua11mw/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=35608",
+            "offers": []
+          },
+          {
+            "id": 35610,
+            "name": "1-фазное реле контроля напряж, 5А, 2 CO, диапазон измер 15-600 В, питание 24-240 V AC/DC RM35UA13MW",
+            "article": "RM35UA13MW",
+            "price": 67270,
+            "image": "https://ekt.kz/upload/iblock/ced/hv0kuaubpnl1xqu1n9o9h6nuq8p1vlg0/1_faznoe_rele_kontrolya_napryazh_5a_2_co_diapazon_izmer_15_600_v_pitanie_24_240_v_ac_dc_rm35ua13mw.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_5a_2_co_diapazon_izmer_15_600_v_pitanie_24_240_v_ac_dc_rm35ua13mw/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=35610",
+            "offers": []
+          },
+          {
+            "id": 35599,
+            "name": "1-фазное реле контроля напряж, 8 A, 2 CO, 0.05…5 V AC/DC, 24…240 V AC/DC RM22UA31MR",
+            "article": "RM22UA31MR",
+            "price": 94060,
+            "image": "https://ekt.kz/upload/iblock/196/2a0n40ypc5u0279ezm13ok4ow451nhdf/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_0_05_5_v_ac_dc_24_240_v_ac_dc_rm22ua31mr.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_0_05_5_v_ac_dc_24_240_v_ac_dc_rm22ua31mr/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=35599",
+            "offers": []
+          },
+          {
+            "id": 35600,
+            "name": "1-фазное реле контроля напряж, 8 A, 2 CO, 1…100 V AC/DC, 24…240 V AC/DC RM22UA32MR",
+            "article": "RM22UA32MR",
+            "price": 39360,
+            "image": "https://ekt.kz/upload/iblock/fe5/3m9imlm19l1aqxox018i3psdsvyz19rg/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_1_100_v_ac_dc_24_240_v_ac_dc_rm22ua32mr.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_1_100_v_ac_dc_24_240_v_ac_dc_rm22ua32mr/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=35600",
+            "offers": []
+          },
+          {
+            "id": 35573,
+            "name": "1-фазное реле контроля напряж, 8 A, 2 CO, 15…500 V AC/DC, 24…240 V AC/DC RM22UA33MR",
+            "article": "RM22UA33MR",
+            "price": 38370,
+            "image": "https://ekt.kz/upload/iblock/7b7/sth84evq2zriuf282g2bxv2aejgoccn5/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_15_500_v_ac_dc_24_240_v_ac_dc_rm22ua33mr.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_15_500_v_ac_dc_24_240_v_ac_dc_rm22ua33mr/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=35573",
+            "offers": []
+          },
+          {
+            "id": 35601,
+            "name": "1-фазное реле контроля напряж, 8 A, 2 CO, 15…500VAC, 380…415VAC RM22UA33MT",
+            "article": "RM22UA33MT",
+            "price": 86540,
+            "image": "https://ekt.kz/upload/iblock/b37/evdxf193s8gpihd7b4b68dckbm53wcmw/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_15_500vac_380_415vac_rm22ua33mt.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_15_500vac_380_415vac_rm22ua33mt/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=35601",
+            "offers": []
+          },
+          {
+            "id": 35581,
+            "name": "1-фазное реле контроля напряж, 8 A, 2 CO, 80…300 V AC/DC, 110…240 V AC/DC RM22UB34",
+            "article": "RM22UB34",
+            "price": 35730,
+            "image": "https://ekt.kz/upload/iblock/775/vqp79ajor0l5xitkj8roltd9d45r6kkf/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_80_300_v_ac_dc_110_240_v_ac_dc_rm22ub34.jpg",
+            "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/rele_schneider_electric/1_faznoe_rele_kontrolya_napryazh_8_a_2_co_80_300_v_ac_dc_110_240_v_ac_dc_rm22ub34/",
+            "url_api_detail": "https://ekt.kz/api/products/detail?id=35581",
+            "offers": []
+          }
+        ],
+        "detail": {
+          "id": 515291,
+          "name": "027228 АВ DRX250 MT 3ф 160А 18ka Legrand (1)",
+          "article": "200300285_",
+          "description": "Автоматический выключатель DRX250 MT 3P 160А 18kA (арт. 027228) Legrand – мощное защитное устройство для предотвращения перегрузок и коротких замыканий в электрических сетях.\r\n\r\nОсновные характеристики:\r\n\r\n\tСерия: DRX250 MT\r\n\tКоличество полюсов: 3\r\n\tНоминальный ток: 160А\r\n\tОтключающая способность: 18kA\r\n\tНоминальное напряжение: 400В AC\r\n\tПроизводитель: Legrand\r\n\r\n\r\n\t Этот автоматический выключатель применяется в промышленных, коммерческих и распределительных системах, обеспечивая надежную защиту электрооборудования. Отличается долговечностью, высокой износостойкостью и простотой монтажа.",
+          "price": 64920,
+          "quantity": 23,
+          "stores": [
+            { "id": 2, "name": "Брак MEGALIGHT", "quantity": 0 },
+            { "id": 3, "name": "Шымкент (ул.Байдукова)", "quantity": 2 },
+            { "id": 4, "name": "Маркетинг MEGALIGHT", "quantity": 0 },
+            { "id": 5, "name": "Никонов", "quantity": 0 },
+            { "id": 6, "name": "РЦ MEGALIGHT", "quantity": 0 },
+            { "id": 7, "name": "Талдыкорган", "quantity": 0 },
+            { "id": 8, "name": "Тастак", "quantity": 0 },
+            { "id": 9, "name": "Торговый зал", "quantity": 0 },
+            { "id": 10, "name": "Востановленный продукт", "quantity": 0 },
+            { "id": 11, "name": "перемещение", "quantity": 0 },
+            { "id": 12, "name": "Основной склад", "quantity": 0 },
+            { "id": 13, "name": "Алматы", "quantity": 5 },
+            { "id": 14, "name": "ЩИТОВОЕ", "quantity": 0 },
+            { "id": 15, "name": "РЦ UNIT", "quantity": 0 },
+            { "id": 16, "name": "Образцы Отдел Закупа", "quantity": 0 },
+            { "id": 17, "name": "Витрина ТЗ", "quantity": 0 },
+            { "id": 18, "name": "Усть-Каменогорск", "quantity": 0 },
+            { "id": 19, "name": "Тараз", "quantity": 2 },
+            { "id": 20, "name": "Атырау", "quantity": 3 },
+            { "id": 21, "name": "Караганда", "quantity": 2 },
+            { "id": 22, "name": "Новосибирск", "quantity": 0 },
+            { "id": 23, "name": "Актау", "quantity": 0 },
+            { "id": 24, "name": "Нур-Султан", "quantity": 8 },
+            { "id": 25, "name": "Шымкент (Тассай)", "quantity": 1 }
+          ],
+          "image": "https://ekt.kz/upload/iblock/1ca/8mdfx6517jvalt5da1n9865q2fzpj6jp/027228_av_drx250_mt_3f_160a_18ka_legrand_1.jpg",
+          "url": "https://ekt.kz/catalog/nizkovoltnaya_apparatura/silovye_avtomaticheskie_vyklyuchateli/drx250_mt_10_250_a_legrand/027228_av_drx250_mt_3f_160a_18ka_legrand_1/",
+          "offers": [],
+          "properties": {
+            "BRAND_PRIORITY": "1",
+            "CML2_ARTICLE": "200300285_",
+            "NOVINKA": "Да",
+            "SPETSPREDLOZHENIE": "Нет",
+            "RECOMMEND": ["48783", "23466", "28727"],
+            "CML2_BAR_CODE": "3414970344526",
+            "CML2_TRAITS": [
+              "Готовая продукция",
+              "Товар",
+              "200300285_",
+              "Да",
+              "Нет",
+              "027228 АВ DRX250 MT 3ф 160А 18ka Legrand (1)",
+              "0,00212",
+              "1,467",
+              "0",
+              "0",
+              "0"
+            ],
+            "CML2_TAXES": "16",
+            "KRATNOST_MIN": "1",
+            "IMYAKARTINKI": "Legrand.jpg",
+            "ARTIKULPOSTAVSHCHIKA": "027228",
+            "OBYEM": "Автоматический выключатель",
+            "KOLICHESTVO_POLYUSOV": "3",
+            "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "18кА",
+            "NOMINALNOE_NAPRYAZHENIE": "400В",
+            "NOMINALNYY_TOK": "250 А",
+            "TIP_USTANOVKI": "Винтовое",
+            "TORGOVAYA_MARKA": "Legrand"
+          }
+        }
+      }
+    </script>
+    <script>
+      (() => {
+        "use strict";
+        const $ = (selector) => document.querySelector(selector);
+        const esc = (value) =>
+          String(value ?? "").replace(
+            /[&<>"']/g,
+            (c) =>
+              ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;",
+              })[c],
+          );
+        const normalize = (value) =>
+          String(value ?? "")
+            .toLowerCase()
+            .replace(/ё/g, "е")
+            .replace(/[^\p{L}\p{N}]+/gu, " ")
+            .trim();
+        const safeUrl = (value) => {
+          try {
+            const u = new URL(value);
+            return u.protocol === "https:" &&
+              (u.hostname === "ekt.kz" || u.hostname.endsWith(".ekt.kz"))
+              ? u.href
+              : "";
+          } catch {
+            return "";
+          }
+        };
+        const amount = (value) => Number(value).toLocaleString("ru-RU");
+        const seed = JSON.parse($("#seedData").textContent);
+        const products = new Map(seed.items.map((p) => [p.id, p]));
+        const details = new Map([
+          [seed.detail.id, { ...seed.detail, mode: "snapshot" }],
+        ]);
+        const storageKey = "ekt-landing-session-cart-v2";
+        let cart = {},
+          pending = null,
+          currentProduct = null,
+          busy = false,
+          reading = false,
+          files = [],
+          live = false,
+          nextPage = 1,
+          previousFocus;
+        try {
+          const saved = JSON.parse(sessionStorage.getItem(storageKey) || "{}");
+          for (const [id, row] of Object.entries(saved)) {
+            if (
+              /^\d+$/.test(id) &&
+              Number.isSafeInteger(row.qty) &&
+              row.qty > 0 &&
+              Number.isFinite(row.price) &&
+              typeof row.article === "string" &&
+              typeof row.name === "string"
+            )
+              cart[id] = row;
+          }
+        } catch {
+          /* Storage may be unavailable in a private/file context. */
+        }
+        function toast(text) {
+          $("#toast").textContent = text;
+          $("#toast").hidden = false;
+          clearTimeout(toast.timer);
+          toast.timer = setTimeout(() => ($("#toast").hidden = true), 5000);
+        }
+        function scroll() {
+          $("#messages").scrollTop = $("#messages").scrollHeight;
+        }
+        function openChat() {
+          if ($("#chat").hidden) previousFocus = document.activeElement;
+          $("#chat").hidden = false;
+          $("#chat").setAttribute("aria-modal", String(innerWidth < 761));
+          $("#launcher").hidden = true;
+          $("#launcher").setAttribute("aria-expanded", "true");
+          if (innerWidth < 761) document.body.style.overflow = "hidden";
+          $("#prompt").focus({ preventScroll: true });
+        }
+        function closeChat() {
+          $("#chat").hidden = true;
+          $("#launcher").hidden = false;
+          $("#launcher").setAttribute("aria-expanded", "false");
+          document.body.style.overflow = "";
+          (previousFocus?.isConnected ? previousFocus : $("#launcher")).focus({
+            preventScroll: true,
+          });
+        }
+        function message(role, content) {
+          const el = document.createElement("div");
+          el.className = "message " + role;
+          if (role === "user") el.textContent = content;
+          else
+            el.innerHTML =
+              '<div class="assistant-label"><span class="spark" aria-hidden="true">✧</span>ЭКТ помощник</div><div class="message-body">' +
+              content +
+              "</div>";
+          $("#messages").append(el);
+          scroll();
+          return el;
+        }
+        function updateCart() {
+          $("#cartCount").textContent = Object.values(cart).reduce(
+            (sum, row) => sum + row.qty,
+            0,
+          );
+          try {
+            sessionStorage.setItem(storageKey, JSON.stringify(cart));
+          } catch {
+            toast(
+              "Хранилище недоступно: корзина сохранится только до обновления страницы.",
+            );
+          }
+          if ($("#cartSummary")) $("#cartSummary").innerHTML = cartMarkup();
+        }
+        async function api(path) {
+          const response = await fetch("/api/catalog" + path, {
+            cache: "no-store",
+            signal: AbortSignal.timeout(12000),
+          });
+          if (!response.ok)
+            throw new Error(
+              response.status === 404
+                ? "Карточка не найдена в источнике."
+                : "Каталог временно недоступен. Попробуйте ещё раз.",
+            );
+          return response.json();
+        }
+        async function getDetail(p) {
+          if (!live) return details.get(p.id) || null;
+          const data = await api("/detail?id=" + encodeURIComponent(p.id));
+          if (
+            data.id !== p.id ||
+            !Number.isInteger(data.quantity) ||
+            !data.properties ||
+            !Array.isArray(data.stores)
+          )
+            throw new Error("Не удалось подтвердить сведения из каталога.");
+          const d = {
+            ...data,
+            mode: "live",
+            fetchedAt: new Date().toISOString(),
+          };
+          details.set(p.id, d);
+          products.set(p.id, { ...p, ...data });
+          return d;
+        }
+        async function loadPage() {
+          const data = await api("?page=" + nextPage);
+          if (!Array.isArray(data.items))
+            throw new Error("Не удалось прочитать страницу каталога.");
+          data.items.forEach((p) => products.set(p.id, p));
+          nextPage++;
+          return data.items.length;
+        }
+        const propertyNames = {
+          TORGOVAYA_MARKA: "Производитель",
+          ARTIKULPOSTAVSHCHIKA: "Код производителя",
+          KOLICHESTVO_POLYUSOV: "Количество полюсов",
+          NOMINALNYY_TOK: "Номинальный ток",
+          NOMINALNOE_NAPRYAZHENIE: "Напряжение",
+          NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST: "Отключающая способность",
+          TIP_USTANOVKI: "Монтаж",
+          KRATNOST_MIN: "Минимальная кратность",
+        };
+        function specs(d) {
+          return (
+            '<dl class="specs">' +
+            Object.entries(propertyNames)
+              .filter(([key]) => d.properties[key])
+              .map(
+                ([key, label]) =>
+                  "<dt>" +
+                  label +
+                  "</dt><dd>" +
+                  esc(d.properties[key]) +
+                  "</dd>",
+              )
+              .join("") +
+            "</dl>"
+          );
+        }
+        function discrepancy(d) {
+          const title = d.name.match(/(?:^|\s)(\d+)\s*[АA](?=\s|$)/i)?.[1];
+          const field = String(d.properties.NOMINALNYY_TOK || "").match(
+            /\d+/,
+          )?.[0];
+          return title && field && title !== field
+            ? '<p class="warning">В источнике есть расхождение: в названии ' +
+                esc(title) +
+                " А, в характеристиках " +
+                esc(field) +
+                " А. Уточните номинал перед покупкой или заменой.</p>"
+            : "";
+        }
+        function certificate(d) {
+          const urls = Object.entries(d.properties || {})
+            .filter(([key]) => /cert|sert|сертиф/i.test(key))
+            .flatMap(([, v]) => (Array.isArray(v) ? v : [v]))
+            .map(safeUrl)
+            .filter(Boolean);
+          return urls.length
+            ? urls
+                .map(
+                  (url) =>
+                    '<a href="' +
+                    esc(url) +
+                    '" target="_blank" rel="noopener">Открыть сертификат ↗</a>',
+                )
+                .join("<br>")
+            : "Сертификат не указан в полученных данных.";
+        }
+        function productCard(p, d = null) {
+          const image = safeUrl(p.image),
+            url = safeUrl(p.url),
+            quantity = d?.quantity;
+          return (
+            '<article class="product-card"><div class="product-top">' +
+            (image
+              ? '<img class="product-image" src="' +
+                esc(image) +
+                '" alt="" loading="lazy" referrerpolicy="no-referrer">'
+              : '<div class="product-glyph"><div class="breaker"></div></div>') +
+            '<div class="product-meta"><small>Артикул ' +
+            esc(p.article) +
+            " · ID " +
+            p.id +
+            "</small><h3>" +
+            esc(p.name) +
+            '</h3><span class="stock ' +
+            (quantity === undefined ? "unknown" : "") +
+            '">' +
+            (quantity === undefined
+              ? "Наличие не подтверждено"
+              : quantity > 0
+                ? (d.mode === "live" ? "По данным API: " : "В снимке: ") +
+                  quantity +
+                  " шт."
+                : "Нет в наличии") +
+            '</span></div></div><div class="product-price">' +
+            amount(p.price) +
+            '</div><p class="muted">Цена из каталога; валюта в API не указана.</p>' +
+            (d
+              ? specs(d) +
+                discrepancy(d) +
+                '<p class="muted">' +
+                certificate(d) +
+                '</p><details><summary>Описание и остатки по складам</summary><p style="white-space:pre-line;margin-top:9px">' +
+                esc(d.description || "Описание не указано.") +
+                '</p><ul class="stores">' +
+                d.stores
+                  .filter((s) => s.quantity > 0)
+                  .map(
+                    (s) =>
+                      "<li><span>" +
+                      esc(s.name) +
+                      "</span><b>" +
+                      s.quantity +
+                      " шт.</b></li>",
+                  )
+                  .join("") +
+                "</ul></details>"
+              : "") +
+            '<div class="product-actions">' +
+            (d && quantity > 0
+              ? '<label class="qty-label">Количество <input class="quantity" aria-label="Количество ' +
+                esc(p.article) +
+                '" type="number" value="1" min="1" step="1" inputmode="numeric" max="' +
+                Math.max(0, quantity - (cart[p.id]?.qty || 0)) +
+                '" data-quantity="' +
+                p.id +
+                '"></label><button class="button small" data-prepare="' +
+                p.id +
+                '">В корзину</button>'
+              : '<button class="button outline small" data-detail="' +
+                p.id +
+                '">Проверить товар</button>') +
+            '<button class="chip" data-analog="' +
+            p.id +
+            '">Найти аналог</button></div><p class="source-note">' +
+            (d?.mode === "live"
+              ? "Получено " +
+                new Date(d.fetchedAt).toLocaleString("ru-RU") +
+                ". Время обновления склада неизвестно."
+              : "Пример API ekt.kz. Дата снимка не указана; актуальность не подтверждена.") +
+            (url
+              ? ' <a href="' +
+                esc(url) +
+                '" target="_blank" rel="noopener">Товар на ekt.kz ↗</a>'
+              : "") +
+            "</p></article>"
+          );
+        }
+        const stopwords = new Set([
+          "есть",
+          "ли",
+          "мне",
+          "нужен",
+          "нужна",
+          "найди",
+          "найти",
+          "покажи",
+          "товар",
+          "товара",
+          "артикул",
+          "по",
+          "какие",
+          "какой",
+          "характеристики",
+          "сколько",
+          "стоит",
+          "шт",
+          "штук",
+          "штуки",
+          "наличии",
+          "наличие",
+          "добавь",
+          "добавить",
+          "корзину",
+          "корзина",
+          "аналог",
+          "для",
+          "его",
+          "него",
+          "этот",
+          "этого",
+          "этой",
+          "позиции",
+          "нужно",
+        ]);
+        function search(text) {
+          const words = normalize(text)
+            .split(" ")
+            .filter((w) => w.length > 1 && !stopwords.has(w))
+            .map((w) => ({ коробку: "короб", коробки: "короб" })[w] || w);
+          const ids = words.filter((w) => /\d/.test(w));
+          return [...products.values()]
+            .map((p) => {
+              const name = normalize(p.name),
+                article = normalize(p.article),
+                code = normalize(
+                  details.get(p.id)?.properties?.ARTIKULPOSTAVSHCHIKA ||
+                    p.name.split(" ")[0],
+                );
+              const exact = ids.some(
+                (w) => w === article || w === String(p.id) || w === code,
+              );
+              const score = words.reduce(
+                (sum, w) =>
+                  sum + (name.includes(w) ? 2 : 0) + (article === w ? 15 : 0),
+                0,
+              );
+              return { p, score: score + (exact ? 100 : 0), exact };
+            })
+            .filter(
+              (r) =>
+                r.score > 0 &&
+                (!ids.length ||
+                  r.exact ||
+                  ids.every((w) => normalize(r.p.name).includes(w))),
+            )
+            .sort((a, b) => b.score - a.score);
+        }
+        async function showProduct(id) {
+          const p = products.get(Number(id));
+          if (!p) return;
+          if (currentProduct !== p.id) clearPending();
+          currentProduct = p.id;
+          const d = await getDetail(p);
+          message("bot", productCard(products.get(p.id), d));
+          if (!d)
+            message(
+              "bot",
+              "В приложенной выборке нет детальной карточки этой позиции. Остаток, характеристики и сертификат пока не подтверждены.",
+            );
+          else if (d.quantity <= 0) await showAnalogs(p.id);
+        }
+        async function showAnalogs(id) {
+          const p = products.get(Number(id));
+          if (!p) return;
+          clearPending();
+          currentProduct = p.id;
+          const family = p.name.match(/DRX\d+\s*MT/i)?.[0];
+          const words = normalize(p.name)
+            .split(" ")
+            .filter((w) => w.length > 3 && !/\d/.test(w));
+          const candidates = [...products.values()]
+            .filter(
+              (x) =>
+                x.id !== p.id &&
+                (family
+                  ? x.name.toLowerCase().includes(family.toLowerCase())
+                  : words.filter((w) => normalize(x.name).includes(w)).length >=
+                    2),
+            )
+            .slice(0, 3);
+          if (!candidates.length) {
+            message(
+              "bot",
+              "В загруженной части каталога подходящий аналог не найден. Уточните параметры или обратитесь к менеджеру магазина.",
+            );
+            return;
+          }
+          let html =
+            "<h3>Варианты для сравнения</h3><p>Исходный товар: " +
+            esc(p.name) +
+            ". Проверим наличие и совместимость; сходство названий само по себе не подтверждает замену.</p>";
+          for (const candidate of candidates) {
+            let d = null;
+            try {
+              d = await getDetail(candidate);
+            } catch {
+              /* A failed lookup must not turn a candidate into a verified analog. */
+            }
+            html +=
+              '<p style="margin-top:14px">' +
+              (family
+                ? "Совпадает серия " +
+                  esc(family) +
+                  ". Сравните номинальный ток, число полюсов и отключающую способность."
+                : "Совпадают слова в наименовании: " +
+                  esc(
+                    words
+                      .filter((w) => normalize(candidate.name).includes(w))
+                      .join(", "),
+                  ) +
+                  ". Назначение и параметры требуют проверки.") +
+              "</p>" +
+              productCard(products.get(candidate.id), d);
+          }
+          html +=
+            '<p class="warning">Подтверждённая взаимозаменяемость не установлена. Не выбирайте замену только по названию.</p>';
+          message("bot", html);
+        }
+        function clearPending() {
+          pending = null;
+          document.querySelectorAll("[data-pending]").forEach((el) => {
+            el.removeAttribute("data-pending");
+            el.querySelectorAll("button").forEach((b) => (b.disabled = true));
+          });
+        }
+        function minMultiple(d) {
+          const raw = String(d?.properties?.KRATNOST_MIN || "1").replace(
+            ",",
+            ".",
+          );
+          const value = Number(raw);
+          return Number.isSafeInteger(value) && value > 0 ? value : 1;
+        }
+        async function prepare(id, quantity) {
+          clearPending();
+          const p = products.get(Number(id));
+          if (!p) return;
+          currentProduct = p.id;
+          if (!Number.isSafeInteger(quantity) || quantity <= 0) {
+            message("bot", "Укажите положительное целое количество товара.");
+            return;
+          }
+          const d = await getDetail(p);
+          if (!d) {
+            message(
+              "bot",
+              "Остаток не подтверждён. Добавить эту позицию пока нельзя.",
+            );
+            return;
+          }
+          const available = Math.max(0, d.quantity - (cart[p.id]?.qty || 0));
+          if (quantity > available) {
+            message(
+              "bot",
+              "Для добавления доступно " +
+                available +
+                " шт. с учётом локальной корзины. Вы запросили " +
+                quantity +
+                " шт. Укажите другое количество — корзина не изменена.",
+            );
+            return;
+          }
+          const multiple = minMultiple(d);
+          if (quantity % multiple !== 0) {
+            message(
+              "bot",
+              "В каталоге указана кратность " +
+                multiple +
+                ". Выберите количество, кратное " +
+                multiple +
+                ".",
+            );
+            return;
+          }
+          pending = {
+            id: p.id,
+            qty: quantity,
+            price: d.price,
+            token: crypto.randomUUID(),
+          };
+          message(
+            "bot",
+            '<div class="consent" data-pending="' +
+              pending.token +
+              '"><b>Подтвердите добавление</b><p>' +
+              esc(p.name) +
+              "</p><p>Артикул " +
+              esc(p.article) +
+              " · <strong>" +
+              quantity +
+              " шт.</strong></p><p>Сумма по каталогу: " +
+              amount(d.price * quantity) +
+              ' · валюта не указана</p><p class="muted">Локальная демонстрационная корзина. Товар не резервируется на ekt.kz.</p><div class="product-actions"><button class="button small" data-confirm="' +
+              pending.token +
+              '">Да, добавить</button><button class="button outline small" data-cancel="' +
+              pending.token +
+              '">Отмена</button></div></div>',
+          );
+        }
+        async function confirm(token) {
+          if (!pending || pending.token !== token) {
+            message(
+              "bot",
+              "Это подтверждение уже не действует. Выберите товар и количество заново.",
+            );
+            return;
+          }
+          const approved = { ...pending };
+          const p = products.get(approved.id);
+          const d = await getDetail(p);
+          if (!pending || pending.token !== token) return;
+          const available = d
+            ? Math.max(0, d.quantity - (cart[p.id]?.qty || 0))
+            : 0;
+          if (
+            !d ||
+            available < approved.qty ||
+            d.price !== approved.price ||
+            approved.qty % minMultiple(d) !== 0
+          ) {
+            clearPending();
+            message(
+              "bot",
+              "Цена, остаток или кратность изменились либо не подтверждены. Корзина не изменена. Выберите товар и подтвердите актуальные условия заново.",
+            );
+            return;
+          }
+          cart[p.id] = {
+            name: d.name,
+            article: d.article,
+            price: d.price,
+            qty: (cart[p.id]?.qty || 0) + approved.qty,
+          };
+          clearPending();
+          updateCart();
+          message(
+            "bot",
+            "<h3>Добавлено " +
+              approved.qty +
+              " шт.</h3><p>" +
+              esc(d.name) +
+              '</p><p class="muted">В локальную корзину этой вкладки. Заказ на ekt.kz не создан.</p><a class="cart-link" href="#cart">Открыть корзину →</a>',
+          );
+        }
+        function cartMarkup() {
+          const rows = Object.entries(cart);
+          if (!rows.length)
+            return "<h3>Корзина пока пуста</h3><p>Найдите товар и подтвердите добавление в чате.</p>";
+          return (
+            '<h3>Ваша локальная корзина</h3><p class="muted">Демонстрация · не синхронизирована с ekt.kz</p>' +
+            rows
+              .map(
+                ([id, row]) =>
+                  '<div class="cart-row"><b>' +
+                  esc(row.name) +
+                  "</b><p>Артикул " +
+                  esc(row.article) +
+                  " · <strong>" +
+                  row.qty +
+                  " шт.</strong> · " +
+                  amount(row.price * row.qty) +
+                  '</p><button class="chip" style="margin-top:7px" data-remove="' +
+                  id +
+                  '">Удалить позицию…</button></div>',
+              )
+              .join("") +
+            '<div class="cart-total"><span>Итого по каталогу</span><span>' +
+            amount(rows.reduce((s, [, r]) => s + r.price * r.qty, 0)) +
+            '</span></div><p class="muted">Валюта источником не указана. Эта корзина не резервирует товар. Оформление заказа здесь недоступно.</p><div class="suggestions"><button class="chip" data-query="Какие условия покупки?">Оплата и доставка</button><a class="chip" href="https://ekt.kz/" target="_blank" rel="noopener">Перейти на сайт магазина ↗</a></div>'
+          );
+        }
+        function showCart() {
+          openChat();
+          if (!$("#cartSummary"))
+            message("bot", '<div id="cartSummary">' + cartMarkup() + "</div>");
+          else $("#cartSummary").innerHTML = cartMarkup();
+          $("#cartSummary").scrollIntoView({ block: "nearest" });
+        }
+        function conditions() {
+          const d = details.get(currentProduct);
+          message(
+            "bot",
+            "<h3>Условия покупки</h3><p><b>Оплата.</b> Доступные способы и порядок оплаты не подтверждены в предоставленных данных.</p><p><b>Доставка.</b> Стоимость, сроки, города и условия самовывоза в каталоге не указаны. Для расчёта уточните город и состав заказа у магазина.</p><p><b>Минимальная партия.</b> " +
+              (d?.properties?.KRATNOST_MIN
+                ? "Для выбранного артикула " +
+                  esc(d.article) +
+                  " источник указывает кратность " +
+                  esc(d.properties.KRATNOST_MIN) +
+                  ". Общая минимальная сумма заказа не указана."
+                : "Общие условия не подтверждены. Кратность отдельных товаров показывается в карточке, если она есть в источнике.") +
+              '</p><p class="muted">Не вводите платёжные данные в чат.</p><a class="cart-link" href="https://ekt.kz/" target="_blank" rel="noopener">Уточнить условия на сайте магазина ↗</a>',
+          );
+        }
+        function quantityFrom(text) {
+          const match =
+            text.match(
+              /(-?\d+(?:[.,]\d+)?)\s*(?:шт\.?|штук[аи]?|единиц[уы]?)(?=\s|$|[.,!?])/i,
+            ) ||
+            text.match(
+              /(?:добавь|добавить|положи)\s+(-?\d+(?:[.,]\d+)?)(?=\s+(?:шт|штук|единиц|эт|его|их))/i,
+            );
+          return match ? Number(match[1].replace(",", ".")) : 1;
+        }
+        async function respond(text, extracted) {
+          const low = normalize(text);
+          const explicit =
+            /^(да добавь|да добавить|да добавляй|подтверждаю добавление)$/.test(
+              low,
+            );
+          if (explicit && !extracted) {
+            if (pending) await confirm(pending.token);
+            else
+              message(
+                "bot",
+                "Сейчас нет товара, ожидающего подтверждения. Сначала выберите позицию и количество.",
+              );
+            return;
+          }
+          if (/^(нет|отмена|не надо|не добавляй)$/.test(low)) {
+            clearPending();
+            message("bot", "Добавление отменено. Корзина не изменена.");
+            return;
+          }
+          if (/^(ок|хорошо|да|ага|понятно|спасибо)$/.test(low)) {
+            message(
+              "bot",
+              pending
+                ? "Чтобы изменить корзину, нажмите «Да, добавить» или напишите «да, добавь»."
+                : "Обращайтесь! Напишите артикул или вопрос о товаре.",
+            );
+            return;
+          }
+          if (/оплат|достав|самовывоз|услови|минимальн/.test(low)) {
+            conditions();
+            return;
+          }
+          if (/корзин/.test(low) && !/добав|полож/.test(low)) {
+            showCart();
+            return;
+          }
+          if (
+            /^(привет|здравствуй|здравствуйте|добрый день|помощь)$/.test(low)
+          ) {
+            message(
+              "bot",
+              "Здравствуйте! Укажите артикул или название. Например: «Есть ли 027228 в наличии?»",
+            );
+            return;
+          }
+          const searchText = (text + " " + extracted).replace(
+            /-?\d+(?:[.,]\d+)?\s*(шт\.?|штук[аи]?|единиц[уы]?)(?=\s|$|[.,!?])/gi,
+            "",
+          );
+          let results = search(searchText);
+          const contextual =
+            /(?:его|него|этот|этого|эту|этой|аналог|характерист|сертификат|остат|добавь|добавить|положи)/.test(
+              low,
+            ) && !/\d/.test(searchText);
+          if (!results.length && contextual && currentProduct)
+            results = [{ p: products.get(currentProduct), exact: true }];
+          if (!results.length) {
+            message(
+              "bot",
+              "Не нашёл совпадений в загруженной части каталога (" +
+                products.size +
+                " позиций). Уточните артикул или код производителя. Это не означает, что товара нет у магазина." +
+                (live
+                  ? '<div class="suggestions"><button class="chip" data-load>Загрузить ещё товары</button></div>'
+                  : ""),
+            );
+            return;
+          }
+          const adding =
+            /добав|полож/.test(low) && !/не\s+(?:добав|полож)/.test(low);
+          if (
+            results.length > 1 &&
+            (!results[0].exact ||
+              (extracted && results.filter((r) => r.exact).length > 1))
+          ) {
+            clearPending();
+            message(
+              "bot",
+              "<h3>Уточните нужную позицию</h3><p>Нашёл " +
+                results.length +
+                " совпадений. Откройте карточку нужного товара.</p>" +
+                results
+                  .slice(0, 4)
+                  .map(({ p }) => productCard(p))
+                  .join(""),
+            );
+            return;
+          }
+          const p = results[0].p;
+          if (currentProduct !== p.id || adding) clearPending();
+          currentProduct = p.id;
+          if (adding) await prepare(p.id, quantityFrom(text));
+          else if (/аналог|замен|похож/.test(low)) await showAnalogs(p.id);
+          else await showProduct(p.id);
+        }
+        async function run(action) {
+          if (busy || reading) return;
+          busy = true;
+          $("#sendButton").disabled = true;
+          $("#attachButton").disabled = true;
+          $("#messages").setAttribute("aria-busy", "true");
+          const loading = message(
+            "bot",
+            '<span class="loading">Проверяю данные <i></i><i></i><i></i></span>',
+          );
+          try {
+            await action();
+          } catch (error) {
+            message(
+              "bot",
+              esc(
+                error.message ||
+                  "Не удалось обработать запрос. Попробуйте ещё раз.",
+              ),
+            );
+          } finally {
+            loading.remove();
+            busy = false;
+            $("#sendButton").disabled = false;
+            $("#attachButton").disabled = false;
+            $("#messages").removeAttribute("aria-busy");
+            scroll();
+          }
+        }
+        async function submit(value) {
+          const text = value.trim();
+          if ((!text && !files.length) || busy || reading) return;
+          openChat();
+          $("#prompt").value = "";
+          $("#prompt").style.height = "auto";
+          const attached = files;
+          files = [];
+          renderFiles();
+          const extracted = attached
+            .map((f) => f.text)
+            .join("\n")
+            .slice(0, 24000);
+          message(
+            "user",
+            (text || "Найди товары из вложения") +
+              (attached.length
+                ? "\n📎 " + attached.map((f) => f.name).join(", ")
+                : ""),
+          );
+          if (attached.length) clearPending();
+          await run(() => respond(text, extracted));
+        }
+        function renderFiles() {
+          $("#attachments").replaceChildren();
+          files.forEach((file) => {
+            const chip = document.createElement("div");
+            chip.className = "attachment";
+            const title = document.createElement("span");
+            title.textContent = file.name;
+            const remove = document.createElement("button");
+            remove.textContent = "×";
+            remove.setAttribute("aria-label", "Удалить " + file.name);
+            remove.onclick = () => {
+              files = files.filter((f) => f !== file);
+              renderFiles();
+            };
+            chip.append(title, remove);
+            $("#attachments").append(chip);
+          });
+        }
+        function loadScript(src, globalName) {
+          if (window[globalName]) return Promise.resolve(window[globalName]);
+          return new Promise((resolve, reject) => {
+            const script = document.createElement("script");
+            script.src = src;
+            script.onload = () =>
+              window[globalName]
+                ? resolve(window[globalName])
+                : reject(new Error("Не удалось запустить чтение файла."));
+            script.onerror = () =>
+              reject(
+                new Error(
+                  "Не удалось загрузить библиотеку чтения. Проверьте подключение к интернету.",
+                ),
+              );
+            document.head.append(script);
+          });
+        }
+        async function readFile(file) {
+          const ext = file.name.split(".").pop().toLowerCase();
+          if (file.size > 8 * 1024 * 1024) throw new Error("Файл больше 8 МБ.");
+          if (["txt", "csv"].includes(ext)) return file.text();
+          if (["xls", "xlsx"].includes(ext)) {
+            const xlsx = await loadScript(
+              "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js",
+              "XLSX",
+            );
+            const workbook = xlsx.read(await file.arrayBuffer(), {
+              type: "array",
+              sheetRows: 301,
+            });
+            if (workbook.SheetNames.length > 5)
+              throw new Error(
+                "В Excel больше 5 листов. Оставьте только нужные листы.",
+              );
+            for (const name of workbook.SheetNames) {
+              const sheet = workbook.Sheets[name];
+              const range = sheet["!fullref"] || sheet["!ref"];
+              if (range && xlsx.utils.decode_range(range).e.r >= 300)
+                throw new Error(
+                  "В листе Excel больше 300 строк. Прикрепите нужные строки отдельным файлом.",
+                );
+            }
+            return workbook.SheetNames.map((name) =>
+              xlsx.utils.sheet_to_csv(workbook.Sheets[name]),
+            ).join("\n");
+          }
+          if (ext === "docx") {
+            const mammoth = await loadScript(
+              "https://cdn.jsdelivr.net/npm/mammoth@1.9.0/mammoth.browser.min.js",
+              "mammoth",
+            );
+            return (
+              await mammoth.extractRawText({
+                arrayBuffer: await file.arrayBuffer(),
+              })
+            ).value;
+          }
+          if (ext === "doc")
+            throw new Error(
+              "Пересохраните старый Word .doc в .docx и прикрепите снова.",
+            );
+          if (ext === "pdf") {
+            const pdfjs =
+              await import("https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.min.mjs");
+            pdfjs.GlobalWorkerOptions.workerSrc =
+              "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs";
+            const doc = await pdfjs.getDocument({
+              data: await file.arrayBuffer(),
+              isEvalSupported: false,
+            }).promise;
+            try {
+              if (doc.numPages > 10)
+                throw new Error(
+                  "В PDF больше 10 страниц. Прикрепите нужные страницы отдельным файлом.",
+                );
+              let text = "";
+              for (let i = 1; i <= doc.numPages; i++)
+                text +=
+                  (await (await doc.getPage(i)).getTextContent()).items
+                    .map((item) => item.str || "")
+                    .join(" ") + "\n";
+              return text;
+            } finally {
+              await doc.destroy();
+            }
+          }
+          if (["jpg", "jpeg", "png"].includes(ext)) {
+            $("#attachmentStatus").textContent =
+              "Распознаю текст на фото. Первая загрузка может занять около минуты…";
+            const ocr = await loadScript(
+              "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js",
+              "Tesseract",
+            );
+            const worker = await ocr.createWorker("rus+eng");
+            try {
+              return (await worker.recognize(file)).data.text;
+            } finally {
+              await worker.terminate();
+            }
+          }
+          throw new Error(
+            "Формат не поддерживается. Используйте Excel, Word, PDF, JPEG, PNG, TXT или CSV.",
+          );
+        }
+        async function attach(list) {
+          if (reading || busy) return;
+          if (files.length + list.length > 5) {
+            toast("Можно приложить не больше 5 файлов.");
+            return;
+          }
+          reading = true;
+          $("#sendButton").disabled = true;
+          $("#attachButton").disabled = true;
+          $("#attachmentStatus").hidden = false;
+          for (const file of list) {
+            $("#attachmentStatus").textContent = "Читаю " + file.name + "…";
+            try {
+              const text = (await readFile(file)).trim();
+              if (!text)
+                throw new Error(
+                  "Текст не распознан. Для скана PDF прикрепите страницу как JPEG; для фото товара укажите артикул вручную.",
+                );
+              if (
+                text.length +
+                  files.reduce((sum, item) => sum + item.text.length + 1, 0) >
+                24000
+              )
+                throw new Error(
+                  "Слишком много текста. Прикрепите только нужную часть спецификации (до 24 000 символов).",
+                );
+              files.push({ name: file.name, text });
+              renderFiles();
+            } catch (error) {
+              message(
+                "bot",
+                "Не удалось прочитать «" +
+                  esc(file.name) +
+                  "»: " +
+                  esc(error.message),
+              );
+            }
+          }
+          reading = false;
+          $("#attachmentStatus").hidden = true;
+          $("#sendButton").disabled = false;
+          $("#attachButton").disabled = false;
+          $("#fileInput").value = "";
+        }
+        document.addEventListener("click", (event) => {
+          const button = event.target.closest("button");
+          if (!button) return;
+          if (button.hasAttribute("data-open")) openChat();
+          if (button.dataset.query) submit(button.dataset.query);
+          if (button.dataset.detail)
+            run(() => showProduct(button.dataset.detail));
+          if (button.dataset.analog)
+            run(() => showAnalogs(button.dataset.analog));
+          if (button.dataset.prepare) {
+            const input = button
+              .closest(".product-card")
+              .querySelector(".quantity");
+            run(() => prepare(button.dataset.prepare, Number(input.value)));
+          }
+          if (button.dataset.confirm)
+            run(() => confirm(button.dataset.confirm));
+          if (
+            button.dataset.cancel &&
+            pending?.token === button.dataset.cancel &&
+            !busy
+          ) {
+            clearPending();
+            message("bot", "Добавление отменено. Корзина не изменена.");
+          }
+          if (button.hasAttribute("data-load"))
+            run(async () =>
+              message(
+                "bot",
+                (await loadPage())
+                  ? "Загружены следующие товары. Повторите запрос."
+                  : "Следующая страница пуста.",
+              ),
+            );
+          if (button.dataset.remove && !busy) {
+            const id = button.dataset.remove;
+            clearPending();
+            if (cart[id])
+              message(
+                "bot",
+                '<div class="consent"><b>Удалить позицию из локальной корзины?</b><p>' +
+                  esc(cart[id].name) +
+                  '</p><div class="product-actions"><button class="button small" data-delete="' +
+                  id +
+                  '">Да, удалить</button><button class="chip" data-keep>Оставить</button></div></div>',
+              );
+          }
+          if (button.dataset.delete && !busy) {
+            delete cart[button.dataset.delete];
+            button.closest(".consent").remove();
+            updateCart();
+            message(
+              "bot",
+              "Позиция удалена из локальной корзины по вашему подтверждению.",
+            );
+          }
+          if (button.hasAttribute("data-keep")) {
+            button.closest(".consent").remove();
+            message("bot", "Позиция оставлена в корзине.");
+          }
+        });
+        document.addEventListener(
+          "error",
+          (event) => {
+            if (event.target.matches?.("img.product-image")) {
+              const fallback = document.createElement("div");
+              fallback.className = "product-glyph";
+              fallback.innerHTML = '<div class="breaker"></div>';
+              event.target.replaceWith(fallback);
+            }
+          },
+          true,
+        );
+        $("#closeChat").onclick = closeChat;
+        $("#openCart").onclick = showCart;
+        $("#attachButton").onclick = () => $("#fileInput").click();
+        $("#fileInput").onchange = (event) => attach([...event.target.files]);
+        $("#chatForm").onsubmit = (event) => {
+          event.preventDefault();
+          submit($("#prompt").value);
+        };
+        $("#prompt").oninput = (event) => {
+          event.target.style.height = "auto";
+          event.target.style.height =
+            Math.min(event.target.scrollHeight, 100) + "px";
+        };
+        $("#prompt").onkeydown = (event) => {
+          if (event.key === "Enter" && !event.shiftKey && !event.isComposing) {
+            event.preventDefault();
+            $("#chatForm").requestSubmit();
+          }
+        };
+        document.addEventListener("input", (event) => {
+          if (event.target.matches("[data-quantity]") && pending) {
+            clearPending();
+            toast(
+              "Количество изменено. Нажмите «В корзину», чтобы подтвердить новый выбор.",
+            );
+          }
+        });
+        document.addEventListener("keydown", (event) => {
+          if ($("#chat").hidden) return;
+          if (event.key === "Escape") closeChat();
+          if (event.key === "Tab" && innerWidth < 761) {
+            const controls = [
+              ...$("#chat").querySelectorAll(
+                'button:not(:disabled),a[href],textarea,input:not([type="file"])',
+              ),
+            ].filter((el) => el.getClientRects().length);
+            const first = controls[0],
+              last = controls.at(-1);
+            if (event.shiftKey && document.activeElement === first) {
+              event.preventDefault();
+              last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+              event.preventDefault();
+              first.focus();
+            }
+          }
+        });
+        window.addEventListener("hashchange", () => {
+          if (location.hash === "#cart") showCart();
+        });
+        document.addEventListener("click", (event) => {
+          if (event.target.closest('a[href="#cart"]')) showCart();
+        });
+        window.addEventListener("resize", () => {
+          $("#chat").setAttribute("aria-modal", String(innerWidth < 761));
+          document.body.style.overflow =
+            !$("#chat").hidden && innerWidth < 761 ? "hidden" : "";
+        });
+        message(
+          "bot",
+          '<h3>Здравствуйте! Что подбираем?</h3><p>Помогу найти товар, посмотреть характеристики и наличие или сравнить похожие позиции. Напишите артикул или выберите вопрос.</p><div class="suggestions"><button class="chip" data-query="Есть ли 027228 в наличии?">Проверить наличие ↗</button><button class="chip" data-query="Характеристики 027228">Характеристики и сертификат ↗</button><button class="chip" data-query="Аналог 027228">Подобрать аналог ↗</button><button class="chip" data-query="Какие условия оплаты и доставки?">Оплата и доставка ↗</button></div><p class="source-note">Источник и актуальность указаны под каждой карточкой. Корзина этой демонстрации локальная.</p>',
+        );
+        updateCart();
+        if (location.hash === "#cart") showCart();
+        if (location.protocol !== "file:")
+          fetch("/api/catalog/status", { signal: AbortSignal.timeout(2500) })
+            .then((r) => (r.ok ? r.json() : null))
+            .then((data) => {
+              if (data?.live) {
+                live = true;
+                details.clear();
+                $("#modeBanner").textContent =
+                  "Каталог ekt.kz через сервер · корзина локальная";
+              }
+            })
+            .catch(() => {});
+      })();
+    </script>
+  </body>
+</html>
