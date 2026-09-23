@@ -1,278 +1,46 @@
-# hackalem_ai_project_tryhackme
+# ИИ-ассистент для покупателей ekt.kz
 
-Trading
+Прототип для кейса HackAlem AI от ТОО «Электрокомплект». Покупатель должен получать в чате сведения о товаре, наличии, сертификатах, аналогах и условиях покупки, а после явного согласия — добавлять выбранный товар в корзину. Требования и критерии приёмки находятся в [PRD](docs/source%20of%20truth/PRD.md), ближайшие шаги — в [плане](docs/source%20of%20truth/plan.md).
 
-> Generated with [Full-Stack AI Agent Template](https://github.com/vstorm-co/full-stack-ai-agent-template).
+## Текущий статус
 
----
+Репозиторий пока содержит **Full-Stack AI Agent Template**, а не завершённый ассистент для ekt.kz. В шаблоне есть общий интерфейс чата и FastAPI backend. В коде пока нет подключения к каталогу ekt.kz, поиска товарных аналогов, подтверждаемого добавления в корзину и проверок сценариев кейса. Общий чат не подтверждает выполнение PRD. Инструкция и возможности исходного шаблона сохранены в [README.template.md](README.template.md).
 
-## Stack
+## Требуемый сценарий
 
-| Component | Technology |
-|-----------|-----------|
-| **Backend** | FastAPI + Pydantic v2 |
-| **Database** | PostgreSQL (async via asyncpg) |
-| **Auth** | JWT + refresh tokens + API keys |
-| **Cache** | Redis |
-| **AI Framework** | pydantic_ai (openai) |
-| **RAG** | pgvector vector store |
-| **Frontend** | Next.js 15 + React 19 + Tailwind v4 |
+Покупатель задаёт вопрос или прикладывает спецификацию → ассистент получает факты из каталога и отвечает с учётом наличия → при отсутствии позиции предлагает обоснованный аналог → показывает товар и количество для подтверждения → только после явного согласия обновляет корзину → даёт ссылку на неё. Критерии разделены на UC-01 (товар), UC-02 (аналоги и условия) и UC-03 (корзина) в PRD.
 
----
+## Технологии и архитектура текущего репозитория
 
-## Prerequisites
+| Компонент | Что есть в коде | Роль в кейсе |
+| --- | --- | --- |
+| `frontend/` | Next.js 15, React 19, Tailwind, интерфейс общего чата | Будущий покупательский чат |
+| `backend/` | FastAPI, Pydantic, общие chat API и AI-агент | Будущие запросы к каталогу и правила подтверждения |
+| Хранение | PostgreSQL, Redis, RAG-компоненты шаблона | Использовать только по необходимости сценария |
+| Каталог ekt.kz | В материалах есть API чтения товаров | Интеграция ещё не реализована и не проверена |
+| Корзина ekt.kz | Контракт в материалах отсутствует | Требуется согласовать с партнёром |
 
-| Tool | Version | Install |
-|---|---|---|
-| **Docker** | Desktop / Engine 24+ | <https://docs.docker.com/get-docker/> |
-| **Make** | GNU Make 3.81+ (preinstalled on macOS/Linux) | Windows: install via [chocolatey](https://chocolatey.org/) `choco install make` or use WSL2 |
-| **uv** | latest | `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
-| **bun** | 1.x | `curl -fsSL https://bun.sh/install \| bash` (or use `npm` / `pnpm` if you prefer) |
+Целевой путь данных: браузер → frontend → backend → источник каталога → ответ; для UC-03 backend меняет корзину только после подтверждения и повторной проверки остатка. Это план, а не описание работающей интеграции.
 
-> **Windows users:** the Makefile and shell helpers assume bash. Use **WSL2** or **Git Bash** for the smoothest experience. The Docker workflow below works identically on macOS, Linux, and WSL2.
+## Локальный запуск имеющегося шаблона
 
----
-
-## Quick Start (Local Dev)
-
-### First time
+Нужны Docker с Compose и Make. Frontend можно запустить в Docker; для локального режима нужен Bun. Команды из корня репозитория:
 
 ```bash
-make bootstrap       # = make dev + make seed
+make dev            # backend, БД, миграции; API на http://localhost:8000
+make dev-frontend   # frontend на http://localhost:3000
 ```
 
-That's the only command you need on a fresh clone. After this, day-to-day is just `make dev`.
+Для входа в существующий чат шаблона может понадобиться тестовый пользователь. В локальной среде его создаёт `make seed`; демонстрационные учётные данные указаны в [README.template.md](README.template.md) и не предназначены для публичного развёртывания. Документация API: <http://localhost:8000/docs>. Для остановки backend: `make dev-down`; frontend управляется отдельным `docker-compose.frontend.yml`.
 
-### Subsequent runs
+Перед использованием AI-функций шаблона настройте `backend/.env` по `backend/.env.example`, включая свой `OPENAI_API_KEY`. Учётные данные API ekt.kz есть только в предоставленном партнёром документе `docs/source of truth/assets/ИИ-ассистент для чата на сайте ekt.kz ДАННЫЕ.docx`; их следует держать в локальной конфигурации/секретах и не публиковать. Пока интеграции нет, добавление этих данных в `.env` само по себе не подключит каталог.
 
-```bash
-make dev
-```
+## Как проверить сейчас
 
-`make dev` is **idempotent** — re-run it any time. It will:
+После запуска откройте frontend и `/docs`, проверьте доступность общего чата и API. Тесты шаблона запускаются `make test` для backend и `cd frontend && bun run test:e2e` для браузера. Они **не проверяют** товарные данные, аналоги или корзину ekt.kz. Воспроизводимая проверка кейса будет готова после реализации шагов в [плане](docs/source%20of%20truth/plan.md): запрос артикула с известными полями, нулевой остаток с аналогом и добавление товара только после подтверждения.
 
-1. Build the backend Docker image (cached after first run)
-2. Start services via `docker-compose.dev.yml` (with hot-reload bind mounts)
-3. Poll Postgres until it accepts connections (`pg_isready` — no fixed sleeps)
-4. Apply pending Alembic migrations (no-op if already at head)
+## Данные, внешние сервисы и ограничения
 
-It does **not** re-seed the admin user — that lives in `make seed` and is run once. This way `make dev` stays cheap to re-run after every code/config change.
+Материалы партнёра указывают `GET https://ekt.kz/api/products` (страницы через `?page=…`) и `GET https://ekt.kz/api/products/detail?id=…` с Basic Auth. Фактический ответ API и наличие доступа пока не проверены. Разрешённая заданием анонимизированная или синтетическая выборка подходит для демонстрации поведения, но не подтверждает актуальность остатков ekt.kz. Источник условий покупки, доступ к корзине и способ встраивания на сайт предстоит уточнить. Развёрнутой версии кейса пока нет.
 
-**Then access:**
-
-- API: <http://localhost:8000>
-- Docs: <http://localhost:8000/docs>
-- Admin: <http://localhost:8000/admin> — `admin@example.com` / `admin123` after `make seed`
-- Frontend: <http://localhost:3000> — start with `make dev-frontend` (Docker) or `cd frontend && bun install && bun dev` (local)
-
-### Day-to-day commands
-
-```bash
-make dev           # bootstrap or restart (idempotent, no admin re-seed)
-make seed          # one-shot admin creation (no-op if admin already exists)
-make dev-down      # stop everything
-make dev-logs      # tail logs (Ctrl-C to exit)
-make dev-rebuild   # force-rebuild backend image (after pyproject.toml change)
-make dev-frontend  # start the Next.js container
-```
-
-If you prefer running the backend on the host (not in Docker) — useful for breakpoints / IDE debugging:
-
-```bash
-make install       # uv sync + pre-commit install
-docker compose -f docker-compose.dev.yml up -d db redis milvus etcd minio
-make db-upgrade    # apply migrations
-make run           # run uvicorn locally with --reload
-```
-
----
-
-## Environments
-
-| `make` target | Compose file | Use case |
-|---|---|---|
-| `make dev` | `docker-compose.dev.yml` | Local development with hot-reload + bind-mounted source. |
-| `make stage` | `docker-compose.yml` | Production-like build, no bind mounts, runs on localhost. Good for sanity-checking before deploy. |
-| `make prod` | `docker-compose.prod.yml` | Production. Requires `backend/.env` (copy from `backend/.env.example`, fill real secrets) and an external Nginx using `nginx/nginx.conf`. |
-
-Each env has matching `-down`, `-logs`, `-rebuild` siblings (e.g. `make stage-down`).
-
----
-
-## Project Structure
-
-```
-backend/app/
-├── main.py               # FastAPI app + lifespan
-├── api/
-│   ├── deps.py           # Annotated DI aliases (DBSession, CurrentUser, *Svc)
-│   ├── exception_handlers.py
-│   └── routes/v1/        # HTTP endpoints — call services, never repos
-├── core/
-│   ├── config.py         # pydantic-settings (reads .env)
-│   ├── security.py       # JWT, bcrypt, API key verification
-│   ├── exceptions.py     # AppException → NotFound / Auth / etc.
-│   └── middleware.py
-├── db/
-│   ├── base.py           # DeclarativeBase + TimestampMixin
-│   └── models/           # SQLAlchemy models (Mapped[] type hints)
-├── schemas/              # Pydantic v2: *Create / *Update / *Read / *List
-├── repositories/         # Data access — db.flush() never commit
-├── services/             # Business logic — raises domain exceptions
-├── agents/               # AI agent wrappers + tools
-├── rag/                  # RAG: vectorstore + embeddings + ingestion + sources
-│   └── connectors/       # Pluggable sync sources (Google Drive, S3, …)
-└── commands/             # Click CLI commands (auto-discovered by `hackalem_ai_project_tryhackme cmd …`)
-
-frontend/src/
-├── app/
-│   ├── [locale]/         # next-intl routes (en/pl)
-│   │   ├── (marketing)/  # Public landing, pricing, FAQ, blog
-│   │   └── (dashboard)/  # Authenticated app
-│   └── api/              # Server-side API proxies (forward auth cookies)
-├── components/           # React components (chat, marketing, ui primitives)
-├── hooks/                # useAuth, useChat, useConversations, …
-├── stores/               # Zustand stores
-└── lib/                  # api-client, server-api, utils
-```
-
----
-
-## CLI
-
-The generated project ships a Click CLI exposed as `hackalem_ai_project_tryhackme` (after `make install`):
-
-```bash
-hackalem_ai_project_tryhackme server run --reload          # dev server
-hackalem_ai_project_tryhackme db upgrade                   # apply migrations
-hackalem_ai_project_tryhackme db migrate -m "message"      # create new migration
-hackalem_ai_project_tryhackme user create-admin            # interactive admin creation
-hackalem_ai_project_tryhackme rag-ingest <path> -c docs    # ingest local files
-hackalem_ai_project_tryhackme rag-search "query" -c docs   # semantic search
-hackalem_ai_project_tryhackme rag-collections              # list collections
-```
-
-Run `make help` for a categorized list, or `hackalem_ai_project_tryhackme --help` for full CLI docs.
-
----
-
-## Configuration
-
-All backend config lives in `backend/.env` (committed for dev defaults). Key variables:
-
-```bash
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-POSTGRES_DB=hackalem_ai_project_tryhackme
-
-# OpenAI — required for chat + embeddings
-OPENAI_API_KEY=sk-…
-```
-
-See `backend/.env.example` for the full list with comments.
-
-For production, **never** commit secrets — `backend/.env` is gitignored. Fill it with real values on the server (or inject them via your platform's secret manager: Doppler, AWS Secrets Manager, GitHub Actions secrets, etc.). The same `backend/.env` is used for dev and prod — there is no separate `.env.prod`.
-
----
-
-## Development
-
-| Command | What it does |
-|---|---|
-| `make test` | Run pytest |
-| `make lint` | Run ruff check + format check + ty |
-| `make format` | Auto-format with ruff |
-| `make db-migrate` | Generate a new migration from model changes (interactive) |
-| `make db-upgrade` | Apply pending migrations |
-| `make db-downgrade` | Roll back one migration |
-| `make db-current` | Show current head |
-| `make create-admin` | Interactive admin creation |
-| `make user-list` | List all users |
-
----
-
-## RAG (Knowledge Base)
-
-Using **pgvector** as the vector store with **openai** embeddings.
-
-```bash
-# Ingest local files (recursive)
-hackalem_ai_project_tryhackme rag-ingest /path/to/docs/ --collection documents --recursive
-
-# Semantic search
-hackalem_ai_project_tryhackme rag-search "your query" --collection documents
-```
-
-PDF parsing uses **all**. See `docs/howto/add-rag-source.md` to add a new source connector.
-
----
-
-## Frontend
-
-```bash
-cd frontend
-bun install
-bun dev          # http://localhost:3000
-bun run lint
-bun run build
-```
-
-The frontend talks to the backend through Next.js API route handlers in `src/app/api/*` (server-side proxy that forwards auth cookies to the FastAPI backend), so HTTP traffic never leaves the frontend origin. The one exception is the chat WebSocket: the browser opens it straight against the backend at `NEXT_PUBLIC_WS_URL`, so that origin must be reachable from the browser and the backend port (or a proxy route to it) has to be exposed.
-
-i18n (PL + EN) ships out of the box via `next-intl`. Add a new locale by extending `messages/<lang>.json` and `src/i18n.ts`.
-
----
-
-## Deployment
-
-### Frontend → Vercel
-
-```bash
-cd frontend && npx vercel --prod
-```
-
-Set in the Vercel dashboard:
-
-- `BACKEND_URL` = `https://api.your-domain.com` (server-side only)
-- `NEXT_PUBLIC_API_URL` = `https://api.your-domain.com`
-- `NEXT_PUBLIC_WS_URL` = `wss://api.your-domain.com`
-- `NEXT_PUBLIC_SITE_URL` = `https://your-domain.com`
-- `NEXT_PUBLIC_RAG_ENABLED` = `true`
-
-`NEXT_PUBLIC_*` values are inlined into the browser bundle at build time, so
-changing one needs a redeploy, and each must be an address the **browser** can
-reach.
-
-### Backend → your server
-
-```bash
-# 1. SSH to the box, clone the repo
-# 2. cp backend/.env.example backend/.env, fill in real secrets
-# 3. Configure nginx using nginx/nginx.conf as reference
-# 4. Bring up the stack:
-make prod
-
-# Day-to-day:
-make prod-logs
-make prod-down
-```
-
-Migrations run automatically on `make prod`. For a fresh deploy on a new host, the same `make prod` is the bootstrap command.
-
----
-
-## Guides
-
-| Guide | What |
-|-------|-------|
-| `docs/howto/add-api-endpoint.md` | Add a new REST endpoint |
-| `docs/howto/add-agent-tool.md` | Create an agent tool |
-| `docs/howto/customize-agent-prompt.md` | Tune system prompts |
-| `docs/howto/add-rag-source.md` | Add a RAG document source |
-| `docs/howto/add-sync-connector.md` | Build a custom sync connector |
-
----
-
-*Generated with [Full-Stack AI Agent Template](https://github.com/vstorm-co/full-stack-ai-agent-template) v0.2.19.*
+Документы хакатона находятся в `docs/source of truth/assets/`; перед публикацией проекта нужно проверить репозиторий на секреты и соблюдать правила организаторов по работе с данными.
