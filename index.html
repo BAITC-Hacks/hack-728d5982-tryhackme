@@ -872,6 +872,26 @@
       .message-body .muted {
         font-size: 10px;
       }
+      .purchase-terms section + section {
+        margin-top: 18px;
+        padding-top: 14px;
+        border-top: 1px solid #dbe4d4;
+      }
+      .purchase-terms h4 {
+        font-size: 13px;
+        margin-bottom: 8px;
+      }
+      .purchase-terms p + p,
+      .purchase-terms ul + p {
+        margin-top: 9px;
+      }
+      .purchase-terms ul {
+        padding-left: 20px;
+        margin: 8px 0;
+      }
+      .purchase-terms li + li {
+        margin-top: 7px;
+      }
       .suggestions {
         display: flex;
         flex-wrap: wrap;
@@ -2428,6 +2448,7 @@
         const storageKey = "ekt-landing-session-cart-v2";
         let server = null,
           serverState = null,
+          cartRequest = null,
           connection = Promise.resolve();
         let cart = {},
           pending = null,
@@ -2517,14 +2538,48 @@
         }
         function showServerCart(state) {
           acceptCart(state);
-          openChat();
+          revealCart(serverCartMarkup());
+        }
+        function revealCart(html) {
+          openChat(false);
           if (!$("#cartSummary"))
             message(
               "bot",
-              '<div id="cartSummary">' + serverCartMarkup() + "</div>",
+              '<div id="cartSummary" tabindex="-1" aria-label="Содержимое корзины">' +
+                html +
+                "</div>",
             );
-          else $("#cartSummary").innerHTML = serverCartMarkup();
-          $("#cartSummary").scrollIntoView({ block: "nearest" });
+          else $("#cartSummary").innerHTML = html;
+          const summary = $("#cartSummary");
+          const messages = $("#messages");
+          messages.append(summary.closest(".message"));
+          summary.focus({ preventScroll: true });
+          messages.scrollTop +=
+            summary.getBoundingClientRect().top -
+            messages.getBoundingClientRect().top -
+            20;
+        }
+        function termsText(value) {
+          let html = "",
+            inList = false;
+          for (const line of value
+            .split(/\n+/)
+            .map((x) => x.trim())
+            .filter(Boolean)) {
+            const item = line.match(/^(?:[-•]|\d+[.)])\s+(.+)$/);
+            if (item && !inList) {
+              html += "<ul>";
+              inList = true;
+            }
+            if (!item && inList) {
+              html += "</ul>";
+              inList = false;
+            }
+            html += item
+              ? "<li>" + esc(item[1]) + "</li>\n"
+              : "<p>" + esc(line) + "</p>\n";
+          }
+          return html + (inList ? "</ul>" : "");
         }
         function renderProposal(proposal) {
           clearPending();
@@ -2570,7 +2625,7 @@
         function renderServerReply(reply) {
           const sameProposal = reply.proposal?.id === pending?.token;
           if (!sameProposal) clearPending();
-          if (reply.text)
+          if (reply.text && !reply.terms)
             message(
               "bot",
               '<p style="white-space:pre-line">' + esc(reply.text) + "</p>",
@@ -2594,7 +2649,7 @@
           if (reply.alternatives?.length) {
             message(
               "bot",
-              "<h3>Доступные аналоги</h3><p>Совпадения и отличия проверены по характеристикам каталога.</p>",
+              "<h3>Доступные аналоги</h3><p>Наличие проверено по каталогу. Для каждого варианта указаны основания подбора, отличия и сведения, которые нужно уточнить.</p>",
             );
             for (const alt of reply.alternatives) {
               const d = {
@@ -2621,13 +2676,13 @@
             const t = reply.terms;
             message(
               "bot",
-              "<h3>Условия покупки</h3><p><b>Оплата</b><br>" +
-                esc(t.payment) +
-                "</p><p><b>Доставка</b><br>" +
-                esc(t.delivery) +
-                "</p><p><b>Минимальная партия</b><br>" +
-                esc(t.minimum) +
-                '</p><p class="source-note"><a href="' +
+              '<div class="purchase-terms"><h3>Условия покупки</h3><section><h4>Оплата</h4>' +
+                termsText(t.payment) +
+                "</section><section><h4>Доставка</h4>" +
+                termsText(t.delivery) +
+                "</section><section><h4>Минимальная партия</h4>" +
+                termsText(t.minimum) +
+                '</section></div><p class="source-note"><a href="' +
                 esc(safeUrl(t.source)) +
                 '" target="_blank" rel="noopener">Опубликованные условия ekt.kz ↗</a> · Проверено ' +
                 new Date(t.fetched_at).toLocaleString("ru-RU") +
@@ -2636,11 +2691,7 @@
           }
           if (reply.proposal && !sameProposal) renderProposal(reply.proposal);
           if (reply.cart) {
-            acceptCart(reply.cart);
-            message(
-              "bot",
-              '<a class="cart-link" href="/cart" data-server-cart>Открыть корзину →</a>',
-            );
+            showServerCart(reply.cart);
           }
         }
         async function attachForServer(list) {
@@ -2675,14 +2726,14 @@
         function scroll() {
           $("#messages").scrollTop = $("#messages").scrollHeight;
         }
-        function openChat() {
+        function openChat(focusPrompt = true) {
           if ($("#chat").hidden) previousFocus = document.activeElement;
           $("#chat").hidden = false;
           $("#chat").setAttribute("aria-modal", String(innerWidth < 761));
           $("#launcher").hidden = true;
           $("#launcher").setAttribute("aria-expanded", "true");
           if (innerWidth < 761) document.body.style.overflow = "hidden";
-          $("#prompt").focus({ preventScroll: true });
+          if (focusPrompt) $("#prompt").focus({ preventScroll: true });
         }
         function closeChat() {
           $("#chat").hidden = true;
@@ -3274,16 +3325,22 @@
             '</span></div><p class="muted">Валюта источником не указана. Эта корзина не резервирует товар. Оформление заказа здесь недоступно.</p><div class="suggestions"><button class="chip" data-query="Какие условия покупки?">Оплата и доставка</button><a class="chip" href="https://ekt.kz/" target="_blank" rel="noopener">Перейти на сайт магазина ↗</a></div>'
           );
         }
-        function showCart() {
+        async function showCart() {
+          await connection;
           if (server) {
-            run(async () => showServerCart(await serverRequest("/cart")));
+            if (cartRequest) return cartRequest;
+            $("#openCart").setAttribute("aria-busy", "true");
+            cartRequest = serverRequest("/cart")
+              .then(showServerCart)
+              .catch((error) => toast(error.message))
+              .finally(() => {
+                cartRequest = null;
+                $("#openCart").removeAttribute("aria-busy");
+              });
+            await cartRequest;
             return;
           }
-          openChat();
-          if (!$("#cartSummary"))
-            message("bot", '<div id="cartSummary">' + cartMarkup() + "</div>");
-          else $("#cartSummary").innerHTML = cartMarkup();
-          $("#cartSummary").scrollIntoView({ block: "nearest" });
+          revealCart(cartMarkup());
         }
         function conditions() {
           const d = details.get(currentProduct);
@@ -3432,7 +3489,6 @@
             $("#sendButton").disabled = false;
             $("#attachButton").disabled = false;
             $("#messages").removeAttribute("aria-busy");
-            scroll();
           }
         }
         async function submit(value) {
@@ -3792,9 +3848,9 @@
         document.addEventListener("input", (event) => {
           if (event.target.matches("[data-quantity]") && pending) {
             if (server)
-              serverRequest("/cart/cancel", {}).catch((error) =>
-                toast(error.message),
-              );
+              serverRequest("/cart/cancel", {
+                proposal_id: pending.token,
+              }).catch((error) => toast(error.message));
             clearPending();
             toast(
               "Количество изменено. Нажмите «В корзину», чтобы подтвердить новый выбор.",
@@ -3824,13 +3880,22 @@
         window.addEventListener("hashchange", () => {
           if (location.hash === "#cart") showCart();
         });
+        window.addEventListener("popstate", () => {
+          if (location.pathname === "/cart" || location.hash === "#cart")
+            showCart();
+        });
         document.addEventListener("click", (event) => {
           const cartLink = event.target.closest("a[data-server-cart]");
           if (cartLink) {
             event.preventDefault();
-            history.pushState({}, "", "/cart");
+            if (location.pathname !== "/cart")
+              history.pushState({}, "", "/cart");
             showCart();
-          } else if (event.target.closest('a[href="#cart"]')) showCart();
+          } else if (event.target.closest('a[href="#cart"]')) {
+            event.preventDefault();
+            if (location.hash !== "#cart") history.pushState({}, "", "#cart");
+            showCart();
+          }
         });
         window.addEventListener("resize", () => {
           $("#chat").setAttribute("aria-modal", String(innerWidth < 761));
@@ -3842,7 +3907,6 @@
           '<h3>Здравствуйте! Что подбираем?</h3><p>Помогу найти товар, посмотреть характеристики и наличие или сравнить похожие позиции. Напишите артикул или выберите вопрос.</p><div class="suggestions"><button class="chip" data-query="Есть ли 027228 в наличии?">Проверить наличие ↗</button><button class="chip" data-query="Характеристики 027228">Характеристики и сертификат ↗</button><button class="chip" data-query="Аналог 027228">Подобрать аналог ↗</button><button class="chip" data-query="Какие условия оплаты и доставки?">Оплата и доставка ↗</button></div><p class="source-note">Источник и актуальность указаны под каждой карточкой. Корзина меняется только после вашего отдельного подтверждения.</p>',
         );
         updateCart();
-        if (location.hash === "#cart") showCart();
         if (location.protocol !== "file:") {
           connection = fetch("/api/session", {
             credentials: "same-origin",
@@ -3867,6 +3931,7 @@
             })
             .catch(() => {});
         }
+        if (location.hash === "#cart") showCart();
       })();
     </script>
   </body>

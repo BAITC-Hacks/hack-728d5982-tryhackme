@@ -1,9 +1,11 @@
-"""Offline regression checks for HackAlem UC-01/04/05 and section 5 inputs.
+# ruff: noqa: RUF001
+"""Offline regression checks for HackAlem UC-01…05 and section 5 inputs.
 
 Catalogue details are controlled fixtures here. Real integration is checked by
 frontend/e2e/landing.live.spec.ts; these checks never call OpenAI or ekt.kz.
 """
 
+import asyncio
 import base64
 import hashlib
 import json
@@ -18,6 +20,139 @@ from app.schemas.ekt_catalog import EktDetailProduct, EktProductPage
 
 ROOT = Path(__file__).resolve().parents[2]
 ASSETS = ROOT / "docs/source of truth/assets"
+
+
+def absent_lamp(state):
+    return state[515291].model_copy(
+        update={
+            "id": 101,
+            "article": "absent-lamp",
+            "name": "Светильник OLD 21W 6500K",
+            "quantity": 0,
+            "warnings": [],
+            "url": "https://ekt.kz/catalog/lighting/surface/old/",
+            "properties": {
+                "MOSHCHNOST_W": "21",
+                "SPOSOB_MONTAZHA": "Накладной",
+                "TSVETOVAYA_TEMPERATURA": "6500",
+            },
+        }
+    )
+
+
+def test_analogs_expand_search_and_exclude_accessories(client, monkeypatch):
+    _, state = client
+    source = absent_lamp(state)
+    state[102] = source.model_copy(
+        update={"id": 102, "name": "Решетка для светильника", "quantity": 20}
+    )
+    state[103] = source.model_copy(
+        update={
+            "id": 103,
+            "article": "led-24",
+            "name": "LED NEW 24W 6500K",
+            "quantity": 7,
+            "url": "https://ekt.kz/catalog/lighting/led/new/",
+            "properties": {
+                "MOSHCHNOST_W": "24",
+                "SPOSOB_MONTAZHA": "Накладной",
+                "TSVETOVAYA_TEMPERATURA": "6500",
+            },
+        }
+    )
+
+    async def search(query):
+        return [103] if query.startswith("светильник ") else [102]
+
+    async def category_products(_):
+        return []
+
+    monkeypatch.setattr(landing, "search_site", search)
+    monkeypatch.setattr(landing, "category_products", category_products)
+    monkeypatch.setattr(landing, "local_search", lambda _: [])
+    results = asyncio.run(landing.analogs(source))
+    assert [a.product.id for a in results] == [103]
+    assert results[0].product.quantity == 7
+    assert "Способ монтажа" in results[0].reason
+    assert any("21 → 24" in line for line in results[0].differences)
+
+
+@pytest.mark.parametrize("intent_name", ["product", "prepare"])
+def test_each_absent_product_gets_analog_without_cart_mutation(client, monkeypatch, intent_name):
+    browser, state = client
+    source = absent_lamp(state)
+    candidate = source.model_copy(update={"id": 103, "quantity": 7, "article": "replacement"})
+
+    async def interpret(_session, _payload):
+        return landing.Intent(
+            intent=intent_name,
+            items=[landing.IntentItem(query="светильники", product_id=None, quantity=1)],
+            reply="Проверено",
+            extracted=[],
+        )
+
+    async def resolve(_):
+        return [state[515291], source] if intent_name == "product" else [source]
+
+    async def analogs(p):
+        assert p.id == source.id
+        return [
+            landing.Alternative(
+                product=candidate, reason="Совпадают характеристики", differences=[]
+            )
+        ]
+
+    monkeypatch.setattr(landing, "interpret", interpret)
+    monkeypatch.setattr(landing, "resolve", resolve)
+    monkeypatch.setattr(landing, "analogs", analogs)
+    response = browser.post("/api/chat", json={"text": "Есть ли светильники?"})
+    assert response.status_code == 200
+    assert len(response.json()["alternatives"]) >= 1
+    assert response.json()["proposal"] is None
+    assert browser.get("/api/cart").json()["count"] == 0
+
+
+def test_sparse_rcbo_parameters_match_but_other_current_is_rejected(client):
+    _, state = client
+    source = absent_lamp(state).model_copy(
+        update={"name": "007886 Диф.авт. 1p+N 16А (30мА)", "properties": {}}
+    )
+    candidate = source.model_copy(
+        update={
+            "id": 103,
+            "quantity": 5,
+            "name": "АВДТ DX3 (1П+Н) 16А (30мA-AC)",
+            "properties": {"KOLICHESTVO_POLYUSOV": "2", "NOMINALNYY_TOK": "16 А"},
+        }
+    )
+    result = landing.analog_candidate(source, candidate)
+    assert result and "Ток утечки" in result[1].reason
+    candidate.properties["NOMINALNYY_TOK"] = "25 А"
+    assert landing.analog_candidate(source, candidate) is None
+    candidate.properties.pop("NOMINALNYY_TOK")
+    candidate.name = "АВДТ 1P+N C32 30mA"
+    assert landing.analog_candidate(source, candidate) is None
+    assert landing.parameter_value("1,6А") != landing.parameter_value("16А")
+
+
+def test_terms_preserve_sections_lists_and_flag_conflicting_versions():
+    html = """<nav>Личный кабинет</nav>
+    <div class="row"><div><h5>Оплата</h5><p>Физическим лицам:</p>
+    <ul><li>Картой онлайн</li><li>Наличными при получении</li></ul>
+    <p>Юридическим лицам:</p><ul><li>Перечислением на счёт</li></ul></div></div>
+    <div class="row"><div><h5>Доставка</h5><span>1. В течение 48 часов.</span><br>
+    <span>2. Бесплатно свыше 30 000 тенге.</span></div></div>
+    <div class="row"><h5>Доставка</h5><p>Бесплатно свыше 15 000 тенге.</p></div>
+    <footer>Вы добавили товар. Личный кабинет</footer>"""
+    terms = landing.parse_terms(html)
+    assert "Физическим лицам:\n- Картой онлайн\n- Наличными" in terms.payment
+    assert "Юридическим лицам:\n- Перечислением" in terms.payment
+    assert "48 часов.\n2." in terms.delivery
+    assert "различающихся версий" in terms.delivery
+    assert "Личный кабинет" not in terms.payment + terms.delivery
+    assert "Вы добавили" not in terms.delivery
+    with pytest.raises(ValueError):
+        landing.parse_terms("<p>Нет разделов условий покупки</p>")
 
 
 @pytest.fixture
@@ -81,6 +216,17 @@ def test_consent_actual_cart_url_and_replay(client):
     assert browser.get("/api/cart").json() == cart
     assert confirm(browser, proposal).status_code == 409
     assert browser.get("/api/cart").json()["count"] == 3
+
+
+def test_cancel_old_quantity_does_not_cancel_new_proposal(client):
+    browser, _ = client
+    old = prepare(browser, 1).json()
+    current = prepare(browser, 2).json()
+    browser.post("/api/cart/cancel", json={"proposal_id": old["id"]}).raise_for_status()
+    assert browser.get("/api/cart").json()["count"] == 0
+    response = confirm(browser, current)
+    assert response.status_code == 200
+    assert response.json()["count"] == 2
 
 
 def test_other_session_csrf_and_origin(client):

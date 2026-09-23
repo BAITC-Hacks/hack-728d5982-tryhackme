@@ -33,22 +33,37 @@ test("live UC-01…05: facts, absent product, terms, consent, persistent cart UR
     await expect(page.getByRole("dialog")).toContainText("Сертификат не указан");
   }
 
-  reply = await ask(page, "Есть ли артикул ярп4520? Если нет, предложи аналог.");
+  reply = await ask(page, "Есть ли артикул ярп4520 в наличии?");
   expect(reply.products[0].quantity).toBe(0);
   expect(reply.alternatives.length).toBeGreaterThan(0);
   expect(reply.alternatives[0].product.quantity).toBeGreaterThan(0);
   await expect(page.getByRole("dialog")).toContainText(reply.alternatives[0].reason);
 
+  reply = await ask(page, "Есть ли артикул 310100080_ в наличии?");
+  expect(reply.products[0].quantity).toBe(0);
+  expect(reply.alternatives.length).toBeGreaterThan(0);
+  expect(
+    reply.alternatives.every(
+      (a: { product: { quantity: number }; reason: string }) =>
+        a.product.quantity > 0 && a.reason.length > 0,
+    ),
+  ).toBe(true);
+
   reply = await ask(page, "Как оплатить, получить доставку и какая минимальная партия?");
   expect(reply.terms.source).toBe("https://ekt.kz/checkout-delivery/");
   await expect(page.getByRole("dialog")).toContainText(reply.terms.minimum);
+  await expect(page.locator(".purchase-terms section")).toHaveCount(3);
+  expect(await page.locator(".purchase-terms li").count()).toBeGreaterThan(4);
 
   await ask(page, "Добавь 2 шт 027005");
   await expect(page.locator("[data-pending]")).toContainText("2 шт.");
   await expect(page.locator("#cartCount")).toHaveText("0");
   await ask(page, "ок");
   await expect(page.locator("#cartCount")).toHaveText("0");
-  await page.getByRole("button", { name: "Да, добавить", exact: true }).click();
+  await page
+    .locator("[data-pending]")
+    .getByRole("button", { name: "Да, добавить", exact: true })
+    .click();
   await expect(page.locator("#cartCount")).toHaveText("2");
   await page.getByRole("link", { name: "Открыть корзину →", exact: true }).last().click();
   await expect(page).toHaveURL(/\/cart$/);
@@ -56,6 +71,28 @@ test("live UC-01…05: facts, absent product, terms, consent, persistent cart UR
   await expect(page.locator("#cartSummary")).toContainText("2 шт.");
   await page.reload();
   await expect(page.locator("#cartSummary")).toContainText("2 шт.");
+  await expect(page.locator("#cartSummary .cart-row")).toBeInViewport();
+  await ask(page, "Расскажи об оплате и доставке");
+  await page.getByRole("button", { name: "Показать корзину" }).click();
+  await expect(page.locator("#cartSummary .cart-row")).toBeInViewport();
+  await expect(page.locator("#cartSummary")).toBeFocused();
+  await ask(page, "Покажи мою корзину");
+  await expect(page.locator("#cartSummary .cart-row")).toBeInViewport();
+  await page.getByRole("button", { name: "Удалить позицию…" }).click();
+  await expect(page.locator("[data-pending]")).toContainText("Подтвердите удаление");
+  await expect(page.locator("#cartCount")).toHaveText("2");
+  await page.locator("[data-pending]").getByRole("button", { name: "Отмена", exact: true }).click();
+  await expect(page.locator("#sendButton")).toBeEnabled();
+  await expect(page.locator("#cartCount")).toHaveText("2");
+  await page.getByRole("button", { name: "Показать корзину" }).click();
+  await page.getByRole("button", { name: "Удалить позицию…" }).click();
+  await page
+    .locator("[data-pending]")
+    .getByRole("button", { name: "Да, удалить", exact: true })
+    .click();
+  await expect(page.locator("#cartCount")).toHaveText("0");
+  await page.getByRole("button", { name: "Показать корзину" }).click();
+  await expect(page.locator("#cartSummary")).toContainText("Пока пусто");
   expect(await page.locator('[role="dialog"]').count()).toBe(1);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
@@ -74,4 +111,17 @@ test("live attachment: extracted article resolves to verified product, never con
   await expect(page.getByRole("dialog")).toContainText("Распознано во вложении");
   await expect(page.getByRole("dialog")).toContainText("200300285_");
   await expect(page.locator("#cartCount")).toHaveText("0");
+  await page.getByRole("spinbutton", { name: "Количество 200300285_" }).fill("2");
+  await page.locator('[data-prepare="515291"]').click();
+  await expect(page.locator("[data-pending]")).toContainText("2 шт.");
+  await expect(page.locator("#cartCount")).toHaveText("0");
+  await page
+    .locator("[data-pending]")
+    .getByRole("button", { name: "Да, добавить", exact: true })
+    .click();
+  await expect(page.locator("#cartCount")).toHaveText("2");
+  await page.getByRole("link", { name: "Открыть корзину →", exact: true }).last().click();
+  await expect(page.locator("#cartSummary .cart-row")).toBeInViewport();
+  await expect(page.locator("#cartSummary")).toContainText("200300285_");
+  await expect(page.locator("#cartSummary")).toContainText("2 шт.");
 });

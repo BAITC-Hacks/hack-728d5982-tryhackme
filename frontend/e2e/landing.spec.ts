@@ -85,3 +85,107 @@ test("attachments can be removed and text input never becomes HTML", async ({ pa
   await expect(page.locator(".message.user")).toContainText("<img src=x onerror=alert(1)>");
   expect(await page.locator(".message.user img").count()).toBe(0);
 });
+
+// Controlled API responses isolate navigation/formatting from network and LLM latency.
+async function mockServer(page: Page) {
+  await page.route("**/cart", async (route) => {
+    if (new URL(route.request().url()).pathname !== "/cart") return route.fallback();
+    await route.fulfill({ response: await page.request.get("/index.html") });
+  });
+  const cart = {
+    items: [
+      {
+        product_id: 1,
+        article: "TEST-001",
+        name: "Тестовая позиция",
+        quantity: 2,
+        price: 100,
+        line_total: 200,
+      },
+    ],
+    count: 2,
+    total: 200,
+    url: "/cart",
+    mode: "server",
+  };
+  await page.route("**/api/**", async (route) => {
+    const path = new URL(route.request().url()).pathname;
+    if (path === "/api/session") {
+      await route.fulfill({ json: { csrf: "test-only", ai: true, live: true, cart } });
+    } else if (path === "/api/cart") {
+      await route.fulfill({ json: cart });
+    } else if (path === "/api/chat") {
+      const text = route.request().postDataJSON().text;
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      await route.fulfill({
+        json: text.includes("корзин")
+          ? { text: "Ваша корзина", cart }
+          : {
+              text: "**Этого дублирующего текста быть не должно**",
+              terms: {
+                payment:
+                  "Физическим лицам:\n- Картой онлайн\n- Наличными\nЮридическим лицам:\n- Перечислением на счёт\n<img src=x onerror=alert(1)>",
+                delivery: Array.from(
+                  { length: 10 },
+                  (_, i) =>
+                    `${i + 1}. Условие доставки ${i + 1}: уточните адрес и время получения.`,
+                ).join("\n"),
+                minimum: "Общая минимальная партия не опубликована.",
+                source: "https://ekt.kz/checkout-delivery/",
+                fetched_at: "2026-09-23T00:00:00Z",
+              },
+            },
+      });
+    } else await route.fulfill({ status: 404, json: {} });
+  });
+}
+
+test("server cart: repeated opening and text request reveal rows without moving the page", async ({
+  page,
+}) => {
+  await mockServer(page);
+  await open(page);
+  await expect(page.locator("#modeBanner")).toContainText("ИИ подключён");
+  await page.getByRole("button", { name: "Показать корзину" }).click();
+  const summary = page.locator("#cartSummary");
+  await expect(summary.locator(".cart-row")).toBeInViewport();
+  await expect(summary).toBeFocused();
+  await ask(page, "Оплата и доставка");
+  await expect(page.locator("#sendButton")).toBeEnabled();
+  const documentTop = await page.evaluate(() => scrollY);
+  await page.getByRole("button", { name: "Показать корзину" }).click();
+  await expect(summary.locator("h3")).toBeInViewport();
+  await expect(summary.locator(".cart-row")).toBeInViewport();
+  await expect(summary).toBeFocused();
+  expect(await page.evaluate(() => scrollY)).toBe(documentTop);
+  await summary.getByRole("link", { name: "Прямая ссылка на эту корзину →" }).click();
+  await expect(page).toHaveURL(/\/cart$/);
+  await expect(summary.locator(".cart-row")).toBeInViewport();
+  await ask(page, "Покажи корзину");
+  await expect(page.locator("#sendButton")).toBeEnabled();
+  await expect(summary).toHaveCount(1);
+  await expect(summary).toContainText("TEST-001");
+  await expect(summary.locator(".cart-row")).toBeInViewport();
+  await page.reload();
+  await expect(summary.locator(".cart-row")).toBeInViewport();
+  await expect(summary).toBeFocused();
+});
+
+test("purchase terms have readable sections and safe lists; cart opens during a chat request", async ({
+  page,
+}) => {
+  await mockServer(page);
+  await open(page);
+  await expect(page.locator("#modeBanner")).toContainText("ИИ подключён");
+  await ask(page, "Оплата и доставка");
+  await page.getByRole("button", { name: "Показать корзину" }).click();
+  await expect(page.locator("#cartSummary")).toContainText("TEST-001");
+  await expect(page.locator("#sendButton")).toBeEnabled();
+  const terms = page.locator(".purchase-terms");
+  await expect(terms.locator("h4")).toHaveText(["Оплата", "Доставка", "Минимальная партия"]);
+  await expect(terms.locator("section").first().locator("li")).toHaveCount(3);
+  await expect(terms.locator("section").nth(1).locator("li")).toHaveCount(10);
+  await expect(terms.locator("img")).toHaveCount(0);
+  await expect(terms).toContainText("<img src=x onerror=alert(1)>");
+  await expect(page.getByRole("dialog")).not.toContainText("Этого дублирующего текста");
+});

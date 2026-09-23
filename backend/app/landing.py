@@ -437,81 +437,258 @@ async def resolve(item):
     return [p for p in found if isinstance(p, ProductFacts)]
 
 
+PARAMETER_NAMES = {
+    "KOLICHESTVO_POLYUSOV": "Число полюсов",
+    "NOMINALNYY_TOK": "Номинальный ток",
+    "NOMINALNOE_NAPRYAZHENIE": "Напряжение",
+    "MOSHCHNOST_W": "Мощность",
+    "TSOKOL": "Цоколь",
+    "TIP_TSOKOLYA": "Тип цоколя",
+    "SPOSOB_MONTAZHA": "Способ монтажа",
+    "TIP_USTANOVKI": "Тип установки",
+    "TSVETOVAYA_TEMPERATURA": "Цветовая температура",
+    "STEPEN_ZASHCHITY_IP": "Степень защиты",
+    "TOK_UTECHKI": "Ток утечки",
+    "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST": "Отключающая способность",
+}
+
+
 def parameters(p):
-    keys = [
+    result = {k: str(p.properties[k]).strip() for k in PARAMETER_NAMES if p.properties.get(k)}
+    # Sparse legacy cards still expose technical facts in their catalogue name.
+    patterns = {
+        "KOLICHESTVO_POLYUSOV": r"(?<!\w)([1-4]\s*[pп](?:\s*\+\s*[nн])?)(?!\w)",
+        "NOMINALNYY_TOK": r"(?<![\w.,])(\d+(?:[.,]\d+)?\s*[aа])(?=[\s(),]|$)",
+        "TOK_UTECHKI": r"(?<!\w)(\d+\s*[mм][aа])(?=[\s(),-]|$)",
+        "MOSHCHNOST_W": r"(?<!\w)(\d+(?:[.,]\d+)?)\s*(?:w|вт)(?!\w)",
+        "TSVETOVAYA_TEMPERATURA": r"(?<!\w)(\d{4,5})\s*[kк](?!\w)",
+        "STEPEN_ZASHCHITY_IP": r"(?<!\w)(IP\s*\d{2})(?!\w)",
+    }
+    for key, pattern in patterns.items():
+        match = re.search(pattern, p.name, re.I)
+        if match and (key not in result or key == "KOLICHESTVO_POLYUSOV"):
+            result[key] = match[1]
+    if "NOMINALNYY_TOK" not in result and product_kind(p) in {"breaker", "rcbo"}:
+        rating = re.search(r"(?<!\w)[BCDВСД]\s*(\d+(?:[.,]\d+)?)(?!\w)", p.name, re.I)
+        if rating:
+            result["NOMINALNYY_TOK"] = rating[1] + " А"
+    return result
+
+
+def parameter_value(value):
+    value = re.sub(r"\s+", "", str(value).lower()).replace(",", ".")
+    value = value.translate(str.maketrans("апнкм", "apnkm"))
+    value = re.sub(r"p(?=\+n|$)", "", value)
+    numeric = re.fullmatch(r"(\d+(?:\.\d+)?)(?:a|а|v|в|w|вт|k|ка|ka)?", value)
+    return f"{float(numeric[1]):g}" if numeric else value
+
+
+def category(p):
+    # Campaign sections can contain the same product category at another depth.
+    parts = urlparse(p.url).path.strip("/").split("/")
+    return parts[-2] if len(parts) >= 3 else ""
+
+
+def product_kind(p):
+    name = norm(p.name)
+    for pattern, kind in [
+        (r"реш[её]тк|колодк|держател|рассеивател|креплен|заглуш|рамк", "accessory"),
+        (r"авдт|диф\s*авт|\bад\s*1[24]\b", "rcbo"),
+        (r"\bузо\b|\bвдт\b|\bвд\s*1", "rccb"),
+        (r"реле.*(?:контрол|фаз|напряж|насос)", "control_relay"),
+        (r"реле", "relay"),
+        (r"автомат|\bавт\b|\bdrx\d", "breaker"),
+        (r"\bлампа\b", "lamp"),
+        (r"светильник|\bсв к\b|\bled\b|\bil mx\b", "luminaire"),
+    ]:
+        if re.search(pattern, name):
+            return kind
+    return ""
+
+
+def analog_candidate(p, alt):
+    if alt.id == p.id or alt.quantity <= 0:
+        return None
+    same_category = bool(category(p)) and category(p) == category(alt)
+    original, other = parameters(p), parameters(alt)
+    equal = [
+        k
+        for k in original
+        if k in other and parameter_value(original[k]) == parameter_value(other[k])
+    ]
+    different = [k for k in original if k in other and k not in equal]
+
+    def words(name):
+        return set(re.findall(r"[a-zа-яё]{3,}", name.lower()))
+
+    shared = words(p.name) & words(alt.name)
+    exact = norm(p.name) == norm(alt.name)
+    kind, other_kind = product_kind(p), product_kind(alt)
+    if kind != other_kind or kind == "accessory":
+        return None
+    if (
+        not exact
+        and not (len(equal) >= 2 and (bool(kind) or len(shared) >= 2))
+        and not (same_category and shared and equal)
+    ):
+        return None
+    # Known contradictory circuit ratings are not compatible replacements.
+    critical = {
         "KOLICHESTVO_POLYUSOV",
         "NOMINALNYY_TOK",
+        "TOK_UTECHKI",
         "NOMINALNOE_NAPRYAZHENIE",
-        "TIP_USTANOVKI",
-        "MOSHCHNOST_W",
         "TSOKOL",
-        "TSOKOL_",
-        "SPOSOB_MONTAZHA",
-    ]
-    return {k: norm(p.properties[k]).replace(" ", "") for k in keys if p.properties.get(k)}
+        "TIP_TSOKOLYA",
+    }
+    if critical.intersection(different):
+        return None
+    if kind in {"breaker", "rcbo", "rccb"} and any(
+        k in original and k not in other for k in critical
+    ):
+        return None
+    capacity = "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST"
+    if capacity in original and capacity in other:
+        before = re.search(r"\d+(?:[.,]\d+)?", original[capacity])
+        after = re.search(r"\d+(?:[.,]\d+)?", other[capacity])
+        if (
+            before
+            and after
+            and float(after[0].replace(",", ".")) < float(before[0].replace(",", "."))
+        ):
+            return None
+    differences = [f"{PARAMETER_NAMES[k]}: {original[k]} → {other[k]}." for k in different]
+    missing = [PARAMETER_NAMES[k] for k in original if k not in other]
+    if missing:
+        differences.append(
+            "У кандидата не указаны: " + ", ".join(missing) + ". Уточните перед заменой."
+        )
+    differences.extend(p.warnings + alt.warnings)
+    differences.append(
+        f"Артикул: {p.article} → {alt.article}. Проверьте исполнение, габариты и комплектность перед заменой."
+    )
+    if exact:
+        basis = "Совпадает полное обозначение модели в каталоге"
+    else:
+        basis = "Совпадают характеристики: " + "; ".join(
+            f"{PARAMETER_NAMES[k]} — {original[k]}" for k in equal
+        )
+    if not exact:
+        differences.append("Полная взаимозаменяемость не подтверждена данными каталога.")
+    score = (
+        int(exact) * 100
+        + len(equal) * 10
+        + int(same_category) * 5
+        + len(shared)
+        - len(different) * 3
+    )
+    return score, Alternative(
+        product=alt,
+        reason=f"Для артикула {p.article}: {basis}. Наличие {alt.quantity} шт. проверено по API.",
+        differences=list(dict.fromkeys(differences)),
+    )
+
+
+async def category_products(p):
+    if not safe_url(p.url):
+        return []
+    url = p.url.rsplit("/", 2)[0] + "/"
+    try:
+        response = await app.state.http.get(url)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, "html.parser")
+        return list(
+            dict.fromkeys(
+                int(str(x["data-id"]))
+                for x in soup.select('[data-action="add2basket"][data-id]')
+                if str(x["data-id"]).isdigit()
+            )
+        )[:16]
+    except httpx.HTTPError:
+        return []
 
 
 async def analogs(p):
-    family = re.search(r"DRX\d+\s*MT", p.name, re.I)
-    query = family[0] if family else " ".join(p.name.replace("***", "").split()[:4])
-    ids = list(dict.fromkeys(local_search(query) + await search_site(query)))
-    found = await asyncio.gather(
-        *(detail(pid) for pid in ids if pid != p.id), return_exceptions=True
-    )
-    results = []
-    original = parameters(p)
-    for alt in found:
-        if not isinstance(alt, ProductFacts) or alt.quantity <= 0 or alt.warnings or p.warnings:
-            continue
-        brand = norm(p.properties.get("TORGOVAYA_MARKA", ""))
-        if (
-            norm(p.name) == norm(alt.name)
-            and brand
-            and brand == norm(alt.properties.get("TORGOVAYA_MARKA", ""))
-        ):
-            results.append(
-                Alternative(
-                    product=alt,
-                    reason=f"Совпадают полное обозначение модели и параметры в названии: {alt.name}. Торговая марка также совпадает; наличие проверено по API.",
-                    differences=[
-                        f"Другой артикул каталога: {p.article} → {alt.article}. Проверьте исполнение и комплектность перед заменой."
-                    ],
-                )
+    name = re.sub(r"^[*\s]*(?:\d{5,}\s+)?", "", p.name)
+    family = re.search(r"DRX\d+\s*MT", name, re.I)
+    query = family[0] if family else " ".join(name.split()[:4])
+    checked = {p.id}
+    ranked = []
+
+    async def inspect(ids):
+        fresh_ids = [pid for pid in dict.fromkeys(ids) if pid not in checked][:16]
+        checked.update(fresh_ids)
+        found = await asyncio.gather(*(detail(pid) for pid in fresh_ids), return_exceptions=True)
+        for alt in found:
+            if isinstance(alt, ProductFacts):
+                candidate = analog_candidate(p, alt)
+                if candidate:
+                    ranked.append(candidate)
+
+    await inspect(local_search(query) + await search_site(query))
+    if not ranked:
+        # A missing legacy model code must not stop search at the first empty page.
+        words = re.findall(r"[a-zа-яё]{3,}", name.lower())
+        facts = parameters(p)
+        kind = product_kind(p)
+        broader = " ".join(words[:2])
+        if kind == "rcbo":
+            broader = "диф " + facts.get("NOMINALNYY_TOK", "") + " " + facts.get("TOK_UTECHKI", "")
+        elif kind == "luminaire":
+            broader = (
+                "светильник "
+                + facts.get("SPOSOB_MONTAZHA", "")
+                + " "
+                + facts.get("TSVETOVAYA_TEMPERATURA", "")
             )
-            continue
-        other = parameters(alt)
-        equal = [k for k in original if other.get(k) == original[k]]
-        if len(equal) < 2 or len(equal) != len(original):
-            continue
-        differences = []
-        if family:
-            key = "NOMINALNAYA_OTKLYUCHAYUSHCHAYA_SPOSOBNOST"
-            a = re.search(r"\d+(?:[.,]\d+)?", str(p.properties.get(key, "")))
-            b = re.search(r"\d+(?:[.,]\d+)?", str(alt.properties.get(key, "")))
-            if (
-                family[0].lower() not in alt.name.lower()
-                or not a
-                or not b
-                or float(b[0].replace(",", ".")) < float(a[0].replace(",", "."))
-            ):
+        elif kind == "control_relay":
+            broader = "реле контроля насоса" if "насос" in name else "реле контроля"
+        pages = await asyncio.gather(search_site(broader), category_products(p))
+        local = [
+            x["id"]
+            for x in catalog.values()
+            if urlparse(x["url"]).path.strip("/").split("/")[-2:-1] == [category(p)]
+        ]
+        await inspect([pid for page in pages for pid in page] + local)
+    return [candidate for _, candidate in sorted(ranked, key=lambda row: row[0], reverse=True)[:3]]
+
+
+def parse_terms(html: str) -> Terms:
+    soup = BeautifulSoup(html, "html.parser")
+    for node in soup(["script", "style", "nav", "footer"]):
+        node.decompose()
+
+    def sections(title):
+        values = []
+        for heading in soup.find_all(re.compile(r"^h[1-6]$")):
+            if heading.get_text(" ", strip=True) != title:
                 continue
-            if a[0] != b[0]:
-                differences.append(
-                    f"Отключающая способность: {p.properties[key]} → {alt.properties[key]}."
-                )
-        elif urlparse(p.url).path.rsplit("/", 2)[0] != urlparse(alt.url).path.rsplit("/", 2)[0]:
-            continue
-        shared = "; ".join(f"{k}: {p.properties[k]}" for k in equal)
-        results.append(
-            Alternative(
-                product=alt,
-                reason="Совпадают подтверждённые характеристики: "
-                + shared
-                + ". Наличие проверено по API.",
-                differences=differences or ["Проверьте габариты и условия монтажа перед заменой."],
-            )
-        )
-    return results[:3]
+            block = heading.find_parent(class_="row") or heading.parent
+            copy = BeautifulSoup(str(block), "html.parser")
+            for h in copy.find_all(re.compile(r"^h[1-6]$")):
+                h.decompose()
+            for li in copy.find_all("li"):
+                li.replace_with("\n- " + li.get_text(" ", strip=True) + "\n")
+            lines = [re.sub(r"\s+", " ", line).strip() for line in copy.get_text("\n").splitlines()]
+            text = "\n".join(line for line in lines if line)
+            if text and text not in values:
+                values.append(text)
+        if not values:
+            raise ValueError("Purchase terms section missing")
+        return values
+
+    payment = sections("Оплата")[0]
+    deliveries = sections("Доставка")
+    delivery = deliveries[0]
+    if len(deliveries) > 1:
+        delivery += "\nУточните у магазина: на странице опубликовано несколько различающихся версий условий доставки. Применимый тариф и пограничные суммы заказа требуют подтверждения."
+    return Terms(
+        source=TERMS_URL,
+        fetched_at=now(),
+        payment=payment,
+        delivery=delivery,
+        minimum="Общая минимальная сумма или партия на странице не опубликована. Для товара используйте минимальную кратность в его карточке; это не минимальная сумма заказа.",
+    )
 
 
 async def terms():
@@ -521,23 +698,7 @@ async def terms():
     try:
         r = await app.state.http.get(TERMS_URL)
         r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-        for x in soup(["script", "style"]):
-            x.decompose()
-        text = soup.get_text(" ", strip=True)
-        a = text.find("При оформлении покупки на физ")
-        b = text.find("При оформлении заказа через интернет-магазин", a)
-        c = text.find("Вы добавили товар", b)
-        if min(a, b, c) < 0:
-            raise ValueError("Source changed")
-        result = Terms(
-            source=TERMS_URL,
-            fetched_at=now(),
-            payment=text[a:b].removesuffix("Доставка").strip(),
-            delivery=text[b:c].strip()
-            + " Порог для ровно 15 000 ₸ не определён; также есть общее условие свыше 30 000 ₸ для городов присутствия. Уточните применимый тариф у магазина.",
-            minimum="Общая минимальная сумма или партия на странице не опубликована. Для товара используйте минимальную кратность в его карточке; это не минимальная сумма заказа.",
-        )
+        result = parse_terms(r.text)
         terms_cache = (time.time(), result)
         return result
     except (httpx.HTTPError, ValueError):
@@ -877,7 +1038,13 @@ async def chat(payload: ChatRequest, request: Request, response: Response):
         if intent.intent == "terms":
             reply.terms = await terms()
             if s.last_product:
-                reply.products = [await detail(s.last_product)]
+                p = await detail(s.last_product)
+                reply.terms = reply.terms.model_copy(
+                    update={
+                        "minimum": reply.terms.minimum
+                        + f"\nДля артикула {p.article}: кратность {multiple(p)} шт."
+                    }
+                )
         elif intent.intent == "cart":
             reply.cart = cart_adapter.state(s)
         elif intent.intent in {"product", "analog", "prepare"}:
@@ -891,6 +1058,12 @@ async def chat(payload: ChatRequest, request: Request, response: Response):
                 reply.products.extend(
                     p for p in matches if p.id not in {x.id for x in reply.products}
                 )
+                for product in matches:
+                    if intent.intent == "analog" or product.quantity <= 0:
+                        alternatives = await analogs(product)
+                        reply.alternatives.extend(alternatives)
+                        if not alternatives:
+                            reply.text += f"\nДля артикула {product.article} после расширенного поиска не найден доступный релевантный аналог. Уточните параметры допустимой замены у магазина; наличие не выдумывается."
                 if len(matches) == 1:
                     s.last_product = matches[0].id
                     qty = item.quantity if item.quantity is not None else 1
@@ -898,11 +1071,8 @@ async def chat(payload: ChatRequest, request: Request, response: Response):
                         raise HTTPException(
                             422, "Укажите положительное целое количество, не больше 1 000 000."
                         )
-                    selected.append(Selection(product_id=matches[0].id, quantity=qty))
-                    if intent.intent == "analog" or matches[0].quantity == 0:
-                        reply.alternatives.extend(await analogs(matches[0]))
-                        if not reply.alternatives:
-                            reply.text += "\nПодтверждённый доступный аналог по известным параметрам не найден. Уточните условия допустимой замены."
+                    if matches[0].quantity > 0:
+                        selected.append(Selection(product_id=matches[0].id, quantity=qty))
             if re.search("сертиф|документ|паспорт", payload.text, re.I):
                 reply.products = [await certificate_links(p) for p in reply.products]
             if intent.intent == "prepare" and selected and len(selected) == len(intent.items):
